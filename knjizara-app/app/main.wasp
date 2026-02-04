@@ -410,6 +410,12 @@ page MyOrdersPage {
   authRequired: true,
   component: import MyOrdersPage from "@src/bookstore/MyOrdersPage"
 }
+
+route AddressManagementRoute { path: "/addresses", to: AddressManagementPage }
+page AddressManagementPage {
+  authRequired: true,
+  component: import AddressManagementPage from "@src/bookstore/AddressManagementPage"
+}
 //#endregion
 
 //#region Contact Form Messages

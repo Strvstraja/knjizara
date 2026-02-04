@@ -432,10 +432,43 @@ Files:
 - Verified i18n translations in both scripts
 - Confirmed with Playwright MCP ✅
 
-### 11.2 Not Yet Implemented ⏳
+### 11.2 Address Management Page ✅
+**Status**: Completed
+
+**Features**:
+- View all saved addresses
+- Add new addresses with form validation
+- Edit existing addresses
+- Delete addresses with confirmation
+- Set default address
+- Default address badge display
+- Empty state with call-to-action
+- Full i18n support (Latin/Cyrillic)
+
+**Implementation**:
+- Created `AddressManagementPage.tsx` component
+- Uses existing address operations: `getUserAddresses`, `createAddress`, `updateAddress`, `deleteAddress`, `setDefaultAddress`
+- Reuses `AddressForm` component for add/edit functionality
+- Route: `/addresses` (auth required)
+- Displays addresses sorted by default status, then creation date
+- Visual indicators for default address (blue ring and badge)
+
+**Translation Coverage**:
+- Page title, buttons (add new, edit, delete, set as default)
+- Empty state messages
+- Form titles (add new address, edit address)
+- Confirmation dialogs
+- All text translates correctly between Latin and Cyrillic
+
+**Tested**:
+- Verified page loads correctly
+- Tested empty state display
+- Verified i18n translations in both scripts
+- Confirmed with Playwright MCP ✅
+
+### 11.3 Not Yet Implemented ⏳
 - Wishlist functionality
 - Profile settings
-- Address management
 
 ### 8.5 Admin Panel ⏳
 - Book management UI (CRUD interface)

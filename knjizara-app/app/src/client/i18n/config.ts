@@ -122,6 +122,20 @@ const srLatn = {
       "cancelled": "Otkazano"
     }
   },
+  "addressManagement": {
+    "title": "Moje adrese",
+    "addNew": "Dodaj novu",
+    "addNewAddress": "Dodaj novu adresu",
+    "editAddress": "Izmeni adresu",
+    "noAddresses": "Nemate sačuvanih adresa",
+    "noAddressesMessage": "Dodajte adresu da biste ubrzali proces poručivanja.",
+    "addFirst": "Dodaj prvu adresu",
+    "default": "Podrazumevano",
+    "setAsDefault": "Postavi kao podrazumevano",
+    "edit": "Izmeni",
+    "delete": "Obriši",
+    "confirmDelete": "Da li ste sigurni da želite da obrišete ovu adresu?"
+  },
   "orderSuccess": {
     "title": "Porudžbina uspešna!",
     "message": "Vaša porudžbina je uspešno primljena i biće obrađena uskoro.",
@@ -258,6 +272,20 @@ const srCyrl = {
       "delivered": "Достављено",
       "cancelled": "Отказано"
     }
+  },
+  "addressManagement": {
+    "title": "Моје адресе",
+    "addNew": "Додај нову",
+    "addNewAddress": "Додај нову адресу",
+    "editAddress": "Измени адресу",
+    "noAddresses": "Немате сачуваних адреса",
+    "noAddressesMessage": "Додајте адресу да бисте убрзали процес поручивања.",
+    "addFirst": "Додај прву адресу",
+    "default": "Подразумевано",
+    "setAsDefault": "Постави као подразумевано",
+    "edit": "Измени",
+    "delete": "Обриши",
+    "confirmDelete": "Да ли сте сигурни да желите да обришете ову адресу?"
   },
   "orderSuccess": {
     "title": "Поруџбина успешна!",
