@@ -2,12 +2,16 @@ import { useState } from 'react';
 import { useQuery } from 'wasp/client/operations';
 import { getBooks, getCategories } from 'wasp/client/operations';
 import { Link } from 'wasp/client/router';
+import { useCart } from '../client/contexts/CartContext';
+import { ShoppingCart, Check } from 'lucide-react';
 
 export default function BooksPage() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [categoryId, setCategoryId] = useState<string | undefined>();
   const [sortBy, setSortBy] = useState<'newest' | 'price_asc' | 'price_desc' | 'title'>('newest');
+  const [addedBookId, setAddedBookId] = useState<string | null>(null);
+  const { addToCart } = useCart();
 
   const { data: booksData, isLoading: booksLoading } = useQuery(getBooks, {
     page,
@@ -22,6 +26,14 @@ export default function BooksPage() {
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setPage(1);
+  };
+
+  const handleQuickAdd = (e: React.MouseEvent, book: any) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart(book);
+    setAddedBookId(book.id);
+    setTimeout(() => setAddedBookId(null), 1500);
   };
 
   return (
@@ -112,6 +124,19 @@ export default function BooksPage() {
                       <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-sm font-bold">
                         -{Math.round(((book.price - book.discountPrice) / book.price) * 100)}%
                       </div>
+                    )}
+                    {book.stock > 0 && (
+                      <button
+                        onClick={(e) => handleQuickAdd(e, book)}
+                        className="absolute bottom-2 right-2 bg-blue-600 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-blue-700"
+                        title="Dodaj u korpu"
+                      >
+                        {addedBookId === book.id ? (
+                          <Check className="w-4 h-4" />
+                        ) : (
+                          <ShoppingCart className="w-4 h-4" />
+                        )}
+                      </button>
                     )}
                   </div>
                   <div className="p-4">

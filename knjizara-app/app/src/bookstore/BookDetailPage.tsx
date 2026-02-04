@@ -2,10 +2,23 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from 'wasp/client/operations';
 import { getBook } from 'wasp/client/operations';
 import { Link } from 'wasp/client/router';
+import { useCart } from '../client/contexts/CartContext';
+import { useState } from 'react';
+import { Check } from 'lucide-react';
 
 export default function BookDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { data: book, isLoading, error } = useQuery(getBook, { id: id! });
+  const { addToCart, isInCart } = useCart();
+  const [showAdded, setShowAdded] = useState(false);
+
+  const handleAddToCart = () => {
+    if (book) {
+      addToCart(book);
+      setShowAdded(true);
+      setTimeout(() => setShowAdded(false), 2000);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -86,11 +99,24 @@ export default function BookDetailPage() {
 
               {/* Add to Cart Button */}
               <button
+                onClick={handleAddToCart}
                 disabled={book.stock === 0}
-                className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors mb-6"
+                className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors mb-6 flex items-center justify-center gap-2"
               >
-                {book.stock > 0 ? 'Dodaj u korpu' : 'Nema na stanju'}
+                {showAdded ? (
+                  <>
+                    <Check className="w-5 h-5" />
+                    Dodato u korpu
+                  </>
+                ) : (
+                  book.stock > 0 ? 'Dodaj u korpu' : 'Nema na stanju'
+                )}
               </button>
+              {isInCart(book.id) && !showAdded && (
+                <p className="text-sm text-green-600 text-center mb-4">
+                  ✓ Ova knjiga je već u vašoj korpi
+                </p>
+              )}
 
               {/* Specifications */}
               <div className="border-t pt-6">

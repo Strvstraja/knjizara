@@ -9,6 +9,7 @@ import {
   marketingNavigationItems,
 } from "./components/NavBar/constants";
 import CookieConsentBanner from "./components/cookie-consent/Banner";
+import { CartProvider } from "./contexts/CartContext";
 
 /**
  * use this component to wrap all child components
@@ -48,7 +49,7 @@ export default function App() {
   }, [location]);
 
   return (
-    <>
+    <CartProvider>
       <div className="bg-background text-foreground min-h-screen">
         {isAdminDashboard ? (
           <Outlet />
@@ -65,6 +66,6 @@ export default function App() {
       </div>
       <Toaster position="bottom-right" />
       <CookieConsentBanner />
-    </>
+    </CartProvider>
   );
 }

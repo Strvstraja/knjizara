@@ -18,6 +18,7 @@ import logo from "../../static/logo.webp";
 import { cn } from "../../utils";
 import DarkModeSwitcher from "../DarkModeSwitcher";
 import { Announcement } from "./Announcement";
+import CartDrawer from "../CartDrawer";
 
 export interface NavigationItem {
   name: string;
@@ -113,6 +114,7 @@ function NavBarDesktopUserDropdown({ isScrolled }: { isScrolled: boolean }) {
   return (
     <div className="hidden items-center justify-end gap-3 lg:flex lg:flex-1">
       <ul className="flex items-center justify-center gap-2 sm:gap-4">
+        <CartDrawer />
         <DarkModeSwitcher />
       </ul>
       {isUserLoading ? null : !user ? (

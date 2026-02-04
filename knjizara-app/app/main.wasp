@@ -362,6 +362,11 @@ route BookDetailRoute { path: "/books/:id", to: BookDetailPage }
 page BookDetailPage {
   component: import BookDetailPage from "@src/bookstore/BookDetailPage"
 }
+
+route CartRoute { path: "/cart", to: CartPage }
+page CartPage {
+  component: import CartPage from "@src/bookstore/CartPage"
+}
 //#endregion
 
 //#region Contact Form Messages
