@@ -217,22 +217,59 @@ File: `/Users/strahinja/knjizara/knjizara-app/app/src/server/scripts/updateBookI
 
 ---
 
-## 🔄 Phase 8: Not Yet Implemented
+## ✅ Phase 8: Shopping Cart - COMPLETE
 
-### 8.1 i18n for Cyrillic/Latin Toggle ⏳
+### 8.1 Shopping Cart ✅
+File: `/Users/strahinja/knjizara/knjizara-app/app/src/client/contexts/CartContext.tsx`
+
+**Cart Context & State Management**:
+- Global cart state using React Context
+- LocalStorage persistence (survives page refreshes)
+- Add, remove, update quantity functions
+- Item count and subtotal calculations
+- Stock validation
+
+**Cart Drawer** (`/src/client/components/CartDrawer.tsx`):
+- Slide-in drawer accessible from navigation
+- Cart badge showing item count
+- Quick view of all items with images
+- Quantity controls (+, -, delete)
+- Free shipping progress bar (3000 RSD threshold)
+- Order summary (subtotal, shipping 350 RSD, total)
+- "Idi na plaćanje" button
+
+**Cart Page** (`/src/bookstore/CartPage.tsx`):
+- Full-page detailed cart view at `/cart`
+- Large book images with links
+- Quantity management
+- Remove items functionality
+- Free shipping progress indicator
+- Order summary sidebar
+- "Nastavi na plaćanje" checkout button
+- "Nastavi sa kupovinom" continue shopping link
+
+**Add to Cart Integration**:
+- Book detail page: "Dodaj u korpu" button with checkmark feedback
+- Books catalog: Quick add buttons on hover (shopping cart icon)
+- Visual confirmation when items added
+- "Already in cart" indicator
+
+### 8.2 Free Shipping Calculation ✅
+- Threshold: 3000 RSD
+- Standard shipping cost: 350 RSD
+- Progress bar showing amount needed
+- Automatic free shipping when threshold reached
+- Visual feedback (blue progress bar / green success message)
+
+## 🔄 Phase 9: Not Yet Implemented
+
+### 9.1 i18n for Cyrillic/Latin Toggle ⏳
 - Script switching component
 - Context provider for language preference
 - Translation files (sr-Cyrl, sr-Latn)
 - Toggle button in header
 
-### 8.2 Shopping Cart ⏳
-- Cart drawer (slide-in)
-- Cart page
-- Add/remove items
-- Quantity adjustment
-- Free shipping progress bar
-
-### 8.3 Checkout Flow ⏳
+### 9.2 Checkout Flow ⏳
 - Step 1: Shipping address
 - Step 2: Delivery method (standard/express)
 - Step 3: Payment method (cash on delivery / card)
