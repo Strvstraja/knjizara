@@ -68,7 +68,7 @@ app OpenSaaS {
       // }
     },
     onAuthFailedRedirectTo: "/login",
-    onAuthSucceededRedirectTo: "/demo-app",
+    onAuthSucceededRedirectTo: "/",
   },
 
   db: {
@@ -352,6 +352,32 @@ query getUserOrders {
   entities: [Order, OrderItem, Book, Address]
 }
 
+// Address queries and actions
+query getUserAddresses {
+  fn: import { getUserAddresses } from "@src/bookstore/addressOperations",
+  entities: [Address]
+}
+
+action createAddress {
+  fn: import { createAddress } from "@src/bookstore/addressOperations",
+  entities: [Address]
+}
+
+action updateAddress {
+  fn: import { updateAddress } from "@src/bookstore/addressOperations",
+  entities: [Address]
+}
+
+action deleteAddress {
+  fn: import { deleteAddress } from "@src/bookstore/addressOperations",
+  entities: [Address]
+}
+
+action setDefaultAddress {
+  fn: import { setDefaultAddress } from "@src/bookstore/addressOperations",
+  entities: [Address]
+}
+
 // Bookstore pages
 route BooksRoute { path: "/books", to: BooksPage }
 page BooksPage {
@@ -366,6 +392,17 @@ page BookDetailPage {
 route CartRoute { path: "/cart", to: CartPage }
 page CartPage {
   component: import CartPage from "@src/bookstore/CartPage"
+}
+
+route CheckoutRoute { path: "/placanje", to: CheckoutPage }
+page CheckoutPage {
+  component: import CheckoutPage from "@src/bookstore/CheckoutPage"
+}
+
+route OrderSuccessRoute { path: "/order-success", to: OrderSuccessPage }
+page OrderSuccessPage {
+  authRequired: true,
+  component: import OrderSuccessPage from "@src/bookstore/OrderSuccessPage"
 }
 //#endregion
 

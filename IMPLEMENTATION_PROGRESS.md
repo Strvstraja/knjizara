@@ -261,21 +261,80 @@ File: `/Users/strahinja/knjizara/knjizara-app/app/src/client/contexts/CartContex
 - Automatic free shipping when threshold reached
 - Visual feedback (blue progress bar / green success message)
 
-## 🔄 Phase 9: Not Yet Implemented
+## ✅ Phase 9: Checkout Flow & Address Management - COMPLETE
 
-### 9.1 i18n for Cyrillic/Latin Toggle ⏳
+### 9.1 Address Management ✅
+File: `/Users/strahinja/knjizara/knjizara-app/app/src/bookstore/addressOperations.ts`
+
+**Address Operations**:
+- `getUserAddresses` - Get all user addresses (sorted by default, then created date)
+- `createAddress` - Create new address with auto-default handling
+- `updateAddress` - Update address details
+- `deleteAddress` - Remove address (with ownership verification)
+- `setDefaultAddress` - Set address as default (unsets others)
+
+**Address Form Component** (`/src/client/components/AddressForm.tsx`):
+- Full name, street, city, postal code, phone fields
+- "Set as default" checkbox
+- Form validation
+- Cancel/Save actions
+
+### 9.2 Checkout Flow ✅
+File: `/Users/strahinja/knjizara/knjizara-app/app/src/bookstore/CheckoutPage.tsx`
+
+**4-Step Checkout Process**:
+- **Step 1: Address Selection**
+  - Display saved addresses with radio selection
+  - "Add new address" form inline
+  - Default address highlighting
+  - Address validation (must belong to user)
+
+- **Step 2: Delivery Method**
+  - Standard delivery (3-5 days, 350 RSD or free if >3000 RSD)
+  - Express delivery (1-2 days, 590 RSD)
+  - Visual selection with pricing
+
+- **Step 3: Payment Method**
+  - Cash on Delivery (recommended, highlighted)
+  - Credit/Debit Card (Visa, Mastercard, Maestro)
+  - Radio button selection
+
+- **Step 4: Review & Confirm**
+  - Summary of address, delivery, payment
+  - List of all items with quantities and prices
+  - Final order totals
+  - "Potvrdi porudžbinu" button
+
+**Features**:
+- Progress indicator with icons (MapPin, Truck, CreditCard, Check)
+- Step navigation (back/forward buttons)
+- Order summary sidebar (always visible)
+- Cart items display with images
+- Authentication required (redirects to login)
+- Empty cart handling
+
+**Order Success Page** (`/src/bookstore/OrderSuccessPage.tsx`):
+- Success confirmation with checkmark icon
+- Order details explanation
+- Links to "My Orders" and "Continue Shopping"
+- Support contact information
+
+**Integration**:
+- Cart page links to checkout
+- Cart drawer links to checkout
+- Order creation via `createOrder` operation
+- Cart cleared after successful order
+- Redirect to `/order-success` after order placement
+
+## 🔄 Phase 10: Not Yet Implemented
+
+### 10.1 i18n for Cyrillic/Latin Toggle ⏳
 - Script switching component
 - Context provider for language preference
 - Translation files (sr-Cyrl, sr-Latn)
 - Toggle button in header
 
-### 9.2 Checkout Flow ⏳
-- Step 1: Shipping address
-- Step 2: Delivery method (standard/express)
-- Step 3: Payment method (cash on delivery / card)
-- Step 4: Review and confirm
-
-### 8.4 User Dashboard ⏳
+### 10.2 User Dashboard ⏳
 - My Orders page
 - Wishlist functionality
 - Profile settings

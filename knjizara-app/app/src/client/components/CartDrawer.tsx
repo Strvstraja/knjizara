@@ -168,13 +168,22 @@ export default function CartDrawer() {
                   <span>{total.toFixed(2)} RSD</span>
                 </div>
               </div>
-              <Link
-                to="/cart"
-                onClick={() => setIsOpen(false)}
-                className="block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-              >
-                Idi na plaćanje
-              </Link>
+              <div className="space-y-2">
+                <Link
+                  to="/placanje"
+                  onClick={() => setIsOpen(false)}
+                  className="block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                >
+                  Idi na plaćanje
+                </Link>
+                <Link
+                  to="/cart"
+                  onClick={() => setIsOpen(false)}
+                  className="block w-full text-center text-blue-600 hover:text-blue-700 font-medium text-sm"
+                >
+                  Pogledaj korpu
+                </Link>
+              </div>
             </div>
           )}
         </div>
