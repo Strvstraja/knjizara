@@ -466,8 +466,42 @@ Files:
 - Verified i18n translations in both scripts
 - Confirmed with Playwright MCP ✅
 
-### 11.3 Not Yet Implemented ⏳
-- Wishlist functionality
+### 11.3 Wishlist Functionality ✅
+**Status**: Completed
+
+**Features**:
+- View all wishlist items with book details
+- Add books to wishlist from book detail page
+- Remove books from wishlist (detail page or wishlist page)
+- Heart button toggle on book detail page
+- Visual indicator (filled heart) for books in wishlist
+- Add to cart directly from wishlist page
+- Empty state with call-to-action
+- Full i18n support (Latin/Cyrillic)
+
+**Implementation**:
+- Created `WishlistItem` database model with unique constraint on userId + bookId
+- Created `wishlistOperations.ts` with CRUD operations
+- Added queries: `getUserWishlist`, `isInWishlist`
+- Added actions: `addToWishlist`, `removeFromWishlist`
+- Created `WishlistPage.tsx` component
+- Added wishlist heart button to `BookDetailPage`
+- Route: `/wishlist` (auth required)
+- Database migration completed successfully
+
+**Translation Coverage**:
+- Page title, empty states, buttons (add to cart, remove)
+- Success/error messages
+- All text translates correctly between Latin and Cyrillic
+
+**Tested**:
+- Verified wishlist page loads correctly
+- Tested add/remove functionality on book detail page
+- Verified heart button toggles correctly
+- Verified i18n translations in both scripts
+- Confirmed with Playwright MCP ✅
+
+### 11.4 Not Yet Implemented ⏳
 - Profile settings
 
 ### 8.5 Admin Panel ⏳

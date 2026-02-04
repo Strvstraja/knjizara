@@ -30,6 +30,7 @@ model User {
   files                     File[]
   addresses                 Address[]
   orders                    Order[]
+  wishlistItems             WishlistItem[]
 }
 
 model GptResponse {
@@ -135,6 +136,7 @@ model Book {
   featured            Boolean       @default(false)
   categories          Category[]    @relation("BookCategories")
   orderItems          OrderItem[]
+  wishlistItems       WishlistItem[]
   createdAt           DateTime      @default(now())
   updatedAt           DateTime      @updatedAt
 }
@@ -213,4 +215,15 @@ enum PaymentMethod {
 enum PaymentStatus {
   PENDING
   PAID
+}
+
+model WishlistItem {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  bookId    String
+  book      Book     @relation(fields: [bookId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@unique([userId, bookId])
 }

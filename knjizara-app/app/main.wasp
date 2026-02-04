@@ -378,6 +378,27 @@ action setDefaultAddress {
   entities: [Address]
 }
 
+// Wishlist queries and actions
+query getUserWishlist {
+  fn: import { getUserWishlist } from "@src/bookstore/wishlistOperations",
+  entities: [WishlistItem, Book, Category]
+}
+
+query isInWishlist {
+  fn: import { isInWishlist } from "@src/bookstore/wishlistOperations",
+  entities: [WishlistItem]
+}
+
+action addToWishlist {
+  fn: import { addToWishlist } from "@src/bookstore/wishlistOperations",
+  entities: [WishlistItem, Book]
+}
+
+action removeFromWishlist {
+  fn: import { removeFromWishlist } from "@src/bookstore/wishlistOperations",
+  entities: [WishlistItem]
+}
+
 // Bookstore pages
 route BooksRoute { path: "/books", to: BooksPage }
 page BooksPage {
@@ -415,6 +436,12 @@ route AddressManagementRoute { path: "/addresses", to: AddressManagementPage }
 page AddressManagementPage {
   authRequired: true,
   component: import AddressManagementPage from "@src/bookstore/AddressManagementPage"
+}
+
+route WishlistRoute { path: "/wishlist", to: WishlistPage }
+page WishlistPage {
+  authRequired: true,
+  component: import WishlistPage from "@src/bookstore/WishlistPage"
 }
 //#endregion
 

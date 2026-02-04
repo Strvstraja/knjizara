@@ -1,24 +1,46 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'wasp/client/operations';
-import { getBook } from 'wasp/client/operations';
+import { getBook, isInWishlist, addToWishlist, removeFromWishlist } from 'wasp/client/operations';
 import { Link } from 'wasp/client/router';
 import { useTranslation } from 'react-i18next';
 import { useCart } from '../client/contexts/CartContext';
 import { useState } from 'react';
-import { Check } from 'lucide-react';
+import { Check, Heart } from 'lucide-react';
+import { useAuth } from 'wasp/client/auth';
 
 export default function BookDetailPage() {
   const { t } = useTranslation();
+  const { data: user } = useAuth();
   const { id } = useParams<{ id: string }>();
   const { data: book, isLoading, error } = useQuery(getBook, { id: id! });
+  const { data: inWishlist, refetch: refetchWishlist } = useQuery(isInWishlist, { bookId: id! }, { enabled: !!user && !!id });
   const { addToCart, isInCart } = useCart();
   const [showAdded, setShowAdded] = useState(false);
+  const [wishlistLoading, setWishlistLoading] = useState(false);
 
   const handleAddToCart = () => {
     if (book) {
       addToCart(book);
       setShowAdded(true);
       setTimeout(() => setShowAdded(false), 2000);
+    }
+  };
+
+  const handleToggleWishlist = async () => {
+    if (!user || !book) return;
+    
+    setWishlistLoading(true);
+    try {
+      if (inWishlist) {
+        await removeFromWishlist({ bookId: book.id });
+      } else {
+        await addToWishlist({ bookId: book.id });
+      }
+      await refetchWishlist();
+    } catch (error) {
+      console.error('Error toggling wishlist:', error);
+    } finally {
+      setWishlistLoading(false);
     }
   };
 
@@ -99,21 +121,37 @@ export default function BookDetailPage() {
                 )}
               </div>
 
-              {/* Add to Cart Button */}
-              <button
-                onClick={handleAddToCart}
-                disabled={book.stock === 0}
-                className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors mb-6 flex items-center justify-center gap-2"
-              >
-                {showAdded ? (
-                  <>
-                    <Check className="w-5 h-5" />
-                    {t('bookDetail.addedToCart')}
-                  </>
-                ) : (
-                  book.stock > 0 ? t('books.addToCart') : t('books.outOfStock')
+              {/* Add to Cart and Wishlist Buttons */}
+              <div className="flex gap-3 mb-6">
+                <button
+                  onClick={handleAddToCart}
+                  disabled={book.stock === 0}
+                  className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+                >
+                  {showAdded ? (
+                    <>
+                      <Check className="w-5 h-5" />
+                      {t('bookDetail.addedToCart')}
+                    </>
+                  ) : (
+                    book.stock > 0 ? t('books.addToCart') : t('books.outOfStock')
+                  )}
+                </button>
+                {user && (
+                  <button
+                    onClick={handleToggleWishlist}
+                    disabled={wishlistLoading}
+                    className={`p-3 rounded-lg font-semibold transition-colors ${
+                      inWishlist
+                        ? 'bg-red-100 text-red-600 hover:bg-red-200'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    } disabled:opacity-50`}
+                    title={inWishlist ? t('wishlist.removedFromWishlist') : t('wishlist.addedToWishlist')}
+                  >
+                    <Heart className={`w-6 h-6 ${inWishlist ? 'fill-current' : ''}`} />
+                  </button>
                 )}
-              </button>
+              </div>
               {isInCart(book.id) && !showAdded && (
                 <p className="text-sm text-green-600 text-center mb-4">
                   ✓ {t('bookDetail.alreadyInCart')}

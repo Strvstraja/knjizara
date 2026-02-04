@@ -136,6 +136,16 @@ const srLatn = {
     "delete": "Obriši",
     "confirmDelete": "Da li ste sigurni da želite da obrišete ovu adresu?"
   },
+  "wishlist": {
+    "title": "Lista želja",
+    "empty": "Vaša lista želja je prazna",
+    "emptyMessage": "Dodajte knjige koje želite da kupite kasnije.",
+    "browseBooks": "Pregledaj knjige",
+    "addToCart": "Dodaj u korpu",
+    "remove": "Ukloni",
+    "addedToWishlist": "Dodato u listu želja",
+    "removedFromWishlist": "Uklonjeno iz liste želja"
+  },
   "orderSuccess": {
     "title": "Porudžbina uspešna!",
     "message": "Vaša porudžbina je uspešno primljena i biće obrađena uskoro.",
@@ -286,6 +296,16 @@ const srCyrl = {
     "edit": "Измени",
     "delete": "Обриши",
     "confirmDelete": "Да ли сте сигурни да желите да обришете ову адресу?"
+  },
+  "wishlist": {
+    "title": "Листа жеља",
+    "empty": "Ваша листа жеља је празна",
+    "emptyMessage": "Додајте књиге које желите да купите касније.",
+    "browseBooks": "Прегледај књиге",
+    "addToCart": "Додај у корпу",
+    "remove": "Уклони",
+    "addedToWishlist": "Додато у листу жеља",
+    "removedFromWishlist": "Уклоњено из листе жеља"
   },
   "orderSuccess": {
     "title": "Поруџбина успешна!",
