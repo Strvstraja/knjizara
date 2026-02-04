@@ -32,7 +32,7 @@ export default function OrderSuccessPage() {
 
         <div className="space-y-3">
           <Link
-            to="/account"
+            to="/my-orders"
             className="block w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
             {t('orderSuccess.viewOrders')}

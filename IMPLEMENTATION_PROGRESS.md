@@ -396,10 +396,43 @@ Files:
   - AddressForm ✅
   - OrderSuccessPage ✅
 
-## 🔄 Phase 11: Not Yet Implemented
+## ✅ Phase 11: User Dashboard
 
-### 11.1 User Dashboard ⏳
-- My Orders page
+### 11.1 My Orders Page ✅
+**Status**: Completed
+
+**Features**:
+- Display all user orders with full details
+- Order status badges (Pending, Processing, Shipped, Delivered, Cancelled)
+- Order items with book covers and details
+- Shipping address display
+- Order totals breakdown (subtotal, shipping, total)
+- Empty state with call-to-action
+- Full i18n support (Latin/Cyrillic)
+
+**Implementation**:
+- Created `MyOrdersPage.tsx` component
+- Uses `getUserOrders` query to fetch user orders
+- Route: `/my-orders` (auth required)
+- Displays orders sorted by creation date (newest first)
+- Shows order status with color-coded badges and icons
+- Links to book detail pages from order items
+- Updated OrderSuccessPage to link to My Orders
+
+**Translation Coverage**:
+- Order page title, empty states, error messages
+- Order status labels (pending, processing, shipped, delivered, cancelled)
+- Order details (order number, placed on, total, items, quantity)
+- Shipping address labels
+- All text translates correctly between Latin and Cyrillic
+
+**Tested**:
+- Verified page loads correctly
+- Tested empty state display
+- Verified i18n translations in both scripts
+- Confirmed with Playwright MCP ✅
+
+### 11.2 Not Yet Implemented ⏳
 - Wishlist functionality
 - Profile settings
 - Address management

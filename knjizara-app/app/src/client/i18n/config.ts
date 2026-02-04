@@ -102,6 +102,26 @@ const srLatn = {
     "categories": "Kategorije",
     "description": "Opis"
   },
+  "orders": {
+    "title": "Moje porudžbine",
+    "noOrders": "Nemate porudžbina",
+    "noOrdersMessage": "Još uvek niste napravili nijednu porudžbinu.",
+    "startShopping": "Počnite sa kupovinom",
+    "orderNumber": "Porudžbina",
+    "placedOn": "Naručeno",
+    "total": "Ukupno",
+    "items": "Stavke",
+    "quantity": "Količina",
+    "shippingAddress": "Adresa dostave",
+    "errorLoading": "Greška pri učitavanju porudžbina.",
+    "status": {
+      "pending": "Na čekanju",
+      "processing": "U obradi",
+      "shipped": "Poslato",
+      "delivered": "Dostavljeno",
+      "cancelled": "Otkazano"
+    }
+  },
   "orderSuccess": {
     "title": "Porudžbina uspešna!",
     "message": "Vaša porudžbina je uspešno primljena i biće obrađena uskoro.",
@@ -218,6 +238,26 @@ const srCyrl = {
     "language": "Језик",
     "categories": "Категорије",
     "description": "Опис"
+  },
+  "orders": {
+    "title": "Моје поруџбине",
+    "noOrders": "Немате поруџбина",
+    "noOrdersMessage": "Још увек нисте направили ниједну поруџбину.",
+    "startShopping": "Почните са куповином",
+    "orderNumber": "Поруџбина",
+    "placedOn": "Наручено",
+    "total": "Укупно",
+    "items": "Ставке",
+    "quantity": "Количина",
+    "shippingAddress": "Адреса доставе",
+    "errorLoading": "Грешка при учитавању поруџбина.",
+    "status": {
+      "pending": "На чекању",
+      "processing": "У обради",
+      "shipped": "Послато",
+      "delivered": "Достављено",
+      "cancelled": "Отказано"
+    }
   },
   "orderSuccess": {
     "title": "Поруџбина успешна!",
