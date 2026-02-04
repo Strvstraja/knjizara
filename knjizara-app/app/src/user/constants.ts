@@ -1,26 +1,33 @@
-import { LayoutDashboard, Settings, Shield } from "lucide-react";
+import { Heart, Package, MapPin, Settings, Shield } from "lucide-react";
 import { routes } from "wasp/client/router";
 
 export const userMenuItems = [
   {
-    name: "AI Scheduler (Demo App)",
-    to: routes.DemoAppRoute.to,
-    icon: LayoutDashboard,
+    name: "Moje porudžbine",
+    to: routes.MyOrdersRoute.to,
+    icon: Package,
     isAdminOnly: false,
     isAuthRequired: true,
   },
   {
-    name: "Account Settings",
+    name: "Lista želja",
+    to: routes.WishlistRoute.to,
+    icon: Heart,
+    isAdminOnly: false,
+    isAuthRequired: true,
+  },
+  {
+    name: "Moje adrese",
+    to: routes.AddressManagementRoute.to,
+    icon: MapPin,
+    isAdminOnly: false,
+    isAuthRequired: true,
+  },
+  {
+    name: "Podešavanja naloga",
     to: routes.AccountRoute.to,
     icon: Settings,
     isAuthRequired: false,
     isAdminOnly: false,
-  },
-  {
-    name: "Admin Dashboard",
-    to: routes.AdminRoute.to,
-    icon: Shield,
-    isAuthRequired: false,
-    isAdminOnly: true,
   },
 ] as const;

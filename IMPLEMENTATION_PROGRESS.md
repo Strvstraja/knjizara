@@ -506,20 +506,53 @@ Files:
 
 ## 🔄 Phase 12: Cleanup and Navigation
 
-### 12.1 Remove Demo Apps ⏳
-- Remove AI Scheduler demo app
-- Remove File Upload demo app
-- Clean up unused demo routes from main.wasp
-- Remove demo pages and components
-- Clean up navigation bar from OpenSaaS demo links
+### 12.1 Remove Demo Apps ✅
+**Status**: Completed
 
-### 12.2 Add Navigation Links ⏳
-- Add "Wishlist" link to navigation (for logged-in users)
-- Add "My Orders" link to navigation (for logged-in users)
-- Add "Addresses" link to navigation (for logged-in users)
-- Update user dropdown menu with bookstore-specific links
-- Add "Books" link to main navigation
-- Add i18n translations for all new navigation items (Latin & Cyrillic)
+**Removed:**
+- AI Scheduler demo app (route, page, queries, actions)
+- File Upload demo app (route, page, queries, actions)
+- Payment/Pricing pages (not needed for bookstore)
+- Admin Dashboard demo routes (will build custom bookstore admin later)
+- All payment-related code from AccountPage
+
+**Updated Navigation:**
+- Replaced "AI Scheduler" and "File Upload" links with "Knjige" (Books)
+- Updated Hero component buttons: "Pregledaj knjige" and "Registruj se"
+- Removed references to PricingPageRoute throughout the app
+
+**Files Modified:**
+- `main.wasp` - Removed demo routes, pages, queries, and actions
+- `src/client/components/NavBar/constants.ts` - Updated navigation items
+- `src/user/constants.ts` - Updated user menu items
+- `src/user/AccountPage.tsx` - Simplified to show only basic user info
+- `src/landing-page/components/Hero.tsx` - Updated CTA buttons
+
+**Tested:**
+- Landing page loads correctly with new navigation
+- Books link works in main navigation
+- No broken route references
+
+### 12.2 Navigation Links for User Features ✅
+**Status**: Completed
+
+**User Menu Items Added:**
+- 📦 "Moje porudžbine" → `/my-orders` (My Orders)
+- ❤️ "Lista želja" → `/wishlist` (Wishlist)
+- 📍 "Moje adrese" → `/addresses` (Address Management)
+- ⚙️ "Podešavanja naloga" → `/account` (Account Settings)
+
+**Main Navigation:**
+- "Knjige" link added to main navigation bar
+- Visible to all users (logged in or not)
+
+**Implementation:**
+- Updated `src/user/constants.ts` with bookstore-specific menu items
+- Used appropriate icons (Package, Heart, MapPin, Settings)
+- All menu items require authentication except Account Settings
+- Menu items show in both desktop dropdown and mobile menu
+
+**Note:** Menu items are currently in Latin script only. Full i18n support for navigation (Latin/Cyrillic toggle) will be added in a future update.
 
 ### 8.5 Admin Panel ⏳
 - Book management UI (CRUD interface)

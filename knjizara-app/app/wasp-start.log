@@ -1,0 +1,43 @@
+[33m
+🐝 --- Starting compilation and setup phase. Hold tight... ------------------------
+[0m
+[33m
+🐝 --- Compiling wasp project... --------------------------------------------------
+[0m
+[33m
+✅ --- Successfully completed npm install. ----------------------------------------
+[0m
+[33m
+🐝 --- Setting up database... -----------------------------------------------------
+[0m
+[33m
+✅ --- Database successfully set up. ----------------------------------------------
+[0m
+[33m
+🐝 --- Building SDK... ------------------------------------------------------------
+[0m
+
+[33m[[0m  [33mWasp[0m  [33m][0m > wasp@1.0.0 build
+[33m[[0m  [33mWasp[0m  [33m][0m > tsc && node ./scripts/copy-assets.js
+[33m[[0m  [33mWasp[0m  [33m][0m 
+[33m[[0m  [33mWasp[0m  [33m][0m src/admin/dashboards/users/UsersTable.tsx(23,36): error TS2307: Cannot find module '../../../payment/plans' or its corresponding type declarations.
+[33m[[0m  [33mWasp[0m  [33m][0m src/admin/dashboards/users/UsersTable.tsx(168,29): error TS2322: Type 'unknown' is not assignable to type 'Key | null | undefined'.
+[33m[[0m  [33mWasp[0m  [33m][0m src/admin/dashboards/users/UsersTable.tsx(172,31): error TS2322: Type 'unknown' is not assignable to type 'string | undefined'.
+[33m[[0m  [33mWasp[0m  [33m][0m src/admin/dashboards/users/UsersTable.tsx(179,31): error TS2322: Type 'unknown' is not assignable to type 'string | undefined'.
+[33m[[0m  [33mWasp[0m  [33m][0m src/admin/dashboards/users/UsersTable.tsx(182,31): error TS2322: Type 'unknown' is not assignable to type 'ReactI18NextChildren | Iterable<ReactI18NextChildren>'.
+[33m[[0m  [33mWasp[0m  [33m][0m src/analytics/stats.ts(5,30): error TS2307: Cannot find module '../payment/stripe/stripeClient' or its corresponding type declarations.
+[33m[[0m  [33mWasp[0m  [33m][0m src/analytics/stats.ts(12,34): error TS2307: Cannot find module '../payment/paymentProcessor' or its corresponding type declarations.
+[33m[[0m  [33mWasp[0m  [33m][0m src/analytics/stats.ts(13,36): error TS2307: Cannot find module '../payment/plans' or its corresponding type declarations.
+[33m[[0m  [33mWasp[0m  [33m][0m src/analytics/stats.ts(14,29): error TS2307: Cannot find module '../payment/polar/polarClient' or its corresponding type declarations.
+[33m[[0m  [33mWasp[0m  [33m][0m src/analytics/stats.ts(70,27): error TS2345: Argument of type 'any' is not assignable to parameter of type 'never'.
+[33m[[0m  [33mWasp[0m  [33m][0m src/server/scripts/dbSeeds.ts(7,8): error TS2307: Cannot find module '../../payment/plans' or its corresponding type declarations.
+[33m[[0m  [33mWasp[0m  [33m][0m src/user/operations.ts(9,36): error TS2307: Cannot find module '../payment/plans' or its corresponding type declarations.[31m
+
+❌ --- [Error] Your wasp project failed to compile: -------------------------------
+
+- SDK build failed with exit code: 2[0m
+[31m
+
+❌ --- [Error] Compilation of wasp project failed: --------------------------------
+
+1 errors found[0m
