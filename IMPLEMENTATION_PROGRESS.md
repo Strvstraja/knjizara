@@ -326,6 +326,11 @@ File: `/Users/strahinja/knjizara/knjizara-app/app/src/bookstore/CheckoutPage.tsx
 - Cart cleared after successful order
 - Redirect to `/order-success` after order placement
 
+**Route Configuration**:
+- Checkout route: `/placanje` (changed from `/checkout` to avoid Wasp routing conflicts)
+- All links updated to use `/placanje`
+- Tested and verified with Playwright MCP
+
 ## 🔄 Phase 10: Not Yet Implemented
 
 ### 10.1 i18n for Cyrillic/Latin Toggle ⏳
