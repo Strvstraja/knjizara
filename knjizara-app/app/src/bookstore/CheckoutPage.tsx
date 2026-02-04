@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useQuery, useAction } from 'wasp/client/operations';
 import { getUserAddresses, createAddress, createOrder } from 'wasp/client/operations';
 import { useAuth } from 'wasp/client/auth';
@@ -11,6 +12,7 @@ type DeliveryMethod = 'standard' | 'express';
 type PaymentMethod = 'CASH_ON_DELIVERY' | 'CARD';
 
 export default function CheckoutPage() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { data: user } = useAuth();
   const { items, getSubtotal, clearCart } = useCart();
@@ -113,16 +115,16 @@ export default function CheckoutPage() {
   const canPlaceOrder = canProceedToStep3 && paymentMethod !== null;
 
   const steps = [
-    { number: 1, title: 'Adresa dostave', icon: MapPin },
-    { number: 2, title: 'Način dostave', icon: Truck },
-    { number: 3, title: 'Plaćanje', icon: CreditCard },
-    { number: 4, title: 'Pregled', icon: Check },
+    { number: 1, title: t('checkout.step1'), icon: MapPin },
+    { number: 2, title: t('checkout.step2'), icon: Truck },
+    { number: 3, title: t('checkout.step3'), icon: CreditCard },
+    { number: 4, title: t('checkout.step4'), icon: Check },
   ];
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Plaćanje</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">{t('checkout.title')}</h1>
 
         {/* Progress Steps */}
         <div className="mb-8">
@@ -169,7 +171,7 @@ export default function CheckoutPage() {
             {/* Step 1: Address */}
             {currentStep === 1 && (
               <div className="bg-white rounded-lg shadow p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Izaberite adresu dostave</h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">{t('checkout.selectAddress')}</h2>
                 
                 {addresses && addresses.length > 0 ? (
                   <div className="space-y-3 mb-4">
@@ -201,7 +203,7 @@ export default function CheckoutPage() {
                           </div>
                           {address.isDefault && (
                             <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">
-                              Podrazumevano
+                              {t('address.default')}
                             </span>
                           )}
                         </div>
@@ -209,7 +211,7 @@ export default function CheckoutPage() {
                     ))}
                   </div>
                 ) : (
-                  <p className="text-gray-600 mb-4">Nemate sačuvanih adresa.</p>
+                  <p className="text-gray-600 mb-4">{t('checkout.noAddresses')}</p>
                 )}
 
                 {!showAddressForm ? (
@@ -217,7 +219,7 @@ export default function CheckoutPage() {
                     onClick={() => setShowAddressForm(true)}
                     className="text-blue-600 hover:text-blue-700 font-medium"
                   >
-                    + Dodaj novu adresu
+                    {t('checkout.addNewAddress')}
                   </button>
                 ) : (
                   <div className="mt-4">
@@ -234,7 +236,7 @@ export default function CheckoutPage() {
                     disabled={!canProceedToStep2}
                     className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
                   >
-                    Nastavi
+                    {t('checkout.continue')}
                   </button>
                 </div>
               </div>
@@ -243,7 +245,7 @@ export default function CheckoutPage() {
             {/* Step 2: Delivery Method */}
             {currentStep === 2 && (
               <div className="bg-white rounded-lg shadow p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Izaberite način dostave</h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">{t('checkout.selectDelivery')}</h2>
                 
                 <div className="space-y-3">
                   <label
@@ -263,11 +265,11 @@ export default function CheckoutPage() {
                     />
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="font-semibold text-gray-900">Standardna dostava</p>
-                        <p className="text-sm text-gray-600">Isporuka za 3-5 radnih dana</p>
+                        <p className="font-semibold text-gray-900">{t('checkout.standardDelivery')}</p>
+                        <p className="text-sm text-gray-600">{t('checkout.standardDeliveryTime')}</p>
                       </div>
                       <p className="font-bold text-gray-900">
-                        {subtotal >= FREE_SHIPPING_THRESHOLD ? 'Besplatno' : '350 RSD'}
+                        {subtotal >= FREE_SHIPPING_THRESHOLD ? t('cart.free') : `350 ${t('common.rsd')}`}
                       </p>
                     </div>
                   </label>
@@ -289,10 +291,10 @@ export default function CheckoutPage() {
                     />
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="font-semibold text-gray-900">Ekspresna dostava</p>
-                        <p className="text-sm text-gray-600">Isporuka za 1-2 radna dana</p>
+                        <p className="font-semibold text-gray-900">{t('checkout.expressDelivery')}</p>
+                        <p className="text-sm text-gray-600">{t('checkout.expressDeliveryTime')}</p>
                       </div>
-                      <p className="font-bold text-gray-900">590 RSD</p>
+                      <p className="font-bold text-gray-900">590 {t('common.rsd')}</p>
                     </div>
                   </label>
                 </div>
@@ -302,13 +304,13 @@ export default function CheckoutPage() {
                     onClick={() => setCurrentStep(1)}
                     className="text-gray-600 hover:text-gray-700 font-medium"
                   >
-                    Nazad
+                    {t('checkout.back')}
                   </button>
                   <button
                     onClick={() => setCurrentStep(3)}
                     className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700"
                   >
-                    Nastavi
+                    {t('checkout.continue')}
                   </button>
                 </div>
               </div>
@@ -317,7 +319,7 @@ export default function CheckoutPage() {
             {/* Step 3: Payment Method */}
             {currentStep === 3 && (
               <div className="bg-white rounded-lg shadow p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Izaberite način plaćanja</h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-4">{t('checkout.selectPayment')}</h2>
                 
                 <div className="space-y-3">
                   <label
@@ -336,10 +338,10 @@ export default function CheckoutPage() {
                       className="sr-only"
                     />
                     <div>
-                      <p className="font-semibold text-gray-900">Plaćanje pouzećem</p>
-                      <p className="text-sm text-gray-600">Platite kuriru prilikom preuzimanja</p>
+                      <p className="font-semibold text-gray-900">{t('checkout.cashOnDelivery')}</p>
+                      <p className="text-sm text-gray-600">{t('checkout.cashOnDeliveryDesc')}</p>
                       <span className="inline-block mt-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
-                        Preporučeno
+                        {t('checkout.recommended')}
                       </span>
                     </div>
                   </label>
@@ -360,8 +362,8 @@ export default function CheckoutPage() {
                       className="sr-only"
                     />
                     <div>
-                      <p className="font-semibold text-gray-900">Platna kartica</p>
-                      <p className="text-sm text-gray-600">Visa, Mastercard, Maestro</p>
+                      <p className="font-semibold text-gray-900">{t('checkout.cardPayment')}</p>
+                      <p className="text-sm text-gray-600">{t('checkout.cardPaymentDesc')}</p>
                     </div>
                   </label>
                 </div>
@@ -371,13 +373,13 @@ export default function CheckoutPage() {
                     onClick={() => setCurrentStep(2)}
                     className="text-gray-600 hover:text-gray-700 font-medium"
                   >
-                    Nazad
+                    {t('checkout.back')}
                   </button>
                   <button
                     onClick={() => setCurrentStep(4)}
                     className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700"
                   >
-                    Nastavi
+                    {t('checkout.continue')}
                   </button>
                 </div>
               </div>
@@ -386,11 +388,11 @@ export default function CheckoutPage() {
             {/* Step 4: Review */}
             {currentStep === 4 && (
               <div className="bg-white rounded-lg shadow p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-6">Pregled porudžbine</h2>
+                <h2 className="text-xl font-bold text-gray-900 mb-6">{t('checkout.orderReview')}</h2>
                 
                 {/* Address Summary */}
                 <div className="mb-6">
-                  <h3 className="font-semibold text-gray-900 mb-2">Adresa dostave</h3>
+                  <h3 className="font-semibold text-gray-900 mb-2">{t('checkout.shippingAddress')}</h3>
                   {addresses && addresses.find(a => a.id === selectedAddressId) && (
                     <div className="text-sm text-gray-600">
                       <p>{addresses.find(a => a.id === selectedAddressId)!.fullName}</p>
@@ -403,23 +405,23 @@ export default function CheckoutPage() {
 
                 {/* Delivery Summary */}
                 <div className="mb-6">
-                  <h3 className="font-semibold text-gray-900 mb-2">Način dostave</h3>
+                  <h3 className="font-semibold text-gray-900 mb-2">{t('checkout.deliveryMethod')}</h3>
                   <p className="text-sm text-gray-600">
-                    {deliveryMethod === 'standard' ? 'Standardna dostava (3-5 dana)' : 'Ekspresna dostava (1-2 dana)'}
+                    {deliveryMethod === 'standard' ? t('checkout.standardDelivery') + ' (3-5 dana)' : t('checkout.expressDelivery') + ' (1-2 dana)'}
                   </p>
                 </div>
 
                 {/* Payment Summary */}
                 <div className="mb-6">
-                  <h3 className="font-semibold text-gray-900 mb-2">Način plaćanja</h3>
+                  <h3 className="font-semibold text-gray-900 mb-2">{t('checkout.paymentMethod')}</h3>
                   <p className="text-sm text-gray-600">
-                    {paymentMethod === 'CASH_ON_DELIVERY' ? 'Plaćanje pouzećem' : 'Platna kartica'}
+                    {paymentMethod === 'CASH_ON_DELIVERY' ? t('checkout.cashOnDelivery') : t('checkout.cardPayment')}
                   </p>
                 </div>
 
                 {/* Items */}
                 <div className="mb-6">
-                  <h3 className="font-semibold text-gray-900 mb-2">Stavke ({items.length})</h3>
+                  <h3 className="font-semibold text-gray-900 mb-2">{t('checkout.items')} ({items.length})</h3>
                   <div className="space-y-2">
                     {items.map(item => (
                       <div key={item.book.id} className="flex justify-between text-sm">
@@ -427,7 +429,7 @@ export default function CheckoutPage() {
                           {item.book.title} x {item.quantity}
                         </span>
                         <span className="font-medium">
-                          {((item.book.discountPrice || item.book.price) * item.quantity).toFixed(2)} RSD
+                          {((item.book.discountPrice || item.book.price) * item.quantity).toFixed(2)} {t('common.rsd')}
                         </span>
                       </div>
                     ))}
@@ -439,14 +441,14 @@ export default function CheckoutPage() {
                     onClick={() => setCurrentStep(3)}
                     className="text-gray-600 hover:text-gray-700 font-medium"
                   >
-                    Nazad
+                    {t('checkout.back')}
                   </button>
                   <button
                     onClick={handlePlaceOrder}
                     disabled={!canPlaceOrder}
                     className="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
                   >
-                    Potvrdi porudžbinu
+                    {t('checkout.confirmOrder')}
                   </button>
                 </div>
               </div>
@@ -456,7 +458,7 @@ export default function CheckoutPage() {
           {/* Order Summary Sidebar */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow p-6 sticky top-4">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Vaša porudžbina</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">{t('checkout.yourOrder')}</h2>
               
               <div className="space-y-3 mb-6 max-h-64 overflow-y-auto">
                 {items.map(item => (
@@ -470,9 +472,9 @@ export default function CheckoutPage() {
                       <p className="text-sm font-medium text-gray-900 line-clamp-2">
                         {item.book.title}
                       </p>
-                      <p className="text-xs text-gray-600">Količina: {item.quantity}</p>
+                      <p className="text-xs text-gray-600">{t('checkout.quantity')}: {item.quantity}</p>
                       <p className="text-sm font-bold text-gray-900 mt-1">
-                        {((item.book.discountPrice || item.book.price) * item.quantity).toFixed(2)} RSD
+                        {((item.book.discountPrice || item.book.price) * item.quantity).toFixed(2)} {t('common.rsd')}
                       </p>
                     </div>
                   </div>
@@ -481,22 +483,22 @@ export default function CheckoutPage() {
 
               <div className="border-t pt-4 space-y-2">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Međuzbir:</span>
-                  <span className="font-medium">{subtotal.toFixed(2)} RSD</span>
+                  <span className="text-gray-600">{t('cart.subtotal')}:</span>
+                  <span className="font-medium">{subtotal.toFixed(2)} {t('common.rsd')}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Dostava:</span>
+                  <span className="text-gray-600">{t('cart.shipping')}:</span>
                   <span className="font-medium">
                     {shippingCost === 0 ? (
-                      <span className="text-green-600">Besplatno</span>
+                      <span className="text-green-600">{t('cart.free')}</span>
                     ) : (
-                      `${shippingCost.toFixed(2)} RSD`
+                      `${shippingCost.toFixed(2)} ${t('common.rsd')}`
                     )}
                   </span>
                 </div>
                 <div className="flex justify-between text-lg font-bold border-t pt-2">
-                  <span>Ukupno:</span>
-                  <span>{total.toFixed(2)} RSD</span>
+                  <span>{t('cart.total')}:</span>
+                  <span>{total.toFixed(2)} {t('common.rsd')}</span>
                 </div>
               </div>
             </div>

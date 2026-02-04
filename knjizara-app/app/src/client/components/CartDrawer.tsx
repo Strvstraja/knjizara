@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'wasp/client/router';
+import { useTranslation } from 'react-i18next';
 import { useCart } from '../contexts/CartContext';
 import { X, ShoppingCart, Minus, Plus, Trash2 } from 'lucide-react';
 
 export default function CartDrawer() {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const { items, removeFromCart, updateQuantity, getItemCount, getSubtotal } = useCart();
 
@@ -48,7 +50,7 @@ export default function CartDrawer() {
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b">
             <h2 className="text-xl font-bold text-gray-900">
-              Korpa ({getItemCount()})
+              {t('cart.title')} ({getItemCount()})
             </h2>
             <button
               onClick={() => setIsOpen(false)}
@@ -62,7 +64,7 @@ export default function CartDrawer() {
           {items.length > 0 && subtotal < FREE_SHIPPING_THRESHOLD && (
             <div className="p-4 bg-blue-50 border-b">
               <p className="text-sm text-gray-700 mb-2">
-                Dodaj još <span className="font-bold">{amountToFreeShipping.toFixed(2)} RSD</span> za besplatnu dostavu!
+                {t('cart.freeShippingProgress', { amount: amountToFreeShipping.toFixed(2), currency: t('common.rsd') })}
               </p>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div
@@ -76,7 +78,7 @@ export default function CartDrawer() {
           {items.length > 0 && subtotal >= FREE_SHIPPING_THRESHOLD && (
             <div className="p-4 bg-green-50 border-b">
               <p className="text-sm text-green-700 font-semibold">
-                ✓ Ostvarili ste besplatnu dostavu!
+                ✓ {t('cart.freeShippingAchieved')}
               </p>
             </div>
           )}
@@ -86,13 +88,13 @@ export default function CartDrawer() {
             {items.length === 0 ? (
               <div className="text-center py-12">
                 <ShoppingCart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                <p className="text-gray-500">Vaša korpa je prazna</p>
+                <p className="text-gray-500">{t('cart.empty')}</p>
                 <Link
                   to="/books"
                   onClick={() => setIsOpen(false)}
                   className="mt-4 inline-block text-blue-600 hover:underline"
                 >
-                  Nastavite sa kupovinom
+                  {t('cart.continueShopping')}
                 </Link>
               </div>
             ) : (
@@ -154,18 +156,18 @@ export default function CartDrawer() {
             <div className="border-t p-4 bg-gray-50">
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Međuzbir:</span>
-                  <span className="font-medium">{subtotal.toFixed(2)} RSD</span>
+                  <span className="text-gray-600">{t('cart.subtotal')}:</span>
+                  <span className="font-medium">{subtotal.toFixed(2)} {t('common.rsd')}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Dostava:</span>
+                  <span className="text-gray-600">{t('cart.shipping')}:</span>
                   <span className="font-medium">
-                    {shippingCost === 0 ? 'Besplatno' : `${shippingCost.toFixed(2)} RSD`}
+                    {shippingCost === 0 ? t('cart.free') : `${shippingCost.toFixed(2)} ${t('common.rsd')}`}
                   </span>
                 </div>
                 <div className="flex justify-between text-lg font-bold border-t pt-2">
-                  <span>Ukupno:</span>
-                  <span>{total.toFixed(2)} RSD</span>
+                  <span>{t('cart.total')}:</span>
+                  <span>{total.toFixed(2)} {t('common.rsd')}</span>
                 </div>
               </div>
               <div className="space-y-2">
@@ -174,14 +176,14 @@ export default function CartDrawer() {
                   onClick={() => setIsOpen(false)}
                   className="block w-full bg-blue-600 text-white text-center py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
                 >
-                  Idi na plaćanje
+                  {t('cart.goToCheckout')}
                 </Link>
                 <Link
                   to="/cart"
                   onClick={() => setIsOpen(false)}
                   className="block w-full text-center text-blue-600 hover:text-blue-700 font-medium text-sm"
                 >
-                  Pogledaj korpu
+                  {t('cart.viewCart')}
                 </Link>
               </div>
             </div>

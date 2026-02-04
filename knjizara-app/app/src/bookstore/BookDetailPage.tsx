@@ -2,11 +2,13 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from 'wasp/client/operations';
 import { getBook } from 'wasp/client/operations';
 import { Link } from 'wasp/client/router';
+import { useTranslation } from 'react-i18next';
 import { useCart } from '../client/contexts/CartContext';
 import { useState } from 'react';
 import { Check } from 'lucide-react';
 
 export default function BookDetailPage() {
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const { data: book, isLoading, error } = useQuery(getBook, { id: id! });
   const { addToCart, isInCart } = useCart();
@@ -25,7 +27,7 @@ export default function BookDetailPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-          <p className="mt-4 text-gray-600">Učitavanje...</p>
+          <p className="mt-4 text-gray-600">{t('common.loading')}</p>
         </div>
       </div>
     );
@@ -35,9 +37,9 @@ export default function BookDetailPage() {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Knjiga nije pronađena</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-4">{t('bookDetail.notFound')}</h1>
           <Link to="/books" className="text-blue-600 hover:underline">
-            Povratak na katalog
+            {t('bookDetail.backToCatalog')}
           </Link>
         </div>
       </div>
@@ -48,7 +50,7 @@ export default function BookDetailPage() {
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Link to="/books" className="text-blue-600 hover:underline mb-6 inline-block">
-          ← Povratak na katalog
+          ← {t('bookDetail.backToCatalog')}
         </Link>
 
         <div className="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -72,10 +74,10 @@ export default function BookDetailPage() {
                 {book.discountPrice ? (
                   <div className="flex items-center gap-3">
                     <span className="text-3xl font-bold text-red-600">
-                      {book.discountPrice.toFixed(2)} RSD
+                      {book.discountPrice.toFixed(2)} {t('common.rsd')}
                     </span>
                     <span className="text-xl text-gray-500 line-through">
-                      {book.price.toFixed(2)} RSD
+                      {book.price.toFixed(2)} {t('common.rsd')}
                     </span>
                     <span className="bg-red-500 text-white px-3 py-1 rounded text-sm font-bold">
                       -{Math.round(((book.price - book.discountPrice) / book.price) * 100)}%
@@ -83,7 +85,7 @@ export default function BookDetailPage() {
                   </div>
                 ) : (
                   <span className="text-3xl font-bold text-gray-900">
-                    {book.price.toFixed(2)} RSD
+                    {book.price.toFixed(2)} {t('common.rsd')}
                   </span>
                 )}
               </div>
@@ -91,9 +93,9 @@ export default function BookDetailPage() {
               {/* Stock Status */}
               <div className="mb-6">
                 {book.stock > 0 ? (
-                  <p className="text-green-600 font-semibold">✓ Na stanju ({book.stock} kom.)</p>
+                  <p className="text-green-600 font-semibold">✓ {t('bookDetail.inStock', { count: book.stock })}</p>
                 ) : (
-                  <p className="text-red-600 font-semibold">Nema na stanju</p>
+                  <p className="text-red-600 font-semibold">{t('books.outOfStock')}</p>
                 )}
               </div>
 
@@ -106,46 +108,46 @@ export default function BookDetailPage() {
                 {showAdded ? (
                   <>
                     <Check className="w-5 h-5" />
-                    Dodato u korpu
+                    {t('bookDetail.addedToCart')}
                   </>
                 ) : (
-                  book.stock > 0 ? 'Dodaj u korpu' : 'Nema na stanju'
+                  book.stock > 0 ? t('books.addToCart') : t('books.outOfStock')
                 )}
               </button>
               {isInCart(book.id) && !showAdded && (
                 <p className="text-sm text-green-600 text-center mb-4">
-                  ✓ Ova knjiga je već u vašoj korpi
+                  ✓ {t('bookDetail.alreadyInCart')}
                 </p>
               )}
 
               {/* Specifications */}
               <div className="border-t pt-6">
-                <h2 className="text-lg font-semibold text-gray-900 mb-4">Specifikacije</h2>
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('bookDetail.specifications')}</h2>
                 <dl className="space-y-2">
                   <div className="flex">
-                    <dt className="text-gray-600 w-32">ISBN:</dt>
+                    <dt className="text-gray-600 w-32">{t('bookDetail.isbn')}:</dt>
                     <dd className="text-gray-900 font-medium">{book.isbn}</dd>
                   </div>
                   <div className="flex">
-                    <dt className="text-gray-600 w-32">Broj strana:</dt>
+                    <dt className="text-gray-600 w-32">{t('bookDetail.pageCount')}:</dt>
                     <dd className="text-gray-900 font-medium">{book.pageCount}</dd>
                   </div>
                   <div className="flex">
-                    <dt className="text-gray-600 w-32">Povez:</dt>
+                    <dt className="text-gray-600 w-32">{t('bookDetail.binding')}:</dt>
                     <dd className="text-gray-900 font-medium">
-                      {book.binding === 'HARDCOVER' ? 'Tvrdi' : 'Meki'}
+                      {book.binding === 'HARDCOVER' ? t('bookDetail.hardcover') : t('bookDetail.softcover')}
                     </dd>
                   </div>
                   <div className="flex">
-                    <dt className="text-gray-600 w-32">Izdavač:</dt>
+                    <dt className="text-gray-600 w-32">{t('bookDetail.publisher')}:</dt>
                     <dd className="text-gray-900 font-medium">{book.publisher}</dd>
                   </div>
                   <div className="flex">
-                    <dt className="text-gray-600 w-32">Godina:</dt>
+                    <dt className="text-gray-600 w-32">{t('bookDetail.year')}:</dt>
                     <dd className="text-gray-900 font-medium">{book.publishYear}</dd>
                   </div>
                   <div className="flex">
-                    <dt className="text-gray-600 w-32">Jezik:</dt>
+                    <dt className="text-gray-600 w-32">{t('bookDetail.language')}:</dt>
                     <dd className="text-gray-900 font-medium">{book.language}</dd>
                   </div>
                 </dl>
@@ -154,7 +156,7 @@ export default function BookDetailPage() {
               {/* Categories */}
               {(book as any).categories && (book as any).categories.length > 0 && (
                 <div className="border-t pt-6 mt-6">
-                  <h2 className="text-lg font-semibold text-gray-900 mb-3">Kategorije</h2>
+                  <h2 className="text-lg font-semibold text-gray-900 mb-3">{t('bookDetail.categories')}</h2>
                   <div className="flex flex-wrap gap-2">
                     {(book as any).categories.map((category: any) => (
                       <span
@@ -172,7 +174,7 @@ export default function BookDetailPage() {
 
           {/* Description */}
           <div className="border-t p-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Opis</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">{t('bookDetail.description')}</h2>
             <p className="text-gray-700 whitespace-pre-line leading-relaxed">
               {book.description}
             </p>

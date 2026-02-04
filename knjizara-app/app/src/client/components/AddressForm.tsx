@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface AddressFormProps {
   onSubmit: (data: AddressFormData) => void;
@@ -16,6 +17,7 @@ export interface AddressFormData {
 }
 
 export default function AddressForm({ onSubmit, onCancel, initialData }: AddressFormProps) {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState<AddressFormData>(
     initialData || {
       fullName: '',
@@ -44,7 +46,7 @@ export default function AddressForm({ onSubmit, onCancel, initialData }: Address
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-1">
-          Ime i prezime *
+          {t('address.fullName')} *
         </label>
         <input
           type="text"
@@ -60,7 +62,7 @@ export default function AddressForm({ onSubmit, onCancel, initialData }: Address
 
       <div>
         <label htmlFor="street" className="block text-sm font-medium text-gray-700 mb-1">
-          Ulica i broj *
+          {t('address.street')} *
         </label>
         <input
           type="text"
@@ -77,7 +79,7 @@ export default function AddressForm({ onSubmit, onCancel, initialData }: Address
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700 mb-1">
-            Poštanski broj *
+            {t('address.postalCode')} *
           </label>
           <input
             type="text"
@@ -93,7 +95,7 @@ export default function AddressForm({ onSubmit, onCancel, initialData }: Address
 
         <div>
           <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">
-            Grad *
+            {t('address.city')} *
           </label>
           <input
             type="text"
@@ -110,7 +112,7 @@ export default function AddressForm({ onSubmit, onCancel, initialData }: Address
 
       <div>
         <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-          Telefon *
+          {t('address.phone')} *
         </label>
         <input
           type="tel"
@@ -134,7 +136,7 @@ export default function AddressForm({ onSubmit, onCancel, initialData }: Address
           className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
         />
         <label htmlFor="isDefault" className="ml-2 text-sm text-gray-700">
-          Postavi kao podrazumevanu adresu
+          {t('address.setDefault')}
         </label>
       </div>
 
@@ -144,13 +146,13 @@ export default function AddressForm({ onSubmit, onCancel, initialData }: Address
           onClick={onCancel}
           className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-medium"
         >
-          Otkaži
+          {t('address.cancel')}
         </button>
         <button
           type="submit"
           className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
         >
-          Sačuvaj adresu
+          {t('address.save')}
         </button>
       </div>
     </form>

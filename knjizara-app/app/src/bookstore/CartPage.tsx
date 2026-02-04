@@ -1,8 +1,10 @@
 import { Link } from 'wasp/client/router';
+import { useTranslation } from 'react-i18next';
 import { useCart } from '../client/contexts/CartContext';
 import { Minus, Plus, Trash2, ShoppingCart } from 'lucide-react';
 
 export default function CartPage() {
+  const { t } = useTranslation();
   const { items, removeFromCart, updateQuantity, getSubtotal } = useCart();
 
   const FREE_SHIPPING_THRESHOLD = 3000;
@@ -33,7 +35,7 @@ export default function CartPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Korpa</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('cart.title')}</h1>
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Cart Items */}
@@ -42,7 +44,7 @@ export default function CartPage() {
             {subtotal < FREE_SHIPPING_THRESHOLD ? (
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <p className="text-sm text-gray-700 mb-2">
-                  Dodaj još <span className="font-bold">{amountToFreeShipping.toFixed(2)} RSD</span> za besplatnu dostavu!
+                  {t('cart.freeShippingProgress', { amount: amountToFreeShipping.toFixed(2), currency: t('common.rsd') })}
                 </p>
                 <div className="w-full bg-gray-200 rounded-full h-3">
                   <div
@@ -54,7 +56,7 @@ export default function CartPage() {
             ) : (
               <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                 <p className="text-sm text-green-700 font-semibold">
-                  ✓ Ostvarili ste besplatnu dostavu!
+                  ✓ {t('cart.freeShippingAchieved')}
                 </p>
               </div>
             )}
@@ -128,13 +130,13 @@ export default function CartPage() {
                           className="flex items-center gap-2 text-red-600 hover:text-red-700 text-sm font-medium"
                         >
                           <Trash2 className="w-4 h-4" />
-                          Ukloni
+                          {t('cart.remove')}
                         </button>
                       </div>
 
                       {item.quantity >= item.book.stock && (
                         <p className="text-sm text-orange-600 mt-2">
-                          Maksimalna dostupna količina
+                          {t('cart.maxQuantityReached')}
                         </p>
                       )}
                     </div>
@@ -153,25 +155,25 @@ export default function CartPage() {
           {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-lg shadow p-6 sticky top-4">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Pregled porudžbine</h2>
+              <h2 className="text-xl font-bold text-gray-900 mb-4">{t('cart.orderSummary')}</h2>
               
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-gray-700">
-                  <span>Međuzbir:</span>
+                  <span>{t('cart.subtotal')}:</span>
                   <span className="font-medium">{subtotal.toFixed(2)} RSD</span>
                 </div>
                 <div className="flex justify-between text-gray-700">
-                  <span>Dostava:</span>
+                  <span>{t('cart.shipping')}:</span>
                   <span className="font-medium">
                     {shippingCost === 0 ? (
-                      <span className="text-green-600">Besplatno</span>
+                      <span className="text-green-600">{t('cart.freeShipping')}</span>
                     ) : (
                       `${shippingCost.toFixed(2)} RSD`
                     )}
                   </span>
                 </div>
                 <div className="border-t pt-3 flex justify-between text-xl font-bold">
-                  <span>Ukupno:</span>
+                  <span>{t('cart.total')}:</span>
                   <span>{total.toFixed(2)} RSD</span>
                 </div>
               </div>
@@ -180,14 +182,14 @@ export default function CartPage() {
                 to="/placanje"
                 className="block w-full text-center bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors mb-3"
               >
-                Nastavi na plaćanje
+                {t('cart.continueToPayment')}
               </Link>
 
               <Link
                 to="/books"
                 className="block w-full text-center text-blue-600 hover:text-blue-700 font-medium"
               >
-                Nastavi sa kupovinom
+                {t('cart.continueShopping')}
               </Link>
             </div>
           </div>

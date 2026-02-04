@@ -10,6 +10,8 @@ import {
 } from "./components/NavBar/constants";
 import CookieConsentBanner from "./components/cookie-consent/Banner";
 import { CartProvider } from "./contexts/CartContext";
+import { ScriptProvider } from "./contexts/ScriptContext";
+import './i18n/config';
 
 /**
  * use this component to wrap all child components
@@ -49,23 +51,25 @@ export default function App() {
   }, [location]);
 
   return (
-    <CartProvider>
-      <div className="bg-background text-foreground min-h-screen">
-        {isAdminDashboard ? (
-          <Outlet />
-        ) : (
-          <>
-            {shouldDisplayAppNavBar && (
-              <NavBar navigationItems={navigationItems} />
-            )}
-            <div className="mx-auto max-w-screen-2xl">
-              <Outlet />
-            </div>
-          </>
-        )}
-      </div>
-      <Toaster position="bottom-right" />
-      <CookieConsentBanner />
-    </CartProvider>
+    <ScriptProvider>
+      <CartProvider>
+        <div className="bg-background text-foreground min-h-screen">
+          {isAdminDashboard ? (
+            <Outlet />
+          ) : (
+            <>
+              {shouldDisplayAppNavBar && (
+                <NavBar navigationItems={navigationItems} />
+              )}
+              <div className="mx-auto max-w-screen-2xl">
+                <Outlet />
+              </div>
+            </>
+          )}
+        </div>
+        <Toaster position="bottom-right" />
+        <CookieConsentBanner />
+      </CartProvider>
+    </ScriptProvider>
   );
 }

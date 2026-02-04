@@ -331,15 +331,74 @@ File: `/Users/strahinja/knjizara/knjizara-app/app/src/bookstore/CheckoutPage.tsx
 - All links updated to use `/placanje`
 - Tested and verified with Playwright MCP
 
-## 🔄 Phase 10: Not Yet Implemented
+## ✅ Phase 10: i18n Cyrillic/Latin Toggle - COMPLETE
 
-### 10.1 i18n for Cyrillic/Latin Toggle ⏳
-- Script switching component
-- Context provider for language preference
-- Translation files (sr-Cyrl, sr-Latn)
-- Toggle button in header
+### 10.1 i18n Implementation ✅
+Files:
+- `/src/client/i18n/config.ts` - i18next configuration
+- `/src/client/i18n/locales/sr-Latn.json` - Latin script translations
+- `/src/client/i18n/locales/sr-Cyrl.json` - Cyrillic script translations
+- `/src/client/contexts/ScriptContext.tsx` - Script state management
+- `/src/client/components/ScriptToggle.tsx` - Toggle button component
 
-### 10.2 User Dashboard ⏳
+**Features**:
+- i18next and react-i18next integration
+- Two language variants: sr-Latn (Latin) and sr-Cyrl (Cyrillic)
+- Script context provider for global state management
+- LocalStorage persistence of script preference
+- User preference sync (reads from user.preferredScript)
+- Toggle button in navigation bar (shows "Ћир" in Latin mode, "Lat" in Cyrillic mode)
+
+**Translation Coverage**:
+- Navigation (books, cart, login, account)
+- Cart (all labels and messages)
+- Books (search, filters, product details)
+- Checkout (all 4 steps, address form, payment)
+- Order success page
+- Common terms (RSD, loading, error, success)
+
+**Integration**:
+- ScriptProvider wraps entire app in App.tsx
+- ScriptToggle button added to NavBar
+- i18n config imported in App.tsx
+- Dependencies added: i18next ^23.7.0, react-i18next ^13.5.0
+
+**Components with Full i18n Coverage**:
+- **CartDrawer**: All labels, buttons, free shipping messages
+- **CartPage**: Title, buttons, order summary, free shipping progress
+- **BooksPage**: Search, filters, sorting, pagination, "add to cart" buttons
+- **BookDetailPage**: Specifications, stock status, binding types, categories, description
+- **CheckoutPage**: All 4 steps (address, delivery, payment, review), order summary
+- **AddressForm**: All field labels, buttons, checkbox, validation messages
+- **OrderSuccessPage**: Success message, next steps, contact information
+
+**Translation Keys Added**:
+- Navigation: books, cart, login, logout, account
+- Cart: title, empty, subtotal, shipping, total, free shipping messages
+- Books: search, filters, sorting, pagination, stock status
+- BookDetail: specifications (ISBN, pages, binding, publisher, year, language), categories, description
+- Checkout: all 4 steps, delivery methods, payment methods, order review
+- Address: all form fields, save/cancel buttons
+- OrderSuccess: success message, what's next, view orders, continue shopping
+- Common: RSD currency, loading, error messages
+
+**Tested**:
+- Script toggle button renders correctly
+- Clicking toggle switches between "Ћир" and "Lat"
+- Script state persists in localStorage
+- All pages translate correctly between Latin/Cyrillic scripts
+- Verified with Playwright MCP on all pages:
+  - BooksPage ✅
+  - BookDetailPage ✅
+  - CartPage ✅
+  - CartDrawer ✅
+  - CheckoutPage (all 4 steps) ✅
+  - AddressForm ✅
+  - OrderSuccessPage ✅
+
+## 🔄 Phase 11: Not Yet Implemented
+
+### 11.1 User Dashboard ⏳
 - My Orders page
 - Wishlist functionality
 - Profile settings

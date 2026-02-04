@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { useQuery } from 'wasp/client/operations';
 import { getBooks, getCategories } from 'wasp/client/operations';
 import { Link } from 'wasp/client/router';
+import { useTranslation } from 'react-i18next';
 import { useCart } from '../client/contexts/CartContext';
 import { ShoppingCart, Check } from 'lucide-react';
 
 export default function BooksPage() {
+  const { t } = useTranslation();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [categoryId, setCategoryId] = useState<string | undefined>();
@@ -39,7 +41,7 @@ export default function BooksPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">Knjige</h1>
+        <h1 className="text-4xl font-bold text-gray-900 mb-8">{t('books.title')}</h1>
 
         {/* Search and Filters */}
         <div className="bg-white rounded-lg shadow p-6 mb-8">
@@ -47,7 +49,7 @@ export default function BooksPage() {
             <div className="flex gap-4">
               <input
                 type="text"
-                placeholder="Pretraži po naslovu, autoru, ISBN..."
+                placeholder={t('books.search')}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -56,7 +58,7 @@ export default function BooksPage() {
                 type="submit"
                 className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
-                Pretraži
+                {t('books.searchButton')}
               </button>
             </div>
           </form>
@@ -70,7 +72,7 @@ export default function BooksPage() {
               }}
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             >
-              <option value="">Sve kategorije</option>
+              <option value="">{t('books.allCategories')}</option>
               {categories?.map((category) => (
                 <option key={category.id} value={category.id}>
                   {category.name}
@@ -86,10 +88,10 @@ export default function BooksPage() {
               }}
               className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             >
-              <option value="newest">Najnovije</option>
-              <option value="price_asc">Cena: rastuće</option>
-              <option value="price_desc">Cena: opadajuće</option>
-              <option value="title">Naslov</option>
+              <option value="newest">{t('books.sortNewest')}</option>
+              <option value="price_asc">{t('books.sortPriceAsc')}</option>
+              <option value="price_desc">{t('books.sortPriceDesc')}</option>
+              <option value="title">{t('books.sortTitle')}</option>
             </select>
           </div>
         </div>
@@ -98,11 +100,11 @@ export default function BooksPage() {
         {booksLoading ? (
           <div className="text-center py-12">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-            <p className="mt-4 text-gray-600">Učitavanje...</p>
+            <p className="mt-4 text-gray-600">{t('common.loading')}</p>
           </div>
         ) : booksData?.books.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-600 text-lg">Nema pronađenih knjiga.</p>
+            <p className="text-gray-600 text-lg">{t('books.noBooks')}</p>
           </div>
         ) : (
           <>
@@ -129,7 +131,7 @@ export default function BooksPage() {
                       <button
                         onClick={(e) => handleQuickAdd(e, book)}
                         className="absolute bottom-2 right-2 bg-blue-600 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 hover:bg-blue-700"
-                        title="Dodaj u korpu"
+                        title={t('books.addToCart')}
                       >
                         {addedBookId === book.id ? (
                           <Check className="w-4 h-4" />
@@ -148,20 +150,20 @@ export default function BooksPage() {
                       {book.discountPrice ? (
                         <>
                           <span className="text-lg font-bold text-red-600">
-                            {book.discountPrice.toFixed(2)} RSD
+                            {book.discountPrice.toFixed(2)} {t('common.rsd')}
                           </span>
                           <span className="text-sm text-gray-500 line-through">
-                            {book.price.toFixed(2)} RSD
+                            {book.price.toFixed(2)} {t('common.rsd')}
                           </span>
                         </>
                       ) : (
                         <span className="text-lg font-bold text-gray-900">
-                          {book.price.toFixed(2)} RSD
+                          {book.price.toFixed(2)} {t('common.rsd')}
                         </span>
                       )}
                     </div>
                     {book.stock === 0 && (
-                      <p className="text-sm text-red-600 mt-2">Nema na stanju</p>
+                      <p className="text-sm text-red-600 mt-2">{t('books.outOfStock')}</p>
                     )}
                   </div>
                 </Link>
@@ -176,17 +178,17 @@ export default function BooksPage() {
                   disabled={page === 1}
                   className="px-4 py-2 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
                 >
-                  Prethodna
+                  {t('books.previous')}
                 </button>
                 <span className="px-4 py-2 text-gray-700">
-                  Strana {page} od {booksData.totalPages}
+                  {t('books.page')} {page} {t('books.of')} {booksData.totalPages}
                 </span>
                 <button
                   onClick={() => setPage((p) => Math.min(booksData.totalPages, p + 1))}
                   disabled={page === booksData.totalPages}
                   className="px-4 py-2 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
                 >
-                  Sledeća
+                  {t('books.next')}
                 </button>
               </div>
             )}
