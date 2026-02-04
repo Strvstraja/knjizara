@@ -504,6 +504,23 @@ Files:
 ### 11.4 Not Yet Implemented ⏳
 - Profile settings
 
+## 🔄 Phase 12: Cleanup and Navigation
+
+### 12.1 Remove Demo Apps ⏳
+- Remove AI Scheduler demo app
+- Remove File Upload demo app
+- Clean up unused demo routes from main.wasp
+- Remove demo pages and components
+- Clean up navigation bar from OpenSaaS demo links
+
+### 12.2 Add Navigation Links ⏳
+- Add "Wishlist" link to navigation (for logged-in users)
+- Add "My Orders" link to navigation (for logged-in users)
+- Add "Addresses" link to navigation (for logged-in users)
+- Update user dropdown menu with bookstore-specific links
+- Add "Books" link to main navigation
+- Add i18n translations for all new navigation items (Latin & Cyrillic)
+
 ### 8.5 Admin Panel ⏳
 - Book management UI (CRUD interface)
 - Order management (status updates, tracking)
