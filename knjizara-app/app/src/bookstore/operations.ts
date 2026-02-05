@@ -14,6 +14,9 @@ type GetBooksInput = {
   featured?: boolean;
   sortBy?: 'price_asc' | 'price_desc' | 'newest' | 'title';
   sellerId?: string;
+  condition?: string;
+  sellerType?: string;
+  city?: string;
 };
 
 type GetBooksOutput = {
@@ -35,6 +38,9 @@ export const getBooks = async (args: GetBooksInput, context: any): Promise<GetBo
     featured,
     sortBy = 'newest',
     sellerId,
+    condition,
+    sellerType,
+    city,
   } = args;
 
   const skip = (page - 1) * limit;
@@ -77,6 +83,23 @@ export const getBooks = async (args: GetBooksInput, context: any): Promise<GetBo
     where.sellerId = sellerId;
   }
 
+  if (condition) {
+    where.condition = condition;
+  }
+
+  if (sellerType) {
+    where.seller = {
+      type: sellerType,
+    };
+  }
+
+  if (city) {
+    where.seller = {
+      ...where.seller,
+      city: { contains: city, mode: 'insensitive' },
+    };
+  }
+
   let orderBy: any = { createdAt: 'desc' };
   if (sortBy === 'price_asc') orderBy = { price: 'asc' };
   if (sortBy === 'price_desc') orderBy = { price: 'desc' };
@@ -90,6 +113,7 @@ export const getBooks = async (args: GetBooksInput, context: any): Promise<GetBo
       orderBy,
       include: {
         categories: true,
+        seller: true,
       },
     }),
     context.entities.Book.count({ where }),

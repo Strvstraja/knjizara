@@ -14,6 +14,7 @@ export default function BooksPage() {
   const [search, setSearch] = useState('');
   const [categoryId, setCategoryId] = useState<string | undefined>();
   const [sortBy, setSortBy] = useState<'newest' | 'price_asc' | 'price_desc' | 'title'>('newest');
+  const [condition, setCondition] = useState<string | undefined>();
   const [addedBookId, setAddedBookId] = useState<string | null>(null);
   const [wishlistLoading, setWishlistLoading] = useState<string | null>(null);
   const { addToCart } = useCart();
@@ -25,6 +26,7 @@ export default function BooksPage() {
     search: search || undefined,
     categoryId,
     sortBy,
+    condition,
   });
 
   const { data: categories } = useQuery(getCategories);
@@ -121,6 +123,22 @@ export default function BooksPage() {
               <option value="price_asc">{t('books.sortPriceAsc')}</option>
               <option value="price_desc">{t('books.sortPriceDesc')}</option>
               <option value="title">{t('books.sortTitle')}</option>
+            </select>
+
+            <select
+              value={condition || ''}
+              onChange={(e) => {
+                setCondition(e.target.value || undefined);
+                setPage(1);
+              }}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Sva stanja</option>
+              <option value="NEW">Nova</option>
+              <option value="LIKE_NEW">Kao nova</option>
+              <option value="VERY_GOOD">Odlična</option>
+              <option value="GOOD">Dobra</option>
+              <option value="ACCEPTABLE">Prihvatljiva</option>
             </select>
           </div>
         </div>
