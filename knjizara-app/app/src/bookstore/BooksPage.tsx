@@ -15,6 +15,7 @@ export default function BooksPage() {
   const [categoryId, setCategoryId] = useState<string | undefined>();
   const [sortBy, setSortBy] = useState<'newest' | 'price_asc' | 'price_desc' | 'title'>('newest');
   const [condition, setCondition] = useState<string | undefined>();
+  const [sellerType, setSellerType] = useState<string | undefined>();
   const [addedBookId, setAddedBookId] = useState<string | null>(null);
   const [wishlistLoading, setWishlistLoading] = useState<string | null>(null);
   const { addToCart } = useCart();
@@ -27,6 +28,7 @@ export default function BooksPage() {
     categoryId,
     sortBy,
     condition,
+    sellerType,
   });
 
   const { data: categories } = useQuery(getCategories);
@@ -139,6 +141,19 @@ export default function BooksPage() {
               <option value="VERY_GOOD">Odlična</option>
               <option value="GOOD">Dobra</option>
               <option value="ACCEPTABLE">Prihvatljiva</option>
+            </select>
+
+            <select
+              value={sellerType || ''}
+              onChange={(e) => {
+                setSellerType(e.target.value || undefined);
+                setPage(1);
+              }}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Svi prodavci</option>
+              <option value="PRIVATE">Privatno lice</option>
+              <option value="BUSINESS">Firma</option>
             </select>
           </div>
         </div>

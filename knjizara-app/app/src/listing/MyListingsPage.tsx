@@ -216,6 +216,17 @@ export default function MyListingsPage() {
 
                   {/* Actions */}
                   <div className="flex gap-2">
+                    {book.status !== 'SOLD' && (
+                      <Link to={`/edit-listing/${book.id}`} className="flex-1">
+                        <button
+                          className="w-full flex items-center justify-center gap-1 px-3 py-2 text-sm bg-blue-100 text-blue-800 rounded hover:bg-blue-200 transition-colors"
+                          title="Izmeni"
+                        >
+                          <Edit className="h-4 w-4" />
+                        </button>
+                      </Link>
+                    )}
+                    
                     {book.status === 'ACTIVE' && (
                       <>
                         <button
@@ -227,7 +238,7 @@ export default function MyListingsPage() {
                         </button>
                         <button
                           onClick={() => handleMarkSold(book.id)}
-                          className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm bg-blue-100 text-blue-800 rounded hover:bg-blue-200 transition-colors"
+                          className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm bg-green-100 text-green-800 rounded hover:bg-green-200 transition-colors"
                           title={t('listing.markSold')}
                         >
                           <CheckCircle className="h-4 w-4" />

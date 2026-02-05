@@ -809,12 +809,25 @@ Files:
 - Routes: `/admin/books`, `/admin/sellers` registered in main.wasp
 - Uses existing admin layout and styling
 
-### 14.3 Order Management for Sellers ⏳
-**Status**: Planned (Next)
-- Seller view of orders for their books
-- Track which books were sold to whom
-- Order history per seller
-- Filter by order status
+### 14.3 Order Management for Sellers ✅
+**Status**: Completed
+- Created seller orders view page (`/seller/orders`)
+- Backend query to fetch orders containing seller's books
+- Displays buyer information (email, username)
+- Shows shipping address details
+- Lists all seller's books in each order with quantities and prices
+- Calculates total for seller's items per order
+- Filter by order status (PENDING, PAID, SHIPPED, DELIVERED, CANCELLED)
+- Stats cards showing total, paid, shipped, and pending orders
+- Pagination support
+- Added "Moje prodaje" link to navigation menu
+
+**Implementation:**
+- File: `src/seller/sellerOrderOperations.ts` - Backend query operation
+- File: `src/seller/SellerOrdersPage.tsx` - Full-featured orders page
+- File: `src/client/components/NavBar/constants.ts` - Added navigation link
+- Route: `/seller/orders` registered in main.wasp
+- Query: `getSellerOrders` with Order, OrderItem, Book, SellerProfile entities
 
 ---
 

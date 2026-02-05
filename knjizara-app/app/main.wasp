@@ -342,6 +342,12 @@ page MyListingsPage {
   component: import MyListingsPage from "@src/listing/MyListingsPage"
 }
 
+route EditListingRoute { path: "/edit-listing/:id", to: EditListingPage }
+page EditListingPage {
+  authRequired: true,
+  component: import EditListingPage from "@src/listing/EditListingPage"
+}
+
 // Listing queries
 query getMyListings {
   fn: import { getMyListings } from "@src/listing/operations",
@@ -372,6 +378,23 @@ action toggleListingStatus {
 action markAsSold {
   fn: import { markAsSold } from "@src/listing/operations",
   entities: [Book, SellerProfile]
+}
+
+// Seller Orders
+route SellerOrdersRoute { path: "/seller/orders", to: SellerOrdersPage }
+page SellerOrdersPage {
+  authRequired: true,
+  component: import SellerOrdersPage from "@src/seller/SellerOrdersPage"
+}
+
+query getSellerOrders {
+  fn: import { getSellerOrders } from "@src/seller/sellerOrderOperations",
+  entities: [Order, OrderItem, Book, SellerProfile, User, Address]
+}
+
+action updateOrderStatus {
+  fn: import { updateOrderStatus } from "@src/order/sellerOrderActions",
+  entities: [Order, OrderItem, Book, SellerProfile]
 }
 //#endregion
 
