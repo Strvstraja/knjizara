@@ -35,14 +35,14 @@ export default function CartDrawer() {
       {/* Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
+          className="fixed inset-0 bg-black/60 z-[9998]"
           onClick={() => setIsOpen(false)}
         />
       )}
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-full sm:w-96 sm:max-w-[24rem] bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-full sm:w-[500px] bg-white shadow-xl z-[9999] transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -83,8 +83,8 @@ export default function CartDrawer() {
             </div>
           )}
 
-          {/* Cart Items */}
-          <div className="flex-1 overflow-y-auto p-4">
+          {/* Cart Items - MAXIMUM SPACE */}
+          <div className="overflow-y-auto p-4 bg-white" style={{ minHeight: '60vh', maxHeight: 'calc(100vh - 200px)' }}>
             {items.length === 0 ? (
               <div className="text-center py-12">
                 <ShoppingCart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
@@ -102,47 +102,49 @@ export default function CartDrawer() {
                 {items.map((item) => {
                   const price = item.book.discountPrice || item.book.price;
                   return (
-                    <div key={item.book.id} className="flex gap-4 pb-4 border-b">
+                    <div key={item.book.id} className="flex gap-3 pb-4 border-b border-gray-200 last:border-b-0">
                       <img
                         src={item.book.coverImage}
                         alt={item.book.title}
-                        className="w-20 h-28 object-cover rounded"
+                        className="w-24 h-32 object-cover rounded shadow-sm flex-shrink-0"
                       />
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-gray-900 text-sm line-clamp-2 mb-1">
+                      <div className="flex-1 min-w-0 flex flex-col">
+                        <h3 className="font-semibold text-gray-900 text-base line-clamp-2 mb-1">
                           {item.book.title}
                         </h3>
-                        <p className="text-xs text-gray-600 mb-2">{item.book.author}</p>
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
+                        <p className="text-sm text-gray-600 mb-3">{item.book.author}</p>
+                        <div className="mt-auto">
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-2 bg-gray-100 rounded-lg p-1">
+                              <button
+                                onClick={() => updateQuantity(item.book.id, item.quantity - 1)}
+                                className="p-1.5 hover:bg-white rounded transition-colors"
+                                disabled={item.quantity <= 1}
+                              >
+                                <Minus className="w-4 h-4 text-gray-700" />
+                              </button>
+                              <span className="text-sm font-semibold w-8 text-center text-gray-900">
+                                {item.quantity}
+                              </span>
+                              <button
+                                onClick={() => updateQuantity(item.book.id, item.quantity + 1)}
+                                className="p-1.5 hover:bg-white rounded transition-colors"
+                                disabled={item.quantity >= item.book.stock}
+                              >
+                                <Plus className="w-4 h-4 text-gray-700" />
+                              </button>
+                            </div>
                             <button
-                              onClick={() => updateQuantity(item.book.id, item.quantity - 1)}
-                              className="p-1 hover:bg-gray-100 rounded"
-                              disabled={item.quantity <= 1}
+                              onClick={() => removeFromCart(item.book.id)}
+                              className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                             >
-                              <Minus className="w-4 h-4" />
-                            </button>
-                            <span className="text-sm font-medium w-8 text-center">
-                              {item.quantity}
-                            </span>
-                            <button
-                              onClick={() => updateQuantity(item.book.id, item.quantity + 1)}
-                              className="p-1 hover:bg-gray-100 rounded"
-                              disabled={item.quantity >= item.book.stock}
-                            >
-                              <Plus className="w-4 h-4" />
+                              <Trash2 className="w-4 h-4" />
                             </button>
                           </div>
-                          <button
-                            onClick={() => removeFromCart(item.book.id)}
-                            className="p-1 text-red-600 hover:bg-red-50 rounded"
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </button>
+                          <p className="text-base font-bold text-gray-900">
+                            {(price * item.quantity).toFixed(2)} RSD
+                          </p>
                         </div>
-                        <p className="text-sm font-bold text-gray-900 mt-2">
-                          {(price * item.quantity).toFixed(2)} RSD
-                        </p>
                       </div>
                     </div>
                   );
