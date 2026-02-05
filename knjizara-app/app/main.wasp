@@ -80,6 +80,8 @@ app OpenSaaS {
       import { seedBooks } from "@src/server/scripts/bookSeeds",
       // Updates book cover images to optimized versions
       import { updateBookImages } from "@src/server/scripts/updateBookImages",
+      // Creates platform seller and assigns existing books
+      import { createPlatformSeller } from "@src/server/scripts/platformSellerSeed",
     ]
   },
 
@@ -289,6 +291,82 @@ route WishlistRoute { path: "/wishlist", to: WishlistPage }
 page WishlistPage {
   authRequired: true,
   component: import WishlistPage from "@src/bookstore/WishlistPage"
+}
+//#endregion
+
+//#region Seller
+// Seller queries
+query getSellerProfile {
+  fn: import { getSellerProfile } from "@src/seller/operations",
+  entities: [SellerProfile]
+}
+
+query getPublicSellerProfile {
+  fn: import { getPublicSellerProfile } from "@src/seller/operations",
+  entities: [SellerProfile]
+}
+
+query getSellerListings {
+  fn: import { getSellerListings } from "@src/seller/operations",
+  entities: [Book, Category, SellerProfile]
+}
+
+query getSellerStats {
+  fn: import { getSellerStats } from "@src/seller/operations",
+  entities: [Book, SellerProfile]
+}
+
+// Seller actions
+action updateSellerProfile {
+  fn: import { updateSellerProfile } from "@src/seller/operations",
+  entities: [SellerProfile]
+}
+//#endregion
+
+//#region Listing
+// Listing routes
+route CreateListingRoute { path: "/create-listing", to: CreateListingPage }
+page CreateListingPage {
+  authRequired: true,
+  component: import CreateListingPage from "@src/listing/CreateListingPage"
+}
+
+route MyListingsRoute { path: "/my-listings", to: MyListingsPage }
+page MyListingsPage {
+  authRequired: true,
+  component: import MyListingsPage from "@src/listing/MyListingsPage"
+}
+
+// Listing queries
+query getMyListings {
+  fn: import { getMyListings } from "@src/listing/operations",
+  entities: [Book, Category, SellerProfile]
+}
+
+// Listing actions
+action createListing {
+  fn: import { createListing } from "@src/listing/operations",
+  entities: [Book, Category, SellerProfile, User]
+}
+
+action updateListing {
+  fn: import { updateListing } from "@src/listing/operations",
+  entities: [Book, Category, SellerProfile]
+}
+
+action deleteListing {
+  fn: import { deleteListing } from "@src/listing/operations",
+  entities: [Book, SellerProfile]
+}
+
+action toggleListingStatus {
+  fn: import { toggleListingStatus } from "@src/listing/operations",
+  entities: [Book, SellerProfile]
+}
+
+action markAsSold {
+  fn: import { markAsSold } from "@src/listing/operations",
+  entities: [Book, SellerProfile]
 }
 //#endregion
 

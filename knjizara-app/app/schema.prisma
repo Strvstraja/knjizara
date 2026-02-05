@@ -31,6 +31,8 @@ model User {
   addresses                 Address[]
   orders                    Order[]
   wishlistItems             WishlistItem[]
+  sellerProfile             SellerProfile?
+  buyerConversations        Conversation[] @relation("BuyerConversations")
 }
 
 model GptResponse {
@@ -137,6 +139,15 @@ model Book {
   categories          Category[]    @relation("BookCategories")
   orderItems          OrderItem[]
   wishlistItems       WishlistItem[]
+  sellerId            String?
+  seller              SellerProfile? @relation(fields: [sellerId], references: [id])
+  condition           BookCondition  @default(NEW)
+  isNegotiable        Boolean        @default(false)
+  status              ListingStatus  @default(ACTIVE)
+  expiresAt           DateTime?
+  viewCount           Int            @default(0)
+  images              String[]
+  conversations       Conversation[]
   createdAt           DateTime      @default(now())
   updatedAt           DateTime      @updatedAt
 }
@@ -144,6 +155,26 @@ model Book {
 enum Binding {
   HARDCOVER
   SOFTCOVER
+}
+
+enum BookCondition {
+  NEW
+  LIKE_NEW
+  VERY_GOOD
+  GOOD
+  ACCEPTABLE
+}
+
+enum ListingStatus {
+  ACTIVE
+  PAUSED
+  SOLD
+  EXPIRED
+}
+
+enum SellerType {
+  PRIVATE
+  BUSINESS
 }
 
 model Category {
@@ -226,4 +257,54 @@ model WishlistItem {
   createdAt DateTime @default(now())
 
   @@unique([userId, bookId])
+}
+
+model SellerProfile {
+  id            String        @id @default(uuid())
+  userId        String        @unique
+  user          User          @relation(fields: [userId], references: [id])
+  type          SellerType
+  displayName   String
+  phone         String
+  city          String
+  isVerified    Boolean       @default(false)
+  
+  companyName   String?
+  pib           String?
+  address       String?
+  contactEmail  String?
+  logo          String?
+  website       String?
+  
+  listings      Book[]
+  conversations Conversation[]
+  
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Conversation {
+  id              String        @id @default(uuid())
+  bookId          String
+  book            Book          @relation(fields: [bookId], references: [id])
+  buyerId         String
+  buyer           User          @relation("BuyerConversations", fields: [buyerId], references: [id])
+  sellerId        String
+  seller          SellerProfile @relation(fields: [sellerId], references: [id])
+  messages        Message[]
+  lastMessageAt   DateTime      @default(now())
+  createdAt       DateTime      @default(now())
+  
+  @@unique([bookId, buyerId, sellerId])
+}
+
+model Message {
+  id              String       @id @default(uuid())
+  conversationId  String
+  conversation    Conversation @relation(fields: [conversationId], references: [id])
+  senderId        String
+  senderType      String
+  content         String       @db.Text
+  isRead          Boolean      @default(false)
+  createdAt       DateTime     @default(now())
 }
