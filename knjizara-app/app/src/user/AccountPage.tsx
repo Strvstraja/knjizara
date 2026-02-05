@@ -17,6 +17,8 @@ export default function AccountPage({ user }: { user: User }) {
   const [displayName, setDisplayName] = useState("");
   const [isEditingCity, setIsEditingCity] = useState(false);
   const [city, setCity] = useState("");
+  const [isEditingType, setIsEditingType] = useState(false);
+  const [sellerType, setSellerType] = useState<'PRIVATE' | 'BUSINESS'>('PRIVATE');
   const [isSaving, setIsSaving] = useState(false);
 
   const handleEditDisplayName = () => {
@@ -67,6 +69,28 @@ export default function AccountPage({ user }: { user: User }) {
   const handleCancelCityEdit = () => {
     setIsEditingCity(false);
     setCity("");
+  };
+
+  const handleEditType = () => {
+    setSellerType(sellerProfile?.type || 'PRIVATE');
+    setIsEditingType(true);
+  };
+
+  const handleSaveType = async () => {
+    setIsSaving(true);
+    try {
+      await updateSellerProfile({ type: sellerType });
+      await refetch();
+      setIsEditingType(false);
+    } catch (error) {
+      console.error('Error updating seller type:', error);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleCancelTypeEdit = () => {
+    setIsEditingType(false);
   };
 
   return (
@@ -143,6 +167,55 @@ export default function AccountPage({ user }: { user: User }) {
                       <span>{sellerProfile?.displayName || "Nije postavljeno"}</span>
                       <button
                         onClick={handleEditDisplayName}
+                        className="p-1 text-blue-600 hover:bg-blue-50 rounded-md"
+                      >
+                        <Pencil className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            <Separator />
+            <div className="px-6 py-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 sm:gap-4">
+                <div className="text-muted-foreground text-sm font-medium">
+                  Tip prodavca
+                </div>
+                <div className="text-foreground mt-1 text-sm sm:col-span-2 sm:mt-0">
+                  {isEditingType ? (
+                    <div className="flex items-center gap-2">
+                      <select
+                        value={sellerType}
+                        onChange={(e) => setSellerType(e.target.value as 'PRIVATE' | 'BUSINESS')}
+                        className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        disabled={isSaving}
+                      >
+                        <option value="PRIVATE">Privatno lice</option>
+                        <option value="BUSINESS">Firma</option>
+                      </select>
+                      <button
+                        onClick={handleSaveType}
+                        disabled={isSaving}
+                        className="p-2 text-green-600 hover:bg-green-50 rounded-md disabled:opacity-50"
+                      >
+                        <Check className="w-5 h-5" />
+                      </button>
+                      <button
+                        onClick={handleCancelTypeEdit}
+                        disabled={isSaving}
+                        className="p-2 text-red-600 hover:bg-red-50 rounded-md disabled:opacity-50"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <span>
+                        {sellerProfile?.type === 'BUSINESS' ? 'Firma' : 'Privatno lice'}
+                      </span>
+                      <button
+                        onClick={handleEditType}
                         className="p-1 text-blue-600 hover:bg-blue-50 rounded-md"
                       >
                         <Pencil className="w-4 h-4" />

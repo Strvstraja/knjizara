@@ -144,6 +144,7 @@ export const registerAsSeller = async (
 // Update seller profile
 type UpdateSellerProfileInput = {
   displayName?: string;
+  type?: 'PRIVATE' | 'BUSINESS';
   phone?: string;
   city?: string;
   companyName?: string;
