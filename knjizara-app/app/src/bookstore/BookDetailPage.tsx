@@ -5,7 +5,7 @@ import { Link } from 'wasp/client/router';
 import { useTranslation } from 'react-i18next';
 import { useCart } from '../client/contexts/CartContext';
 import { useState } from 'react';
-import { Check, Heart } from 'lucide-react';
+import { Check, Heart, MapPin, Phone, Store, User } from 'lucide-react';
 import { useAuth } from 'wasp/client/auth';
 
 export default function BookDetailPage() {
@@ -17,6 +17,26 @@ export default function BookDetailPage() {
   const { addToCart, isInCart } = useCart();
   const [showAdded, setShowAdded] = useState(false);
   const [wishlistLoading, setWishlistLoading] = useState(false);
+
+  const getConditionStyle = (condition: string) => {
+    switch (condition) {
+      case 'NEW': return 'bg-green-100 text-green-800';
+      case 'LIKE_NEW': return 'bg-teal-100 text-teal-800';
+      case 'VERY_GOOD': return 'bg-blue-100 text-blue-800';
+      case 'GOOD': return 'bg-yellow-100 text-yellow-800';
+      default: return 'bg-orange-100 text-orange-800';
+    }
+  };
+
+  const getConditionLabel = (condition: string) => {
+    switch (condition) {
+      case 'NEW': return t('listing.conditionNew');
+      case 'LIKE_NEW': return t('listing.conditionLikeNew');
+      case 'VERY_GOOD': return t('listing.conditionVeryGood');
+      case 'GOOD': return t('listing.conditionGood');
+      default: return t('listing.conditionAcceptable');
+    }
+  };
 
   const handleAddToCart = () => {
     if (book) {
@@ -89,22 +109,43 @@ export default function BookDetailPage() {
             {/* Book Info */}
             <div>
               <h1 className="text-3xl font-bold text-gray-900 mb-2">{book.title}</h1>
-              <p className="text-xl text-gray-600 mb-6">{book.author}</p>
+              <p className="text-xl text-gray-600 mb-4">{book.author}</p>
+
+              {/* Condition Badge */}
+              {book.condition && (
+                <div className="mb-4">
+                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${getConditionStyle(book.condition)}`}>
+                    {getConditionLabel(book.condition)}
+                  </span>
+                  {book.isNegotiable && (
+                    <span className="ml-2 text-sm text-gray-600">
+                      ({t('listing.negotiable')})
+                    </span>
+                  )}
+                </div>
+              )}
 
               {/* Price */}
               <div className="mb-6">
                 {book.discountPrice ? (
-                  <div className="flex items-center gap-3">
-                    <span className="text-3xl font-bold text-red-600">
-                      {book.discountPrice.toFixed(2)} {t('common.rsd')}
-                    </span>
-                    <span className="text-xl text-gray-500 line-through">
-                      {book.price.toFixed(2)} {t('common.rsd')}
-                    </span>
-                    <span className="bg-red-500 text-white px-3 py-1 rounded text-sm font-bold">
-                      -{Math.round(((book.price - book.discountPrice) / book.price) * 100)}%
-                    </span>
-                  </div>
+                  <>
+                    {(() => {
+                      const discountPercent = Math.round(((book.price - book.discountPrice) / book.price) * 100);
+                      return (
+                        <div className="flex items-center gap-3">
+                          <span className="text-3xl font-bold text-red-600">
+                            {book.discountPrice.toFixed(2)} {t('common.rsd')}
+                          </span>
+                          <span className="text-xl text-gray-500 line-through">
+                            {book.price.toFixed(2)} {t('common.rsd')}
+                          </span>
+                          <span className="bg-red-500 text-white px-3 py-1 rounded text-sm font-bold">
+                            -{discountPercent}%
+                          </span>
+                        </div>
+                      );
+                    })()}
+                  </>
                 ) : (
                   <span className="text-3xl font-bold text-gray-900">
                     {book.price.toFixed(2)} {t('common.rsd')}
@@ -204,6 +245,25 @@ export default function BookDetailPage() {
                         {category.name}
                       </span>
                     ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Seller Info Card */}
+              {(book as any).seller && (book as any).seller.displayName && (
+                <div className="border-t pt-6 mt-6">
+                  <h2 className="text-lg font-semibold text-gray-900 mb-3">Prodavac</h2>
+                  <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+                    <div className="flex items-center gap-2">
+                      {(book as any).seller.type === 'BUSINESS' ? (
+                        <Store className="w-5 h-5 text-blue-600" />
+                      ) : (
+                        <User className="w-5 h-5 text-gray-600" />
+                      )}
+                      <span className="font-semibold text-gray-900">
+                        {(book as any).seller.displayName}
+                      </span>
+                    </div>
                   </div>
                 </div>
               )}

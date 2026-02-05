@@ -102,6 +102,7 @@ export const getBook = async ({ id }: { id: string }, context: any): Promise<Boo
     where: { id },
     include: {
       categories: true,
+      seller: true,
     },
   });
 

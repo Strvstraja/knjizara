@@ -692,14 +692,78 @@ Files:
 
 ---
 
+## ✅ Phase 13: Marketplace Features (C2C + B2C)
+
+### 13.1 Seller Functionality ✅
+**Status**: Completed
+
+**Auto-Seller Registration:**
+- All users are automatically sellers upon account creation
+- Seller profile auto-created on first listing
+- Type: PRIVATE by default
+- Can be upgraded to BUSINESS later
+
+**Seller Profile Management:**
+- Added displayName field to Account Settings page (`/account`)
+- Editable inline with pencil icon
+- Saves to SellerProfile table in database
+- Real-time updates with visual feedback
+
+**Implementation:**
+- File: `src/user/AccountPage.tsx` - Added displayName edit functionality
+- Operations: `getSellerProfile`, `updateSellerProfile` already in place
+- Database: SellerProfile model with all required fields
+
+### 13.2 Book Listing Features ✅
+**Status**: Completed
+
+**Condition Badges:**
+- Added to BookDetailPage
+- Color-coded: Green (NEW), Teal (LIKE_NEW), Blue (VERY_GOOD), Yellow (GOOD), Orange (ACCEPTABLE)
+- Shows "Cena po dogovoru" if negotiable
+- Full i18n support (Latin/Cyrillic)
+
+**Seller Info Display:**
+- Shows on book detail page when displayName is set
+- Displays seller name with business/private icon
+- Only visible for books with seller information
+- Conditional rendering to avoid empty states
+
+**Implementation:**
+- File: `src/bookstore/BookDetailPage.tsx` - Added condition badge and seller info card
+- Updated `getBook` operation to include seller data
+- Translation keys added: `listing.*` for conditions
+
+### 13.3 Navigation Updates ✅
+**Status**: Completed
+
+**My Listings Link:**
+- Added "Moji oglasi" to main navigation
+- Links to `/my-listings` page
+- Accessible from anywhere in the app
+- Shows seller's active/paused/sold listings
+
+**Fixed Issues:**
+- Fixed `createListing` entity error (added User entity)
+- Fixed `deleteListing` entity error (added SellerProfile entity)
+- Both operations now work correctly
+
+### 13.4 Not Yet Implemented ⏳
+- Seller public profile page (`/seller/:id`)
+- Phone number and city fields in account settings
+- Messaging system between buyers and sellers
+- Search filters for condition and seller type
+- Seller ratings and reviews
+
+---
+
 ## 📝 Next Priority Tasks
 
-1. Implement shopping cart functionality
-2. Build checkout flow with cash-on-delivery
-3. Create user dashboard for orders
-4. Add i18n for Cyrillic/Latin toggle
-5. Customize homepage for bookstore
-6. Build admin panel for book management
+1. Add phone and city fields to Account Settings
+2. Build seller public profile page
+3. Add condition and seller type filters to book search
+4. Implement simple messaging system
+5. Build admin panel for book management
 
 ---
 

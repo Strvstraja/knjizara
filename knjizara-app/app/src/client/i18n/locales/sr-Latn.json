@@ -98,6 +98,39 @@
     "continueShopping": "Nastavi sa kupovinom",
     "support": "Imate pitanja? Kontaktirajte nas na"
   },
+  "bookDetail": {
+    "notFound": "Knjiga nije pronađena",
+    "backToCatalog": "Nazad na katalog",
+    "inStock": "Na stanju ({{count}})",
+    "addedToCart": "Dodato u korpu",
+    "alreadyInCart": "Već u korpi",
+    "specifications": "Specifikacije",
+    "isbn": "ISBN",
+    "pageCount": "Broj strana",
+    "binding": "Povez",
+    "hardcover": "Tvrdi povez",
+    "softcover": "Meki povez",
+    "publisher": "Izdavač",
+    "year": "Godina",
+    "language": "Jezik",
+    "categories": "Kategorije",
+    "description": "Opis",
+    "seller": "Prodavac"
+  },
+  "seller": {
+    "private": "Privatni prodavac",
+    "business": "Firma",
+    "showPhone": "Prikaži broj telefona",
+    "viewAllListings": "Pogledaj sve oglase prodavca"
+  },
+  "listing": {
+    "conditionNew": "Nova (neotpakovana)",
+    "conditionLikeNew": "Kao nova",
+    "conditionVeryGood": "Odlična",
+    "conditionGood": "Dobra",
+    "conditionAcceptable": "Prihvatljiva",
+    "negotiable": "Cena po dogovoru"
+  },
   "common": {
     "rsd": "RSD",
     "loading": "Učitavanje...",
