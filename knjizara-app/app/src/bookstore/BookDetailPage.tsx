@@ -264,6 +264,22 @@ export default function BookDetailPage() {
                         {(book as any).seller.displayName}
                       </span>
                     </div>
+                    
+                    {(book as any).seller.city && (
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <MapPin className="w-4 h-4" />
+                        <span>{(book as any).seller.city}</span>
+                      </div>
+                    )}
+
+                    <div className="pt-2 border-t">
+                      <a
+                        href={`/all-sellers?seller=${(book as any).seller.id}`}
+                        className="text-sm text-blue-600 hover:underline"
+                      >
+                        Pogledaj sve oglase prodavca →
+                      </a>
+                    </div>
                   </div>
                 </div>
               )}

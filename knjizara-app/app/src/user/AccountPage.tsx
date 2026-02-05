@@ -15,6 +15,8 @@ export default function AccountPage({ user }: { user: User }) {
   const { data: sellerProfile, refetch } = useQuery(getSellerProfile);
   const [isEditingDisplayName, setIsEditingDisplayName] = useState(false);
   const [displayName, setDisplayName] = useState("");
+  const [isEditingCity, setIsEditingCity] = useState(false);
+  const [city, setCity] = useState("");
   const [isSaving, setIsSaving] = useState(false);
 
   const handleEditDisplayName = () => {
@@ -40,6 +42,31 @@ export default function AccountPage({ user }: { user: User }) {
   const handleCancelEdit = () => {
     setIsEditingDisplayName(false);
     setDisplayName("");
+  };
+
+  const handleEditCity = () => {
+    setCity(sellerProfile?.city || "");
+    setIsEditingCity(true);
+  };
+
+  const handleSaveCity = async () => {
+    if (!city.trim()) return;
+    
+    setIsSaving(true);
+    try {
+      await updateSellerProfile({ city: city.trim() });
+      await refetch();
+      setIsEditingCity(false);
+    } catch (error) {
+      console.error('Error updating city:', error);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleCancelCityEdit = () => {
+    setIsEditingCity(false);
+    setCity("");
   };
 
   return (
@@ -116,6 +143,52 @@ export default function AccountPage({ user }: { user: User }) {
                       <span>{sellerProfile?.displayName || "Nije postavljeno"}</span>
                       <button
                         onClick={handleEditDisplayName}
+                        className="p-1 text-blue-600 hover:bg-blue-50 rounded-md"
+                      >
+                        <Pencil className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            <Separator />
+            <div className="px-6 py-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 sm:gap-4">
+                <div className="text-muted-foreground text-sm font-medium">
+                  Grad
+                </div>
+                <div className="text-foreground mt-1 text-sm sm:col-span-2 sm:mt-0">
+                  {isEditingCity ? (
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={city}
+                        onChange={(e) => setCity(e.target.value)}
+                        className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Unesite grad"
+                        disabled={isSaving}
+                      />
+                      <button
+                        onClick={handleSaveCity}
+                        disabled={isSaving || !city.trim()}
+                        className="p-2 text-green-600 hover:bg-green-50 rounded-md disabled:opacity-50"
+                      >
+                        <Check className="w-5 h-5" />
+                      </button>
+                      <button
+                        onClick={handleCancelCityEdit}
+                        disabled={isSaving}
+                        className="p-2 text-red-600 hover:bg-red-50 rounded-md disabled:opacity-50"
+                      >
+                        <X className="w-5 h-5" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <span>{sellerProfile?.city || "Nije postavljeno"}</span>
+                      <button
+                        onClick={handleEditCity}
                         className="p-1 text-blue-600 hover:bg-blue-50 rounded-md"
                       >
                         <Pencil className="w-4 h-4" />

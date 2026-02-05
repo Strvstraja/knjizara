@@ -13,6 +13,7 @@ type GetBooksInput = {
   binding?: string;
   featured?: boolean;
   sortBy?: 'price_asc' | 'price_desc' | 'newest' | 'title';
+  sellerId?: string;
 };
 
 type GetBooksOutput = {
@@ -33,6 +34,7 @@ export const getBooks = async (args: GetBooksInput, context: any): Promise<GetBo
     binding,
     featured,
     sortBy = 'newest',
+    sellerId,
   } = args;
 
   const skip = (page - 1) * limit;
@@ -69,6 +71,10 @@ export const getBooks = async (args: GetBooksInput, context: any): Promise<GetBo
 
   if (featured !== undefined) {
     where.featured = featured;
+  }
+
+  if (sellerId) {
+    where.sellerId = sellerId;
   }
 
   let orderBy: any = { createdAt: 'desc' };

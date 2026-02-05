@@ -292,6 +292,11 @@ page WishlistPage {
   authRequired: true,
   component: import WishlistPage from "@src/bookstore/WishlistPage"
 }
+
+route AllSellersRoute { path: "/all-sellers", to: AllSellersPage }
+page AllSellersPage {
+  component: import AllSellersPage from "@src/bookstore/AllSellersPage"
+}
 //#endregion
 
 //#region Seller

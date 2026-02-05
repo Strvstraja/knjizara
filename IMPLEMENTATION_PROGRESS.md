@@ -748,22 +748,45 @@ Files:
 - Fixed `deleteListing` entity error (added SellerProfile entity)
 - Both operations now work correctly
 
-### 13.4 Not Yet Implemented ⏳
-- Seller public profile page (`/seller/:id`)
-- Phone number and city fields in account settings
-- Messaging system between buyers and sellers
-- Search filters for condition and seller type
-- Seller ratings and reviews
+### 13.4 Additional Features ✅
+**Status**: Completed
+
+**City Field in Account Settings:**
+- Added editable city field to `/account` page
+- Inline editing with pencil icon
+- Saves to SellerProfile database
+- Displays on book detail pages when set
+
+**All Sellers Listings Page:**
+- Created `/all-sellers` route and page
+- Shows all books from all sellers
+- Grid layout with pagination
+- Link added to book detail pages ("Pogledaj sve oglase →")
+
+**Implementation:**
+- File: `src/user/AccountPage.tsx` - Added city field with edit functionality
+- File: `src/bookstore/AllSellersPage.tsx` - New page showing all sellers' listings
+- File: `src/bookstore/BookDetailPage.tsx` - Added city display and link to all sellers page
+- Route: `/all-sellers` registered in main.wasp
+
+### 13.5 Not Implemented (Marked as Won't Do) ❌
+- Seller public profile page (`/seller/:id`) - Skipped
+- Phone number field in account settings - Not needed
+- Messaging system between buyers and sellers - Won't implement
+- Seller ratings and reviews - Future consideration
+
+### 13.6 Already Implemented ✅
+- Search filters for condition and seller type - Already available in book search
 
 ---
 
 ## 📝 Next Priority Tasks
 
-1. Add phone and city fields to Account Settings
-2. Build seller public profile page
-3. Add condition and seller type filters to book search
-4. Implement simple messaging system
-5. Build admin panel for book management
+1. Test marketplace features end-to-end
+2. Add more seller fields if needed (optional)
+3. Build admin panel for book management
+4. Implement order management improvements
+5. Add analytics/reporting for sellers
 
 ---
 
