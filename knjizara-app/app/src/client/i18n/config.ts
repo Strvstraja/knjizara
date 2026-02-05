@@ -55,13 +55,15 @@ const srLatn = {
     "shipping": "Dostava",
     "total": "Ukupno",
     "free": "Besplatno",
+    "freeShipping": "Besplatno",
     "freeShippingProgress": "Dodaj još {{amount}} {{currency}} za besplatnu dostavu!",
     "freeShippingAchieved": "Ostvarili ste besplatnu dostavu!",
     "goToCheckout": "Idi na plaćanje",
     "viewCart": "Pogledaj korpu",
     "remove": "Ukloni",
     "orderSummary": "Pregled porudžbine",
-    "continueToPayment": "Nastavi na plaćanje"
+    "continueToPayment": "Nastavi na plaćanje",
+    "maxQuantityReached": "Dostignuta maksimalna količina na stanju"
   },
   "books": {
     "title": "Knjige",
@@ -350,13 +352,15 @@ const srCyrl = {
     "shipping": "Достава",
     "total": "Укупно",
     "free": "Бесплатно",
+    "freeShipping": "Бесплатно",
     "freeShippingProgress": "Додај још {{amount}} {{currency}} за бесплатну доставу!",
     "freeShippingAchieved": "Остварили сте бесплатну доставу!",
     "goToCheckout": "Иди на плаћање",
     "viewCart": "Погледај корпу",
     "remove": "Уклони",
     "orderSummary": "Преглед поруџбине",
-    "continueToPayment": "Настави на плаћање"
+    "continueToPayment": "Настави на плаћање",
+    "maxQuantityReached": "Достигнута максимална количина на стању"
   },
   "books": {
     "title": "Књиге",

@@ -19,7 +19,8 @@
     "goToCheckout": "Иди на плаћање",
     "viewCart": "Погледај корпу",
     "remove": "Уклони",
-    "quantity": "Количина"
+    "quantity": "Количина",
+    "maxQuantityReached": "Достигнута максимална количина на стању"
   },
   "books": {
     "title": "Књиге",
