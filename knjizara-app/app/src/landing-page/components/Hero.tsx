@@ -1,9 +1,11 @@
 import { Link as WaspRouterLink, routes } from "wasp/client/router";
+import { useTranslation } from "react-i18next";
+import { BookOpen, ShoppingCart, Truck } from "lucide-react";
 import { Button } from "../../client/components/ui/button";
-import openSaasBannerDark from "../../client/static/open-saas-banner-dark.svg";
-import openSaasBannerLight from "../../client/static/open-saas-banner-light.svg";
 
 export default function Hero() {
+  const { t } = useTranslation();
+
   return (
     <div className="relative w-full pt-14">
       <TopGradient />
@@ -12,43 +14,61 @@ export default function Hero() {
         <div className="max-w-8xl mx-auto px-6 lg:px-8">
           <div className="lg:mb-18 mx-auto max-w-3xl text-center">
             <h1 className="text-foreground text-5xl font-bold sm:text-6xl">
-              Some <span className="italic">cool</span> words about{" "}
-              <span className="text-gradient-primary">your product</span>
+              {t('landing.hero.title')}{" "}
+              <span className="text-gradient-primary">{t('landing.hero.highlight')}</span>
             </h1>
             <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-lg leading-8">
-              With some more exciting words about your product!
+              {t('landing.hero.subtitle')}
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Button size="lg" variant="outline" asChild>
+              <Button size="lg" variant="default" asChild>
                 <WaspRouterLink to={routes.BooksRoute.to}>
-                  Pregledaj knjige
+                  <BookOpen className="mr-2 h-5 w-5" />
+                  {t('landing.hero.browseBooks')}
                 </WaspRouterLink>
               </Button>
-              <Button size="lg" variant="default" asChild>
+              <Button size="lg" variant="outline" asChild>
                 <WaspRouterLink to={routes.SignupRoute.to}>
-                  Registruj se <span aria-hidden="true">→</span>
+                  {t('landing.hero.signup')} <span aria-hidden="true">→</span>
                 </WaspRouterLink>
               </Button>
             </div>
           </div>
-          <div className="mt-14 flow-root sm:mt-14">
-            <div className="m-2 hidden justify-center rounded-xl md:flex lg:-m-4 lg:rounded-2xl lg:p-4">
-              <img
-                src={openSaasBannerLight}
-                alt="App screenshot"
-                width={1000}
-                height={530}
-                loading="lazy"
-                className="rounded-md shadow-2xl ring-1 ring-gray-900/10 dark:hidden"
-              />
-              <img
-                src={openSaasBannerDark}
-                alt="App screenshot"
-                width={1000}
-                height={530}
-                loading="lazy"
-                className="hidden rounded-md shadow-2xl ring-1 ring-gray-900/10 dark:block"
-              />
+          
+          {/* Feature highlights */}
+          <div className="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-3">
+            <div className="flex flex-col items-center text-center">
+              <div className="bg-primary/10 rounded-full p-4 mb-4">
+                <BookOpen className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-foreground font-semibold text-lg mb-2">
+                {t('landing.features.wideSelection.title')}
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                {t('landing.features.wideSelection.description')}
+              </p>
+            </div>
+            <div className="flex flex-col items-center text-center">
+              <div className="bg-primary/10 rounded-full p-4 mb-4">
+                <ShoppingCart className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-foreground font-semibold text-lg mb-2">
+                {t('landing.features.easyOrdering.title')}
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                {t('landing.features.easyOrdering.description')}
+              </p>
+            </div>
+            <div className="flex flex-col items-center text-center">
+              <div className="bg-primary/10 rounded-full p-4 mb-4">
+                <Truck className="h-8 w-8 text-primary" />
+              </div>
+              <h3 className="text-foreground font-semibold text-lg mb-2">
+                {t('landing.features.freeShipping.title')}
+              </h3>
+              <p className="text-muted-foreground text-sm">
+                {t('landing.features.freeShipping.description')}
+              </p>
             </div>
           </div>
         </div>

@@ -560,14 +560,89 @@ Files:
 - Category management
 - Bulk import (CSV)
 
-### 8.6 Homepage Customization ⏳
-- Replace demo content with bookstore hero
-- Featured books section
-- New arrivals
-- Bestsellers
-- Local authors highlight
+### 8.6 Homepage Customization ✅
+**Status**: Completed
 
-### 8.7 Additional Features ⏳
+**Implemented:**
+- ✅ Custom bookstore hero section with i18n support
+  - Compelling headline: "Otkrijte svet knjiga u vašoj knjižari"
+  - Call-to-action buttons: "Pregledaj knjige" and "Registruj se"
+  - Three feature highlights with icons (Wide Selection, Easy Ordering, Wishlist)
+- ✅ Featured Books section
+  - Displays 4 featured books in a grid layout
+  - Book cards with cover images, titles, authors, and prices
+  - Hover effects and smooth transitions
+  - "View All Books" button
+- ✅ Categories section
+  - Displays all book categories in a 6-column grid
+  - Category cards with icons and names
+  - Links to filtered book listings by category
+- ✅ New Arrivals section
+  - Displays 6 newest books in a compact grid
+  - "Novo" badge on each book
+  - Responsive design (2 cols mobile, 6 cols desktop)
+  - "View All" button
+
+**Files Created:**
+- `src/landing-page/components/FeaturedBooks.tsx` - Featured books carousel
+- `src/landing-page/components/Categories.tsx` - Category grid display
+- `src/landing-page/components/NewArrivals.tsx` - New arrivals showcase
+
+**Files Modified:**
+- `src/landing-page/LandingPage.tsx` - Replaced demo sections with bookstore sections
+- `src/landing-page/components/Hero.tsx` - Custom bookstore hero with features
+- `src/client/i18n/config.ts` - Added `landing.*` translations for both scripts
+
+**i18n Support:**
+- All text fully translated to Latin and Cyrillic scripts
+- Translation keys: `landing.hero.*`, `landing.features.*`, `landing.featured.*`, `landing.categories.*`, `landing.newArrivals.*`
+- Script toggle works seamlessly across all homepage sections
+
+**Design Features:**
+- Gradient backgrounds for visual appeal
+- Responsive grid layouts (mobile-first)
+- Hover effects and smooth transitions
+- Loading skeletons for better UX
+- Consistent color scheme using design tokens
+
+### 8.7 Auth Pages Translation ✅
+**Status**: Completed
+
+**Implemented:**
+- ✅ Custom signup form with full i18n support
+  - Translated form fields: "E-mail", "Lozinka"
+  - Translated button: "Registruj se"
+  - Translated links: "Već imam nalog (idi na prijavu)"
+  - Auto-redirect to books page after successful signup
+- ✅ Custom login form with full i18n support
+  - Translated form fields: "E-mail", "Lozinka"
+  - Translated button: "Prijavi se"
+  - Translated links: "Nemate nalog? registrujte se", "Zaboravili ste lozinku? resetujte je"
+  - Auto-redirect to books page after successful login
+- ✅ Error handling with translated messages
+- ✅ Loading states with translated text
+
+**Files Created:**
+- `src/auth/CustomSignupForm.tsx` - Custom signup form with i18n
+- `src/auth/CustomLoginForm.tsx` - Custom login form with i18n
+
+**Files Modified:**
+- `src/auth/SignupPage.tsx` - Uses custom form instead of Wasp default
+- `src/auth/LoginPage.tsx` - Uses custom form instead of Wasp default
+- `src/client/i18n/config.ts` - Added `auth.*` translations for both scripts
+
+**i18n Support:**
+- All text fully translated to Latin and Cyrillic scripts
+- Translation keys: `auth.signup.*`, `auth.login.*`, `auth.forgotPassword.*`
+- Script toggle works seamlessly across all auth pages
+
+**Functionality:**
+- Email/password authentication working
+- Automatic redirect to `/books` after successful login/signup
+- Form validation and error messages
+- Loading states during authentication
+
+### 8.8 Additional Features ⏳
 - Similar books section on detail page
 - Reviews and ratings
 - Gift wrapping option

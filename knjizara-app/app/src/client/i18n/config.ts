@@ -9,6 +9,44 @@ const srLatn = {
     "logout": "Odjavi se",
     "account": "Nalog"
   },
+  "landing": {
+    "hero": {
+      "title": "Otkrijte svet knjiga u",
+      "highlight": "Čika Strajinoj maloj knjižari",
+      "subtitle": "Širok izbor domaćih i stranih naslova, brza dostava i jednostavna kupovina. Vaša omiljena knjiga je samo jedan klik daleko.",
+      "browseBooks": "Pregledaj knjige",
+      "signup": "Registruj se"
+    },
+    "features": {
+      "wideSelection": {
+        "title": "Širok izbor",
+        "description": "Hiljade naslova iz svih žanrova"
+      },
+      "easyOrdering": {
+        "title": "Jednostavna kupovina",
+        "description": "Brza i sigurna online porudžbina"
+      },
+      "freeShipping": {
+        "title": "Besplatna dostava",
+        "description": "Za kupovinu preko 3000 RSD"
+      }
+    },
+    "featured": {
+      "title": "Izdvajamo",
+      "subtitle": "Najpopularnije knjige ovog meseca",
+      "viewAll": "Pogledaj sve knjige"
+    },
+    "categories": {
+      "title": "Kategorije",
+      "subtitle": "Pronađite knjige po žanru"
+    },
+    "newArrivals": {
+      "title": "Novo u ponudi",
+      "subtitle": "Najnoviji naslovi u našoj knjižari",
+      "viewAll": "Pogledaj sve",
+      "badge": "Novo"
+    }
+  },
   "cart": {
     "title": "Korpa",
     "empty": "Vaša korpa je prazna",
@@ -159,6 +197,31 @@ const srLatn = {
     "rsd": "RSD",
     "loading": "Učitavanje...",
     "error": "Greška"
+  },
+  "auth": {
+    "signup": {
+      "title": "Napravite novi nalog",
+      "email": "E-mail",
+      "password": "Lozinka",
+      "button": "Registruj se",
+      "haveAccount": "Već imam nalog",
+      "goToLogin": "idi na prijavu"
+    },
+    "login": {
+      "title": "Prijavite se na nalog",
+      "email": "E-mail",
+      "password": "Lozinka",
+      "button": "Prijavi se",
+      "noAccount": "Nemate nalog?",
+      "goToSignup": "registrujte se",
+      "forgotPassword": "Zaboravili ste lozinku?"
+    },
+    "forgotPassword": {
+      "title": "Zaboravljena lozinka",
+      "email": "E-mail",
+      "button": "Pošalji link za resetovanje",
+      "backToLogin": "Nazad na prijavu"
+    }
   }
 };
 
@@ -169,6 +232,44 @@ const srCyrl = {
     "login": "Пријави се",
     "logout": "Одјави се",
     "account": "Налог"
+  },
+  "landing": {
+    "hero": {
+      "title": "Откријте свет књига у",
+      "highlight": "Чика Страјиној малој књижари",
+      "subtitle": "Широк избор домаћих и страних наслова, брза достава и једноставна куповина. Ваша омиљена књига је само један клик далеко.",
+      "browseBooks": "Прегледај књиге",
+      "signup": "Региструј се"
+    },
+    "features": {
+      "wideSelection": {
+        "title": "Широк избор",
+        "description": "Хиљаде наслова из свих жанрова"
+      },
+      "easyOrdering": {
+        "title": "Једноставна куповина",
+        "description": "Брза и сигурна онлине поруџбина"
+      },
+      "freeShipping": {
+        "title": "Бесплатна достава",
+        "description": "За куповину преко 3000 РСД"
+      }
+    },
+    "featured": {
+      "title": "Издвајамо",
+      "subtitle": "Најпопуларније књиге овог месеца",
+      "viewAll": "Погледај све књиге"
+    },
+    "categories": {
+      "title": "Категорије",
+      "subtitle": "Пронађите књиге по жанру"
+    },
+    "newArrivals": {
+      "title": "Ново у понуди",
+      "subtitle": "Најновији наслови у нашој књижари",
+      "viewAll": "Погледај све",
+      "badge": "Ново"
+    }
   },
   "cart": {
     "title": "Корпа",
@@ -320,6 +421,31 @@ const srCyrl = {
     "rsd": "РСД",
     "loading": "Учитавање...",
     "error": "Грешка"
+  },
+  "auth": {
+    "signup": {
+      "title": "Направите нови налог",
+      "email": "Е-маил",
+      "password": "Лозинка",
+      "button": "Региструј се",
+      "haveAccount": "Већ имам налог",
+      "goToLogin": "иди на пријаву"
+    },
+    "login": {
+      "title": "Пријавите се на налог",
+      "email": "Е-маил",
+      "password": "Лозинка",
+      "button": "Пријави се",
+      "noAccount": "Немате налог?",
+      "goToSignup": "региструјте се",
+      "forgotPassword": "Заборавили сте лозинку?"
+    },
+    "forgotPassword": {
+      "title": "Заборављена лозинка",
+      "email": "Е-маил",
+      "button": "Пошаљи линк за ресетовање",
+      "backToLogin": "Назад на пријаву"
+    }
   }
 };
 
