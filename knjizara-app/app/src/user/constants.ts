@@ -3,28 +3,28 @@ import { routes } from "wasp/client/router";
 
 export const userMenuItems = [
   {
-    name: "Moje porudžbine",
+    name: "userMenu.myOrders",
     to: routes.MyOrdersRoute.to,
     icon: Package,
     isAdminOnly: false,
     isAuthRequired: true,
   },
   {
-    name: "Lista želja",
+    name: "userMenu.wishlist",
     to: routes.WishlistRoute.to,
     icon: Heart,
     isAdminOnly: false,
     isAuthRequired: true,
   },
   {
-    name: "Moje adrese",
+    name: "userMenu.myAddresses",
     to: routes.AddressManagementRoute.to,
     icon: MapPin,
     isAdminOnly: false,
     isAuthRequired: true,
   },
   {
-    name: "Podešavanja naloga",
+    name: "userMenu.accountSettings",
     to: routes.AccountRoute.to,
     icon: Settings,
     isAuthRequired: false,

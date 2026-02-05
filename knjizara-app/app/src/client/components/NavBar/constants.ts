@@ -2,15 +2,15 @@ import { routes } from "wasp/client/router";
 import type { NavigationItem } from "./NavBar";
 
 export const marketingNavigationItems: NavigationItem[] = [
-  { name: "Knjige", to: routes.BooksRoute.to },
-  { name: "Objavi knjigu", to: routes.CreateListingRoute.to },
-  { name: "Moji oglasi", to: routes.MyListingsRoute.to },
-  { name: "Moje prodaje", to: routes.SellerOrdersRoute.to },
+  { name: "nav.books", to: routes.BooksRoute.to },
+  { name: "nav.createListing", to: routes.CreateListingRoute.to },
+  { name: "nav.myListings", to: routes.MyListingsRoute.to },
+  { name: "nav.mySales", to: routes.SellerOrdersRoute.to },
 ] as const;
 
 export const demoNavigationitems: NavigationItem[] = [
-  { name: "Knjige", to: routes.BooksRoute.to },
-  { name: "Objavi knjigu", to: routes.CreateListingRoute.to },
-  { name: "Moji oglasi", to: routes.MyListingsRoute.to },
-  { name: "Moje prodaje", to: routes.SellerOrdersRoute.to },
+  { name: "nav.books", to: routes.BooksRoute.to },
+  { name: "nav.createListing", to: routes.CreateListingRoute.to },
+  { name: "nav.myListings", to: routes.MyListingsRoute.to },
+  { name: "nav.mySales", to: routes.SellerOrdersRoute.to },
 ] as const;

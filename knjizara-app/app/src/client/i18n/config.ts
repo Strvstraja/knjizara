@@ -4,10 +4,19 @@ import { initReactI18next } from 'react-i18next';
 const srLatn = {
   "nav": {
     "books": "Knjige",
+    "createListing": "Objavi knjigu",
+    "myListings": "Moji oglasi",
+    "mySales": "Moje prodaje",
     "cart": "Korpa",
     "login": "Prijavi se",
     "logout": "Odjavi se",
     "account": "Nalog"
+  },
+  "userMenu": {
+    "myOrders": "Moje porudžbine",
+    "wishlist": "Lista želja",
+    "myAddresses": "Moje adrese",
+    "accountSettings": "Podešavanja naloga"
   },
   "landing": {
     "hero": {
@@ -301,10 +310,19 @@ const srLatn = {
 const srCyrl = {
   "nav": {
     "books": "Књиге",
+    "createListing": "Објави књигу",
+    "myListings": "Моји огласи",
+    "mySales": "Моје продаје",
     "cart": "Корпа",
     "login": "Пријави се",
     "logout": "Одјави се",
     "account": "Налог"
+  },
+  "userMenu": {
+    "myOrders": "Моје поруџбине",
+    "wishlist": "Листа жеља",
+    "myAddresses": "Моје адресе",
+    "accountSettings": "Подешавања налога"
   },
   "landing": {
     "hero": {

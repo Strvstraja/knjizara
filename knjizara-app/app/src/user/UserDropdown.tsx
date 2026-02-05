@@ -3,6 +3,7 @@ import { useState } from "react";
 import { logout } from "wasp/client/auth";
 import { Link as WaspRouterLink } from "wasp/client/router";
 import { type User as UserEntity } from "wasp/entities";
+import { useTranslation } from "react-i18next";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,6 +14,7 @@ import { userMenuItems } from "./constants";
 
 export function UserDropdown({ user }: { user: Partial<UserEntity> }) {
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -40,7 +42,7 @@ export function UserDropdown({ user }: { user: Partial<UserEntity> }) {
                 className="flex w-full items-center gap-3"
               >
                 <item.icon size="1.1rem" />
-                {item.name}
+                {t(item.name)}
               </WaspRouterLink>
             </DropdownMenuItem>
           );
@@ -52,7 +54,7 @@ export function UserDropdown({ user }: { user: Partial<UserEntity> }) {
             className="flex w-full items-center gap-3"
           >
             <LogOut size="1.1rem" />
-            Log Out
+            {t('nav.logout')}
           </button>
         </DropdownMenuItem>
       </DropdownMenuContent>

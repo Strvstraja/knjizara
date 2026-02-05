@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { useAuth } from "wasp/client/auth";
 import { Link as WaspRouterLink, routes } from "wasp/client/router";
+import { useTranslation } from "react-i18next";
 import {
   Sheet,
   SheetContent,
@@ -223,6 +224,7 @@ function renderNavigationItems(
   navigationItems: NavigationItem[],
   setMobileMenuOpen?: Dispatch<SetStateAction<boolean>>,
 ) {
+  const { t } = useTranslation();
   const menuStyles = cn({
     "block rounded-lg px-3 py-2 text-sm font-medium leading-7 text-foreground hover:bg-accent hover:text-accent-foreground transition-colors":
       !!setMobileMenuOpen,
@@ -239,7 +241,7 @@ function renderNavigationItems(
           onClick={setMobileMenuOpen && (() => setMobileMenuOpen(false))}
           target={item.to.startsWith("http") ? "_blank" : undefined}
         >
-          {item.name}
+          {t(item.name)}
         </ReactRouterLink>
       </li>
     );

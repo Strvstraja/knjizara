@@ -829,14 +829,72 @@ Files:
 - Route: `/seller/orders` registered in main.wasp
 - Query: `getSellerOrders` with Order, OrderItem, Book, SellerProfile entities
 
+### 14.4 Additional Completed Features ✅
+**Status**: Completed
+- Seller type filter on books page (PRIVATE/BUSINESS)
+- Edit listing functionality with full form
+- Order status updates with tracking numbers
+- 14 book categories (expanded from 4)
+
+---
+
+## 📝 Phase 15: Optional Features (Marked as Won't Do) ❌
+
+The following features are considered optional enhancements and will NOT be implemented at this time:
+
+### **Nice-to-Have Features:**
+- ❌ Email notifications for orders
+- ❌ Advanced analytics for sellers (views over time, conversion rates)
+- ❌ Bulk operations on My Listings
+- ❌ Image upload (using URLs is sufficient)
+- ❌ Advanced search features
+- ❌ Wishlist sharing functionality
+- ❌ Order tracking for buyers
+- ❌ Reviews/ratings system
+- ❌ Seller verification badges
+- ❌ Promotional features (featured listings, discounts)
+
+### **Technical Improvements (Deferred):**
+- ❌ Performance optimization (caching, lazy loading)
+- ❌ SEO optimization (meta tags, sitemaps)
+- ❌ Additional mobile responsiveness improvements
+- ❌ Advanced accessibility features
+- ❌ Unit/integration tests
+- ❌ Comprehensive E2E tests
+
+---
+
+## 📝 Phase 16: Polish & Testing (Current Phase) ⏳
+
+**Status**: In Progress
+
+### **Testing Checklist:**
+- [ ] End-to-end user flow testing
+- [ ] Seller registration and profile setup
+- [ ] Create/edit/delete listings
+- [ ] Browse and filter books
+- [ ] Add to cart and checkout
+- [ ] Order management for sellers
+- [ ] Admin panel functionality
+- [ ] i18n translations (Latin/Cyrillic)
+- [ ] Mobile responsiveness
+- [ ] Error handling and edge cases
+
+### **Polish Tasks:**
+- [ ] Review and improve loading states
+- [ ] Enhance error messages
+- [ ] UI/UX consistency check
+- [ ] Performance review
+- [ ] Code cleanup and documentation
+
 ---
 
 ## 📝 Next Priority Tasks
 
-1. Add seller dashboard stats card to My Listings page
-2. Build admin panel for managing books/sellers/users
-3. Implement seller order management view
-4. Test all marketplace features end-to-end
+1. Test all marketplace features end-to-end
+2. Fix any bugs discovered during testing
+3. Polish UI/UX based on findings
+4. Prepare for deployment
 
 ---
 
