@@ -72,12 +72,12 @@ export default function BooksPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">{t('books.title')}</h1>
+        <h1 className="text-4xl font-bold text-foreground mb-8">{t('books.title')}</h1>
 
         {/* Search and Filters */}
-        <div className="bg-white rounded-lg shadow p-6 mb-8">
+        <div className="bg-card rounded-lg shadow p-6 mb-8">
           <form onSubmit={handleSearch} className="mb-4">
             <div className="flex gap-4">
               <input
@@ -85,7 +85,7 @@ export default function BooksPage() {
                 placeholder={t('books.search')}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="flex-1 px-4 py-2 bg-background border border-input rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-foreground"
               />
               <button
                 type="submit"
@@ -103,7 +103,7 @@ export default function BooksPage() {
                 setCategoryId(e.target.value || undefined);
                 setPage(1);
               }}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 bg-background border border-input rounded-lg focus:ring-2 focus:ring-blue-500 text-foreground"
             >
               <option value="">{t('books.allCategories')}</option>
               {categories?.map((category) => (
@@ -119,7 +119,7 @@ export default function BooksPage() {
                 setSortBy(e.target.value as any);
                 setPage(1);
               }}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 bg-background border border-input rounded-lg focus:ring-2 focus:ring-blue-500 text-foreground"
             >
               <option value="newest">{t('books.sortNewest')}</option>
               <option value="price_asc">{t('books.sortPriceAsc')}</option>
@@ -133,7 +133,7 @@ export default function BooksPage() {
                 setCondition(e.target.value || undefined);
                 setPage(1);
               }}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 bg-background border border-input rounded-lg focus:ring-2 focus:ring-blue-500 text-foreground"
             >
               <option value="">Sva stanja</option>
               <option value="NEW">Nova</option>
@@ -149,7 +149,7 @@ export default function BooksPage() {
                 setSellerType(e.target.value || undefined);
                 setPage(1);
               }}
-              className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="px-4 py-2 bg-background border border-input rounded-lg focus:ring-2 focus:ring-blue-500 text-foreground"
             >
               <option value="">Svi prodavci</option>
               <option value="PRIVATE">Privatno lice</option>
@@ -175,7 +175,7 @@ export default function BooksPage() {
                 <Link
                   key={book.id}
                   to={`/books/${book.id}` as any}
-                  className="bg-white rounded-lg shadow hover:shadow-xl transition-shadow overflow-hidden group"
+                  className="bg-card rounded-lg shadow hover:shadow-xl transition-shadow overflow-hidden group"
                 >
                   <div className="aspect-[2/3] bg-gray-200 relative overflow-hidden">
                     <img
