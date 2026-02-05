@@ -773,20 +773,57 @@ Files:
 - Seller public profile page (`/seller/:id`) - Skipped
 - Phone number field in account settings - Not needed
 - Messaging system between buyers and sellers - Won't implement
-- Seller ratings and reviews - Future consideration
+- Seller ratings and reviews - Won't implement
 
-### 13.6 Already Implemented ✅
-- Search filters for condition and seller type - Already available in book search
+### 13.6 Search Filters ✅
+**Status**: Completed
+- Condition filter added to books page (NEW, LIKE_NEW, VERY_GOOD, GOOD, ACCEPTABLE)
+- Works alongside existing category and sort filters
+- Seller type and city filters removed (not needed)
+
+---
+
+## 📝 Phase 14: Seller Dashboard & Admin Features (In Progress)
+
+### 14.1 Seller Dashboard Stats ✅
+**Status**: Completed
+- Added stats card to My Listings page
+- Shows: total listings, active (green), paused (yellow), sold (blue)
+- Real-time calculation from listings data
+- Clean, card-based UI design
+
+**Implementation:**
+- File: `src/listing/MyListingsPage.tsx` - Added 4-card stats grid
+
+### 14.2 Admin Panel ✅
+**Status**: Completed
+- Created admin books management page (`/admin/books`)
+- Created admin sellers management page (`/admin/sellers`)
+- Books admin: view all books, filter by status, delete listings
+- Sellers admin: view all sellers, see listing counts, view their books
+- Integrated with existing admin layout
+
+**Implementation:**
+- Files: `src/admin/dashboards/books/BooksAdminPage.tsx` & `BooksAdminTable.tsx`
+- Files: `src/admin/dashboards/sellers/SellersAdminPage.tsx` & `SellersAdminTable.tsx`
+- Routes: `/admin/books`, `/admin/sellers` registered in main.wasp
+- Uses existing admin layout and styling
+
+### 14.3 Order Management for Sellers ⏳
+**Status**: Planned (Next)
+- Seller view of orders for their books
+- Track which books were sold to whom
+- Order history per seller
+- Filter by order status
 
 ---
 
 ## 📝 Next Priority Tasks
 
-1. Test marketplace features end-to-end
-2. Add more seller fields if needed (optional)
-3. Build admin panel for book management
-4. Implement order management improvements
-5. Add analytics/reporting for sellers
+1. Add seller dashboard stats card to My Listings page
+2. Build admin panel for managing books/sellers/users
+3. Implement seller order management view
+4. Test all marketplace features end-to-end
 
 ---
 

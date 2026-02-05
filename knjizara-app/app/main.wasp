@@ -375,10 +375,19 @@ action markAsSold {
 }
 //#endregion
 
-//#region Contact Form Messages
-// TODO:
-// add functionality to allow users to send messages to admin
-// and make them accessible via the admin dashboard
+//#region Admin Panel
+route AdminBooksRoute { path: "/admin/books", to: AdminBooksPage }
+page AdminBooksPage {
+  authRequired: true,
+  component: import AdminBooks from "@src/admin/dashboards/books/BooksAdminPage"
+}
+
+route AdminSellersRoute { path: "/admin/sellers", to: AdminSellersPage }
+page AdminSellersPage {
+  authRequired: true,
+  component: import AdminSellers from "@src/admin/dashboards/sellers/SellersAdminPage"
+}
+
 route AdminMessagesRoute { path: "/admin/messages", to: AdminMessagesPage }
 page AdminMessagesPage {
   authRequired: true,

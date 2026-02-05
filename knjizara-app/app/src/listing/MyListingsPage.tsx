@@ -87,9 +87,6 @@ export default function MyListingsPage() {
             <h1 className="text-3xl font-bold text-foreground mb-2">
               {t('listing.myListings')}
             </h1>
-            <p className="text-muted-foreground">
-              {t('listing.totalListings')}: {data?.total || 0}
-            </p>
           </div>
           <Link to="/create-listing">
             <Button className="flex items-center gap-2">
@@ -97,6 +94,32 @@ export default function MyListingsPage() {
               {t('listing.create')}
             </Button>
           </Link>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+          <div className="bg-card rounded-lg p-4 border border-border">
+            <p className="text-sm text-muted-foreground mb-1">Ukupno</p>
+            <p className="text-2xl font-bold text-foreground">{data?.total || 0}</p>
+          </div>
+          <div className="bg-card rounded-lg p-4 border border-border">
+            <p className="text-sm text-muted-foreground mb-1">Aktivno</p>
+            <p className="text-2xl font-bold text-green-600">
+              {data?.books?.filter((b: any) => b.status === 'ACTIVE').length || 0}
+            </p>
+          </div>
+          <div className="bg-card rounded-lg p-4 border border-border">
+            <p className="text-sm text-muted-foreground mb-1">Pauzirano</p>
+            <p className="text-2xl font-bold text-yellow-600">
+              {data?.books?.filter((b: any) => b.status === 'PAUSED').length || 0}
+            </p>
+          </div>
+          <div className="bg-card rounded-lg p-4 border border-border">
+            <p className="text-sm text-muted-foreground mb-1">Prodato</p>
+            <p className="text-2xl font-bold text-blue-600">
+              {data?.books?.filter((b: any) => b.status === 'SOLD').length || 0}
+            </p>
+          </div>
         </div>
 
         {/* Status Filters */}
