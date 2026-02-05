@@ -31,46 +31,14 @@ export default function NavBar({
 }: {
   navigationItems: NavigationItem[];
 }) {
-  const [isScrolled, setIsScrolled] = useState(false);
   const isLandingPage = useIsLandingPage();
-
-  useEffect(() => {
-    const throttledHandler = throttleWithTrailingInvocation(() => {
-      setIsScrolled(window.scrollY > 0);
-    }, 50);
-
-    window.addEventListener("scroll", throttledHandler);
-
-    return () => {
-      window.removeEventListener("scroll", throttledHandler);
-      throttledHandler.cancel();
-    };
-  }, []);
 
   return (
     <>
-      <header
-        className={cn(
-          "sticky top-0 z-50 transition-all duration-300",
-          isScrolled && "top-4",
-        )}
-      >
-        <div
-          className={cn("transition-all duration-300", {
-            "bg-background/90 border-border mx-4 rounded-full border pr-2 shadow-lg backdrop-blur-lg md:mx-20 lg:pr-0":
-              isScrolled,
-            "bg-background/80 border-border mx-0 border-b backdrop-blur-lg":
-              !isScrolled,
-          })}
-        >
+      <header className="sticky top-0 z-50">
+        <div className="bg-background/80 border-border border-b backdrop-blur-lg">
           <nav
-            className={cn(
-              "flex items-center justify-between transition-all duration-300",
-              {
-                "p-3 lg:px-6": isScrolled,
-                "p-6 lg:px-8": !isScrolled,
-              },
-            )}
+            className="flex items-center justify-between p-6 lg:px-8"
             aria-label="Global"
           >
             <div className="flex items-center gap-6">
@@ -78,16 +46,8 @@ export default function NavBar({
                 to={routes.LandingPageRoute.to}
                 className="text-foreground hover:text-primary flex items-center transition-colors duration-300 ease-in-out"
               >
-                <NavLogo isScrolled={isScrolled} />
-                <span
-                  className={cn(
-                    "text-foreground font-semibold leading-6 transition-all duration-300",
-                    {
-                      "ml-2 text-sm": !isScrolled,
-                      "ml-2 text-xs": isScrolled,
-                    },
-                  )}
-                >
+                <NavLogo isScrolled={false} />
+                <span className="text-foreground ml-2 text-sm font-semibold leading-6">
                   Your SaaS
                 </span>
               </WaspRouterLink>
@@ -97,10 +57,10 @@ export default function NavBar({
               </ul>
             </div>
             <NavBarMobileMenu
-              isScrolled={isScrolled}
+              isScrolled={false}
               navigationItems={navigationItems}
             />
-            <NavBarDesktopUserDropdown isScrolled={isScrolled} />
+            <NavBarDesktopUserDropdown isScrolled={false} />
           </nav>
         </div>
       </header>

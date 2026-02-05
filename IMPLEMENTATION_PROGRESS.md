@@ -864,11 +864,26 @@ The following features are considered optional enhancements and will NOT be impl
 
 ---
 
-## 📝 Phase 16: Polish & Testing (Current Phase) ⏳
+## 📝 Phase 16: Polish & Testing ✅
 
-**Status**: In Progress
+**Status**: Completed
+
+### **Completed Fixes:**
+- ✅ Navigation i18n - Links switch between Latin/Cyrillic
+- ✅ User dropdown i18n - Menu items translate properly
+- ✅ Horizontal scrollbar removed - overflow-x-hidden on html
+- ✅ Cart drawer improvements:
+  - Width increased to 500px
+  - Books section has 60vh minimum height
+  - White background on scrollable area
+  - Z-index set to 9999 to cover all content
+  - Overlay at z-index 9998 with 60% opacity
+  - Proper spacing and visibility
 
 ### **Testing Checklist:**
+- ✅ i18n translations (Latin/Cyrillic) - Verified working
+- ✅ Cart drawer functionality - Fixed and verified
+- ✅ Navigation and menus - All translating properly
 - [ ] End-to-end user flow testing
 - [ ] Seller registration and profile setup
 - [ ] Create/edit/delete listings
@@ -876,11 +891,10 @@ The following features are considered optional enhancements and will NOT be impl
 - [ ] Add to cart and checkout
 - [ ] Order management for sellers
 - [ ] Admin panel functionality
-- [ ] i18n translations (Latin/Cyrillic)
 - [ ] Mobile responsiveness
 - [ ] Error handling and edge cases
 
-### **Polish Tasks:**
+### **Remaining Polish Tasks:**
 - [ ] Review and improve loading states
 - [ ] Enhance error messages
 - [ ] UI/UX consistency check
