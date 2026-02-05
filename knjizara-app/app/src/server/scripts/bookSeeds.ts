@@ -1,37 +1,36 @@
 import type { PrismaClient } from "@prisma/client";
 
 export async function seedBooks(prismaClient: PrismaClient) {
-  // Create categories first
-  const categories = await Promise.all([
-    prismaClient.category.create({
-      data: {
-        name: "Beletristika",
-        nameCyrillic: "Белетристика",
-        slug: "beletristika",
-      },
-    }),
-    prismaClient.category.create({
-      data: {
-        name: "Naučna literatura",
-        nameCyrillic: "Научна литература",
-        slug: "naucna-literatura",
-      },
-    }),
-    prismaClient.category.create({
-      data: {
-        name: "Dečje knjige",
-        nameCyrillic: "Дечје књиге",
-        slug: "decje-knjige",
-      },
-    }),
-    prismaClient.category.create({
-      data: {
-        name: "Domaći autori",
-        nameCyrillic: "Домаћи аутори",
-        slug: "domaci-autori",
-      },
-    }),
-  ]);
+  // Create or update categories
+  const categoryData = [
+    { name: "Beletristika", nameCyrillic: "Белетристика", slug: "beletristika" },
+    { name: "Naučna literatura", nameCyrillic: "Научна литература", slug: "naucna-literatura" },
+    { name: "Dečje knjige", nameCyrillic: "Дечје књиге", slug: "decje-knjige" },
+    { name: "Domaći autori", nameCyrillic: "Домаћи аутори", slug: "domaci-autori" },
+    { name: "Triler i krimi", nameCyrillic: "Трилер и крими", slug: "triler-krimi" },
+    { name: "Fantastika i SF", nameCyrillic: "Фантастика и СФ", slug: "fantastika-sf" },
+    { name: "Ljubavni romani", nameCyrillic: "Љубавни романи", slug: "ljubavni-romani" },
+    { name: "Biografije i memoari", nameCyrillic: "Биографије и мемоари", slug: "biografije-memoari" },
+    { name: "Poezija", nameCyrillic: "Поезија", slug: "poezija" },
+    { name: "Istorija", nameCyrillic: "Историја", slug: "istorija" },
+    { name: "Psihologija i samopomoć", nameCyrillic: "Психологија и самопомоћ", slug: "psihologija-samopomoc" },
+    { name: "Biznis i ekonomija", nameCyrillic: "Бизнис и економија", slug: "biznis-ekonomija" },
+    { name: "Putopisi", nameCyrillic: "Путописи", slug: "putopisi" },
+    { name: "Kuvari i ishrana", nameCyrillic: "Кувари и исхрана", slug: "kuvari-ishrana" },
+  ];
+
+  const categories = await Promise.all(
+    categoryData.map(cat =>
+      prismaClient.category.upsert({
+        where: { slug: cat.slug },
+        update: {
+          name: cat.name,
+          nameCyrillic: cat.nameCyrillic,
+        },
+        create: cat,
+      })
+    )
+  );
 
   // Create sample books
   const books = [
