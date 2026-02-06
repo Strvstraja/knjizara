@@ -31,6 +31,9 @@ export default function NavBar({
   navigationItems: NavigationItem[];
 }) {
   const isLandingPage = useIsLandingPage();
+  const { i18n } = useTranslation();
+  const isCyrillic = i18n.language === 'sr-Cyrl';
+  const siteName = isCyrillic ? 'ЧСМК' : 'ČSMK';
 
   return (
     <>
@@ -47,7 +50,7 @@ export default function NavBar({
               >
                 <NavLogo isScrolled={false} />
                 <span className="text-foreground ml-2 text-sm font-semibold leading-6">
-                  Your SaaS
+                  {siteName}
                 </span>
               </WaspRouterLink>
 
@@ -116,6 +119,9 @@ function NavBarMobileMenu({
 }) {
   const { data: user, isLoading: isUserLoading } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { i18n } = useTranslation();
+  const isCyrillic = i18n.language === 'sr-Cyrl';
+  const siteName = isCyrillic ? 'ЧСМК' : 'ČSMK';
 
   return (
     <div className="flex lg:hidden">
@@ -141,7 +147,7 @@ function NavBarMobileMenu({
           <SheetHeader>
             <SheetTitle className="flex items-center">
               <WaspRouterLink to={routes.LandingPageRoute.to}>
-                <span className="sr-only">Your SaaS</span>
+                <span className="sr-only">{siteName}</span>
                 <NavLogo isScrolled={false} />
               </WaspRouterLink>
             </SheetTitle>
@@ -203,13 +209,19 @@ function renderNavigationItems(
   });
 }
 
-const NavLogo = ({ isScrolled }: { isScrolled: boolean }) => (
-  <img
-    className={cn("transition-all duration-500", {
-      "size-8": !isScrolled,
-      "size-7": isScrolled,
-    })}
-    src={logo}
-    alt="Your SaaS App"
-  />
-);
+const NavLogo = ({ isScrolled }: { isScrolled: boolean }) => {
+  const { i18n } = useTranslation();
+  const isCyrillic = i18n.language === 'sr-Cyrl';
+  const siteName = isCyrillic ? 'ЧСМК' : 'ČSMK';
+  
+  return (
+    <img
+      className={cn("transition-all duration-500", {
+        "size-8": !isScrolled,
+        "size-7": isScrolled,
+      })}
+      src={logo}
+      alt={siteName}
+    />
+  );
+};

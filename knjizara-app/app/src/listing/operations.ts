@@ -477,3 +477,41 @@ export const toggleFeatured = async (
 
   return updated;
 };
+
+// Toggle bestseller
+type ToggleBestsellerInput = {
+  id: string;
+  bestseller: boolean;
+};
+
+export const toggleBestseller = async (
+  args: ToggleBestsellerInput,
+  context: any
+): Promise<Book> => {
+  if (!context.user) {
+    throw new HttpError(401, 'You must be logged in');
+  }
+
+  if (!context.user.isAdmin) {
+    throw new HttpError(403, 'Only admins can mark books as bestsellers');
+  }
+
+  const book = await context.entities.Book.findUnique({
+    where: { id: args.id }
+  });
+
+  if (!book) {
+    throw new HttpError(404, 'Book not found');
+  }
+
+  const updated = await context.entities.Book.update({
+    where: { id: args.id },
+    data: { bestseller: args.bestseller },
+    include: {
+      categories: true,
+      seller: true
+    }
+  });
+
+  return updated;
+};

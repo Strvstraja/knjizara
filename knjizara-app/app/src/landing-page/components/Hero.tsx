@@ -2,17 +2,30 @@ import { Link as WaspRouterLink, routes } from "wasp/client/router";
 import { useTranslation } from "react-i18next";
 import { BookOpen, ShoppingCart, Truck } from "lucide-react";
 import { Button } from "../../client/components/ui/button";
+import logoLatin from "../../client/static/csmk.png";
+import logoCyrillic from "../../client/static/csmk1.png";
 
 export default function Hero() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isCyrillic = i18n.language === 'sr-Cyrl';
 
   return (
-    <div className="relative w-full pt-14">
-      <TopGradient />
-      <BottomGradient />
-      <div className="md:p-24">
-        <div className="max-w-8xl mx-auto px-6 lg:px-8">
-          <div className="lg:mb-18 mx-auto max-w-3xl text-center">
+    <div className="relative w-full">
+      <div className="px-6 lg:px-8 pb-8">
+        <div className="max-w-8xl mx-auto">
+          <div className="mx-auto max-w-5xl text-center">
+            {/* Logo */}
+            <div className="flex justify-center overflow-hidden -mb-8">
+              <img 
+                src={isCyrillic ? logoLatin : logoCyrillic}
+                alt="Logo"
+                className="w-full max-w-4xl -mt-[15%]"
+                style={{ 
+                  clipPath: 'inset(30% 0px)',
+                  transform: 'scale(1.3)'
+                }}
+              />
+            </div>
             <h1 className="text-foreground text-5xl font-bold sm:text-6xl">
               {t('landing.hero.title')}{" "}
               <span className="text-gradient-primary">{t('landing.hero.highlight')}</span>

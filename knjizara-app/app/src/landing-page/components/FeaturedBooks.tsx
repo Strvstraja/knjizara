@@ -54,24 +54,24 @@ export default function FeaturedBooks() {
             <a
               key={book.id}
               href={routes.BookDetailRoute.build({ params: { id: book.id } })}
-              className="group"
+              className="group h-full flex"
             >
-              <div className="bg-card rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300">
-                <div className="aspect-[3/4] overflow-hidden bg-muted">
+              <div className="bg-card rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col w-full">
+                <div className="aspect-[3/4] overflow-hidden bg-muted flex-shrink-0">
                   <img
                     src={book.coverImage || '/placeholder-book.jpg'}
                     alt={book.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <div className="p-4">
+                <div className="p-4 flex flex-col flex-grow">
                   <h3 className="font-semibold text-foreground mb-1 line-clamp-2 group-hover:text-primary transition-colors">
                     {book.title}
                   </h3>
                   <p className="text-sm text-muted-foreground mb-2 line-clamp-1">
                     {book.author}
                   </p>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-auto">
                     <span className="text-lg font-bold text-primary">
                       {book.price.toLocaleString('sr-RS')} {t('common.rsd')}
                     </span>

@@ -42,24 +42,16 @@ export default function NewArrivals() {
   return (
     <section className="py-16 px-6 lg:px-8 bg-muted/30">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-12">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <Sparkles className="h-6 w-6 text-primary" />
-              <h2 className="text-3xl font-bold text-foreground">
-                {t('landing.newArrivals.title')}
-              </h2>
-            </div>
-            <p className="text-muted-foreground">
-              {t('landing.newArrivals.subtitle')}
-            </p>
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Sparkles className="h-6 w-6 text-primary" />
+            <h2 className="text-3xl font-bold text-foreground">
+              {t('landing.newArrivals.title')}
+            </h2>
           </div>
-          <Button variant="ghost" asChild className="hidden sm:flex">
-            <WaspRouterLink to={routes.BooksRoute.to}>
-              {t('landing.newArrivals.viewAll')}
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </WaspRouterLink>
-          </Button>
+          <p className="text-muted-foreground">
+            {t('landing.newArrivals.subtitle')}
+          </p>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -67,10 +59,10 @@ export default function NewArrivals() {
             <a
               key={book.id}
               href={routes.BookDetailRoute.build({ params: { id: book.id } })}
-              className="group"
+              className="group h-full flex"
             >
-              <div className="bg-card rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
-                <div className="aspect-[3/4] overflow-hidden bg-muted relative">
+              <div className="bg-card rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col w-full">
+                <div className="aspect-[3/4] overflow-hidden bg-muted relative flex-shrink-0">
                   <img
                     src={book.coverImage || '/placeholder-book.jpg'}
                     alt={book.title}
@@ -80,14 +72,14 @@ export default function NewArrivals() {
                     {t('landing.newArrivals.badge')}
                   </div>
                 </div>
-                <div className="p-3">
+                <div className="p-3 flex flex-col flex-grow">
                   <h3 className="font-semibold text-sm text-foreground mb-1 line-clamp-2 group-hover:text-primary transition-colors">
                     {book.title}
                   </h3>
                   <p className="text-xs text-muted-foreground mb-2 line-clamp-1">
                     {book.author}
                   </p>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mt-auto">
                     <span className="text-sm font-bold text-primary">
                       {book.price.toLocaleString('sr-RS')} {t('common.rsd')}
                     </span>

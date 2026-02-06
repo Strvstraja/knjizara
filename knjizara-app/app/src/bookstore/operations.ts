@@ -12,6 +12,7 @@ type GetBooksInput = {
   maxPrice?: number;
   binding?: string;
   featured?: boolean;
+  bestseller?: boolean;
   sortBy?: 'price_asc' | 'price_desc' | 'newest' | 'title';
   sellerId?: string;
   condition?: string;
@@ -37,6 +38,7 @@ export const getBooks = async (args: GetBooksInput, context: any): Promise<GetBo
     maxPrice,
     binding,
     featured,
+    bestseller,
     sortBy = 'newest',
     sellerId,
     condition,
@@ -81,6 +83,10 @@ export const getBooks = async (args: GetBooksInput, context: any): Promise<GetBo
 
   if (featured !== undefined) {
     where.featured = featured;
+  }
+
+  if (bestseller !== undefined) {
+    where.bestseller = bestseller;
   }
 
   if (sellerId) {

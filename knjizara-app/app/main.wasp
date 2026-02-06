@@ -385,6 +385,11 @@ action toggleFeatured {
   entities: [Book]
 }
 
+action toggleBestseller {
+  fn: import { toggleBestseller } from "@src/listing/operations",
+  entities: [Book]
+}
+
 // Seller Orders
 route SellerOrdersRoute { path: "/seller/orders", to: SellerOrdersPage }
 page SellerOrdersPage {

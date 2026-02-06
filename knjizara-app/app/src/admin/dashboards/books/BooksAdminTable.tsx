@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from 'wasp/client/operations';
-import { getBooks, deleteListing, toggleFeatured } from 'wasp/client/operations';
-import { Trash2, Eye, Pause, Play, Star } from 'lucide-react';
+import { getBooks, deleteListing, toggleFeatured, toggleBestseller } from 'wasp/client/operations';
+import { Trash2, Eye, Pause, Play, Star, TrendingUp } from 'lucide-react';
 
 export default function BooksAdminTable() {
   const [page, setPage] = useState(1);
@@ -33,6 +33,16 @@ export default function BooksAdminTable() {
     } catch (err: any) {
       console.error('Error toggling featured:', err);
       alert('Greška pri promeni statusa izdvajamo');
+    }
+  };
+
+  const handleToggleBestseller = async (id: string, currentValue: boolean) => {
+    try {
+      await toggleBestseller({ id, bestseller: !currentValue });
+      refetch();
+    } catch (err: any) {
+      console.error('Error toggling bestseller:', err);
+      alert('Greška pri promeni statusa bestseller');
     }
   };
 
@@ -106,6 +116,9 @@ export default function BooksAdminTable() {
               <th className="min-w-[120px] px-4 py-4 font-medium text-black">
                 Izdvajamo
               </th>
+              <th className="min-w-[120px] px-4 py-4 font-medium text-black">
+                Bestseller
+              </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black">
                 Prodavac
               </th>
@@ -146,6 +159,20 @@ export default function BooksAdminTable() {
                   >
                     <Star className={`h-4 w-4 ${book.featured ? 'fill-yellow-600' : ''}`} />
                     {book.featured ? 'DA' : 'NE'}
+                  </button>
+                </td>
+                <td className="px-4 py-5">
+                  <button
+                    onClick={() => handleToggleBestseller(book.id, book.bestseller)}
+                    className={`inline-flex items-center gap-1 rounded px-3 py-1 text-sm font-medium transition-colors ${
+                      book.bestseller
+                        ? 'bg-green-100 text-green-800 hover:bg-green-200'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                    title={book.bestseller ? 'Ukloni iz bestseller' : 'Dodaj u bestseller'}
+                  >
+                    <TrendingUp className={`h-4 w-4 ${book.bestseller ? 'fill-green-600' : ''}`} />
+                    {book.bestseller ? 'DA' : 'NE'}
                   </button>
                 </td>
                 <td className="px-4 py-5">

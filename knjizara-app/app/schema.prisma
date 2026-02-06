@@ -136,6 +136,7 @@ model Book {
   language            String
   stock               Int           @default(0)
   featured            Boolean       @default(false)
+  bestseller          Boolean       @default(false)
   categories          Category[]    @relation("BookCategories")
   orderItems          OrderItem[]
   wishlistItems       WishlistItem[]
