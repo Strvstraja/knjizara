@@ -1,6 +1,6 @@
 import { useState, FormEvent } from "react";
 import { useTranslation } from "react-i18next";
-import { signup } from "wasp/client/auth";
+import { signup, login } from "wasp/client/auth";
 import { Link as WaspRouterLink, routes } from "wasp/client/router";
 import { useNavigate } from "react-router-dom";
 
@@ -19,6 +19,7 @@ export function CustomSignupForm() {
 
     try {
       await signup({ username, password });
+      await login({ username, password });
       navigate(routes.BooksRoute.to);
     } catch (err: any) {
       console.error('Signup error:', JSON.stringify(err, null, 2));
