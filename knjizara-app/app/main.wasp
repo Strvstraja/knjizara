@@ -380,6 +380,11 @@ action markAsSold {
   entities: [Book, SellerProfile]
 }
 
+action toggleFeatured {
+  fn: import { toggleFeatured } from "@src/listing/operations",
+  entities: [Book]
+}
+
 // Seller Orders
 route SellerOrdersRoute { path: "/seller/orders", to: SellerOrdersPage }
 page SellerOrdersPage {

@@ -17,6 +17,7 @@ type GetBooksInput = {
   condition?: string;
   sellerType?: string;
   city?: string;
+  status?: string;
 };
 
 type GetBooksOutput = {
@@ -41,11 +42,14 @@ export const getBooks = async (args: GetBooksInput, context: any): Promise<GetBo
     condition,
     sellerType,
     city,
+    status = 'ACTIVE',
   } = args;
 
   const skip = (page - 1) * limit;
 
-  const where: any = {};
+  const where: any = {
+    status: status,
+  };
 
   if (search) {
     where.OR = [

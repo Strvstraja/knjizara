@@ -89,7 +89,7 @@ export default function NewArrivals() {
                   </p>
                   <div className="flex items-center justify-between">
                     <span className="text-sm font-bold text-primary">
-                      {book.price.toLocaleString('sr-RS')} {t('common.currency')}
+                      {book.price.toLocaleString('sr-RS')} {t('common.rsd')}
                     </span>
                     <ShoppingCart className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
                   </div>

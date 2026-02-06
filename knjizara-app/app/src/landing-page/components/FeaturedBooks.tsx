@@ -8,7 +8,8 @@ export default function FeaturedBooks() {
   const { t } = useTranslation();
   const { data: booksData, isLoading } = useQuery(getBooks, {
     page: 1,
-    pageSize: 4,
+    limit: 8,
+    featured: true,
   });
 
   if (isLoading) {
@@ -34,8 +35,7 @@ export default function FeaturedBooks() {
     );
   }
 
-  const books = booksData?.books || [];
-  const featuredBooks = books.slice(0, 4);
+  const featuredBooks = booksData?.books || [];
 
   return (
     <section className="py-16 px-6 lg:px-8 bg-muted/30">
@@ -73,7 +73,7 @@ export default function FeaturedBooks() {
                   </p>
                   <div className="flex items-center justify-between">
                     <span className="text-lg font-bold text-primary">
-                      {book.price.toLocaleString('sr-RS')} {t('common.currency')}
+                      {book.price.toLocaleString('sr-RS')} {t('common.rsd')}
                     </span>
                     <ShoppingCart className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
                   </div>

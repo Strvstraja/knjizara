@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from 'wasp/client/operations';
-import { getBooks, deleteListing } from 'wasp/client/operations';
-import { Trash2, Eye, Pause, Play } from 'lucide-react';
+import { getBooks, deleteListing, toggleFeatured } from 'wasp/client/operations';
+import { Trash2, Eye, Pause, Play, Star } from 'lucide-react';
 
 export default function BooksAdminTable() {
   const [page, setPage] = useState(1);
@@ -23,6 +23,16 @@ export default function BooksAdminTable() {
       console.error('Error deleting book:', err);
       const errorMessage = err?.message || 'Greška pri brisanju knjige';
       alert(errorMessage);
+    }
+  };
+
+  const handleToggleFeatured = async (id: string, currentValue: boolean) => {
+    try {
+      await toggleFeatured({ id, featured: !currentValue });
+      refetch();
+    } catch (err: any) {
+      console.error('Error toggling featured:', err);
+      alert('Greška pri promeni statusa izdvajamo');
     }
   };
 
@@ -93,6 +103,9 @@ export default function BooksAdminTable() {
               <th className="min-w-[100px] px-4 py-4 font-medium text-black">
                 Status
               </th>
+              <th className="min-w-[120px] px-4 py-4 font-medium text-black">
+                Izdvajamo
+              </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black">
                 Prodavac
               </th>
@@ -120,6 +133,20 @@ export default function BooksAdminTable() {
                   <span className={`inline-flex rounded px-3 py-1 text-sm font-medium ${getStatusBadge(book.status)}`}>
                     {book.status}
                   </span>
+                </td>
+                <td className="px-4 py-5">
+                  <button
+                    onClick={() => handleToggleFeatured(book.id, book.featured)}
+                    className={`inline-flex items-center gap-1 rounded px-3 py-1 text-sm font-medium transition-colors ${
+                      book.featured
+                        ? 'bg-yellow-100 text-yellow-800 hover:bg-yellow-200'
+                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                    title={book.featured ? 'Ukloni iz izdvajamo' : 'Dodaj u izdvajamo'}
+                  >
+                    <Star className={`h-4 w-4 ${book.featured ? 'fill-yellow-600' : ''}`} />
+                    {book.featured ? 'DA' : 'NE'}
+                  </button>
                 </td>
                 <td className="px-4 py-5">
                   <p className="text-sm text-black">

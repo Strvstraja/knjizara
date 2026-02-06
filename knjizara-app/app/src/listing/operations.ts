@@ -439,3 +439,41 @@ export const markAsSold = async (
 
   return updated;
 };
+
+// Toggle featured (izdvajamo)
+type ToggleFeaturedInput = {
+  id: string;
+  featured: boolean;
+};
+
+export const toggleFeatured = async (
+  args: ToggleFeaturedInput,
+  context: any
+): Promise<Book> => {
+  if (!context.user) {
+    throw new HttpError(401, 'You must be logged in');
+  }
+
+  if (!context.user.isAdmin) {
+    throw new HttpError(403, 'Only admins can mark books as featured');
+  }
+
+  const book = await context.entities.Book.findUnique({
+    where: { id: args.id }
+  });
+
+  if (!book) {
+    throw new HttpError(404, 'Book not found');
+  }
+
+  const updated = await context.entities.Book.update({
+    where: { id: args.id },
+    data: { featured: args.featured },
+    include: {
+      categories: true,
+      seller: true
+    }
+  });
+
+  return updated;
+};
