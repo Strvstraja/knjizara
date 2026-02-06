@@ -268,7 +268,7 @@ export default function BooksPage() {
               </div>
             ) : (
               <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {booksData?.books.map((book) => (
                 <Link
                   key={book.id}
@@ -317,12 +317,12 @@ export default function BooksPage() {
                       </button>
                     )}
                   </div>
-                  <div className="p-4">
-                    <h3 className="font-semibold text-gray-900 mb-1 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                  <div className="p-4 flex flex-col">
+                    <h3 className="font-semibold text-gray-900 mb-1 line-clamp-2 group-hover:text-blue-600 transition-colors h-12">
                       {book.title}
                     </h3>
-                    <p className="text-sm text-gray-600 mb-2">{book.author}</p>
-                    <div className="flex items-center gap-2">
+                    <p className="text-sm text-gray-600 mb-2 h-10 line-clamp-2">{book.author}</p>
+                    <div className="flex items-center gap-2 mt-auto">
                       {book.discountPrice ? (
                         <>
                           <span className="text-lg font-bold text-red-600">
