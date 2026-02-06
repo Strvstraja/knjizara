@@ -42,19 +42,19 @@ export default function CartDrawer() {
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 right-0 h-full w-full sm:w-[500px] bg-white shadow-xl z-[9999] transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-full sm:w-[500px] bg-card shadow-xl z-[9999] transform transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b">
-            <h2 className="text-xl font-bold text-gray-900">
+          <div className="flex items-center justify-between p-4 border-b border-border">
+            <h2 className="text-xl font-bold text-foreground">
               {t('cart.title')} ({getItemCount()})
             </h2>
             <button
               onClick={() => setIsOpen(false)}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              className="p-2 hover:bg-accent rounded-lg transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -62,8 +62,8 @@ export default function CartDrawer() {
 
           {/* Free Shipping Progress */}
           {items.length > 0 && subtotal < FREE_SHIPPING_THRESHOLD && (
-            <div className="p-4 bg-blue-50 border-b">
-              <p className="text-sm text-gray-700 mb-2">
+            <div className="p-4 bg-blue-50 dark:bg-blue-950 border-b border-border">
+              <p className="text-sm text-foreground mb-2">
                 {t('cart.freeShippingProgress', { amount: amountToFreeShipping.toFixed(2), currency: t('common.rsd') })}
               </p>
               <div className="w-full bg-gray-200 rounded-full h-2">
@@ -76,19 +76,19 @@ export default function CartDrawer() {
           )}
 
           {items.length > 0 && subtotal >= FREE_SHIPPING_THRESHOLD && (
-            <div className="p-4 bg-green-50 border-b">
-              <p className="text-sm text-green-700 font-semibold">
+            <div className="p-4 bg-green-50 dark:bg-green-950 border-b border-border">
+              <p className="text-sm text-green-700 dark:text-green-300 font-semibold">
                 ✓ {t('cart.freeShippingAchieved')}
               </p>
             </div>
           )}
 
           {/* Cart Items - MAXIMUM SPACE */}
-          <div className="overflow-y-auto p-4 bg-white" style={{ minHeight: '60vh', maxHeight: 'calc(100vh - 200px)' }}>
+          <div className="overflow-y-auto p-4 bg-card" style={{ minHeight: '60vh', maxHeight: 'calc(100vh - 200px)' }}>
             {items.length === 0 ? (
               <div className="text-center py-12">
                 <ShoppingCart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-                <p className="text-gray-500">{t('cart.empty')}</p>
+                <p className="text-muted-foreground">{t('cart.empty')}</p>
                 <Link
                   to="/books"
                   onClick={() => setIsOpen(false)}
@@ -102,46 +102,46 @@ export default function CartDrawer() {
                 {items.map((item) => {
                   const price = item.book.discountPrice || item.book.price;
                   return (
-                    <div key={item.book.id} className="flex gap-3 pb-4 border-b border-gray-200 last:border-b-0">
+                    <div key={item.book.id} className="flex gap-3 pb-4 border-b border-border last:border-b-0">
                       <img
                         src={item.book.coverImage}
                         alt={item.book.title}
                         className="w-24 h-32 object-cover rounded shadow-sm flex-shrink-0"
                       />
                       <div className="flex-1 min-w-0 flex flex-col">
-                        <h3 className="font-semibold text-gray-900 text-base line-clamp-2 mb-1">
+                        <h3 className="font-semibold text-foreground text-base line-clamp-2 mb-1">
                           {item.book.title}
                         </h3>
-                        <p className="text-sm text-gray-600 mb-3">{item.book.author}</p>
+                        <p className="text-sm text-muted-foreground mb-3">{item.book.author}</p>
                         <div className="mt-auto">
                           <div className="flex items-center justify-between mb-2">
-                            <div className="flex items-center gap-2 bg-gray-100 rounded-lg p-1">
+                            <div className="flex items-center gap-2 bg-accent rounded-lg p-1">
                               <button
                                 onClick={() => updateQuantity(item.book.id, item.quantity - 1)}
-                                className="p-1.5 hover:bg-white rounded transition-colors"
+                                className="p-1.5 hover:bg-background rounded transition-colors"
                                 disabled={item.quantity <= 1}
                               >
-                                <Minus className="w-4 h-4 text-gray-700" />
+                                <Minus className="w-4 h-4" />
                               </button>
-                              <span className="text-sm font-semibold w-8 text-center text-gray-900">
+                              <span className="text-sm font-semibold w-8 text-center text-foreground">
                                 {item.quantity}
                               </span>
                               <button
                                 onClick={() => updateQuantity(item.book.id, item.quantity + 1)}
-                                className="p-1.5 hover:bg-white rounded transition-colors"
+                                className="p-1.5 hover:bg-background rounded transition-colors"
                                 disabled={item.quantity >= item.book.stock}
                               >
-                                <Plus className="w-4 h-4 text-gray-700" />
+                                <Plus className="w-4 h-4" />
                               </button>
                             </div>
                             <button
                               onClick={() => removeFromCart(item.book.id)}
-                              className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                              className="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-950 rounded-lg transition-colors"
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
                           </div>
-                          <p className="text-base font-bold text-gray-900">
+                          <p className="text-base font-bold text-foreground">
                             {(price * item.quantity).toFixed(2)} RSD
                           </p>
                         </div>
@@ -155,21 +155,21 @@ export default function CartDrawer() {
 
           {/* Footer */}
           {items.length > 0 && (
-            <div className="border-t p-4 bg-gray-50">
+            <div className="border-t border-border p-4 bg-muted">
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">{t('cart.subtotal')}:</span>
-                  <span className="font-medium">{subtotal.toFixed(2)} {t('common.rsd')}</span>
+                  <span className="text-muted-foreground">{t('cart.subtotal')}:</span>
+                  <span className="font-medium text-foreground">{subtotal.toFixed(2)} {t('common.rsd')}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">{t('cart.shipping')}:</span>
-                  <span className="font-medium">
+                  <span className="text-muted-foreground">{t('cart.shipping')}:</span>
+                  <span className="font-medium text-foreground">
                     {shippingCost === 0 ? t('cart.free') : `${shippingCost.toFixed(2)} ${t('common.rsd')}`}
                   </span>
                 </div>
-                <div className="flex justify-between text-lg font-bold border-t pt-2">
-                  <span>{t('cart.total')}:</span>
-                  <span>{total.toFixed(2)} {t('common.rsd')}</span>
+                <div className="flex justify-between text-lg font-bold border-t border-border pt-2">
+                  <span className="text-foreground">{t('cart.total')}:</span>
+                  <span className="text-foreground">{total.toFixed(2)} {t('common.rsd')}</span>
                 </div>
               </div>
               <div className="space-y-2">

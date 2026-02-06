@@ -17,7 +17,6 @@ import { UserMenuItems } from "../../../user/UserMenuItems";
 import { useIsLandingPage } from "../../hooks/useIsLandingPage";
 import logo from "../../static/logo.webp";
 import { cn } from "../../utils";
-import DarkModeSwitcher from "../DarkModeSwitcher";
 import CartDrawer from "../CartDrawer";
 import ScriptToggle from "../ScriptToggle";
 
@@ -76,7 +75,6 @@ function NavBarDesktopUserDropdown({ isScrolled }: { isScrolled: boolean }) {
       <ul className="flex items-center justify-center gap-2 sm:gap-4">
         <ScriptToggle />
         <CartDrawer />
-        <DarkModeSwitcher />
       </ul>
       {isUserLoading ? null : !user ? (
         <WaspRouterLink
@@ -168,9 +166,6 @@ function NavBarMobileMenu({
                     />
                   </ul>
                 )}
-              </div>
-              <div className="py-6">
-                <DarkModeSwitcher />
               </div>
             </div>
           </div>

@@ -47,10 +47,10 @@ export default function CheckoutPage() {
   // Redirect if cart is empty
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <ShoppingBag className="w-24 h-24 text-gray-300 mx-auto mb-6" />
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Vaša korpa je prazna</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-4">Vaša korpa je prazna</h1>
           <button
             onClick={() => navigate('/books')}
             className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700"
@@ -65,9 +65,9 @@ export default function CheckoutPage() {
   // Redirect if not logged in
   if (!user) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Prijavite se da nastavite</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-4">Prijavite se da nastavite</h1>
           <button
             onClick={() => navigate('/login')}
             className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700"
@@ -122,9 +122,9 @@ export default function CheckoutPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">{t('checkout.title')}</h1>
+        <h1 className="text-3xl font-bold text-foreground mb-8">{t('checkout.title')}</h1>
 
         {/* Progress Steps */}
         <div className="mb-8">
@@ -143,7 +143,7 @@ export default function CheckoutPage() {
                           ? 'bg-green-600 text-white'
                           : isActive
                           ? 'bg-blue-600 text-white'
-                          : 'bg-gray-200 text-gray-500'
+                          : 'bg-muted text-muted-foreground'
                       }`}
                     >
                       {isCompleted ? <Check className="w-6 h-6" /> : <Icon className="w-6 h-6" />}
@@ -170,8 +170,8 @@ export default function CheckoutPage() {
           <div className="lg:col-span-2">
             {/* Step 1: Address */}
             {currentStep === 1 && (
-              <div className="bg-white rounded-lg shadow p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">{t('checkout.selectAddress')}</h2>
+              <div className="bg-card rounded-lg shadow p-6">
+                <h2 className="text-xl font-bold text-foreground mb-4">{t('checkout.selectAddress')}</h2>
                 
                 {addresses && addresses.length > 0 ? (
                   <div className="space-y-3 mb-4">
@@ -244,8 +244,8 @@ export default function CheckoutPage() {
 
             {/* Step 2: Delivery Method */}
             {currentStep === 2 && (
-              <div className="bg-white rounded-lg shadow p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">{t('checkout.selectDelivery')}</h2>
+              <div className="bg-card rounded-lg shadow p-6">
+                <h2 className="text-xl font-bold text-foreground mb-4">{t('checkout.selectDelivery')}</h2>
                 
                 <div className="space-y-3">
                   <label
@@ -318,8 +318,8 @@ export default function CheckoutPage() {
 
             {/* Step 3: Payment Method */}
             {currentStep === 3 && (
-              <div className="bg-white rounded-lg shadow p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">{t('checkout.selectPayment')}</h2>
+              <div className="bg-card rounded-lg shadow p-6">
+                <h2 className="text-xl font-bold text-foreground mb-4">{t('checkout.selectPayment')}</h2>
                 
                 <div className="space-y-3">
                   <label
@@ -387,8 +387,8 @@ export default function CheckoutPage() {
 
             {/* Step 4: Review */}
             {currentStep === 4 && (
-              <div className="bg-white rounded-lg shadow p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-6">{t('checkout.orderReview')}</h2>
+              <div className="bg-card rounded-lg shadow p-6">
+                <h2 className="text-xl font-bold text-foreground mb-6">{t('checkout.orderReview')}</h2>
                 
                 {/* Address Summary */}
                 <div className="mb-6">
@@ -457,8 +457,8 @@ export default function CheckoutPage() {
 
           {/* Order Summary Sidebar */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow p-6 sticky top-4">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">{t('checkout.yourOrder')}</h2>
+            <div className="bg-card rounded-lg shadow p-6 sticky top-4">
+              <h2 className="text-xl font-bold text-foreground mb-4">{t('checkout.yourOrder')}</h2>
               
               <div className="space-y-3 mb-6 max-h-64 overflow-y-auto">
                 {items.map(item => (

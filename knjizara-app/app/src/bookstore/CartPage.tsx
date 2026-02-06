@@ -16,10 +16,10 @@ export default function CartPage() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <ShoppingCart className="w-24 h-24 text-gray-300 mx-auto mb-6" />
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Vaša korpa je prazna</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-4">Vaša korpa je prazna</h1>
           <p className="text-gray-600 mb-6">Dodajte knjige u korpu da biste nastavili sa kupovinom.</p>
           <Link
             to="/books"
@@ -33,9 +33,9 @@ export default function CartPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('cart.title')}</h1>
+        <h1 className="text-3xl font-bold text-foreground mb-2">{t('cart.title')}</h1>
 
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Cart Items */}
@@ -62,7 +62,7 @@ export default function CartPage() {
             )}
 
             {/* Items List */}
-            <div className="bg-white rounded-lg shadow">
+            <div className="bg-card rounded-lg shadow">
               {items.map((item, index) => {
                 const price = item.book.discountPrice || item.book.price;
                 const itemTotal = price * item.quantity;
@@ -154,8 +154,8 @@ export default function CartPage() {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-lg shadow p-6 sticky top-4">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">{t('cart.orderSummary')}</h2>
+            <div className="bg-card rounded-lg shadow p-6 sticky top-4">
+              <h2 className="text-xl font-bold text-foreground mb-4">{t('cart.orderSummary')}</h2>
               
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-gray-700">
