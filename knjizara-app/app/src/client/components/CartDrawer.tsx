@@ -45,9 +45,9 @@ export default function CartDrawer() {
         <div
           className="fixed top-0 right-0 h-full w-full sm:w-[500px] bg-card shadow-xl z-[9999] transform transition-transform duration-300 ease-in-out animate-in slide-in-from-right"
         >
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full max-h-screen">
           {/* Header */}
-          <div className="flex items-center justify-between p-4 border-b border-border">
+          <div className="flex-shrink-0 flex items-center justify-between p-4 border-b border-border">
             <h2 className="text-xl font-bold text-foreground">
               {t('cart.title')} ({getItemCount()})
             </h2>
@@ -61,7 +61,7 @@ export default function CartDrawer() {
 
           {/* Free Shipping Progress */}
           {items.length > 0 && subtotal < FREE_SHIPPING_THRESHOLD && (
-            <div className="p-4 bg-blue-50 dark:bg-blue-950 border-b border-border">
+            <div className="flex-shrink-0 p-4 bg-blue-50 dark:bg-blue-950 border-b border-border">
               <p className="text-sm text-foreground mb-2">
                 {t('cart.freeShippingProgress', { amount: amountToFreeShipping.toFixed(2), currency: t('common.rsd') })}
               </p>
@@ -75,7 +75,7 @@ export default function CartDrawer() {
           )}
 
           {items.length > 0 && subtotal >= FREE_SHIPPING_THRESHOLD && (
-            <div className="p-4 bg-green-50 dark:bg-green-950 border-b border-border">
+            <div className="flex-shrink-0 p-4 bg-green-50 dark:bg-green-950 border-b border-border">
               <p className="text-sm text-green-700 dark:text-green-300 font-semibold">
                 ✓ {t('cart.freeShippingAchieved')}
               </p>
@@ -83,7 +83,7 @@ export default function CartDrawer() {
           )}
 
           {/* Cart Items - MAXIMUM SPACE */}
-          <div className="overflow-y-auto p-4 bg-card" style={{ minHeight: '60vh', maxHeight: 'calc(100vh - 200px)' }}>
+          <div className="flex-1 overflow-y-auto p-4 bg-card min-h-[400px]">
             {items.length === 0 ? (
               <div className="text-center py-12">
                 <ShoppingCart className="w-16 h-16 text-gray-300 mx-auto mb-4" />
@@ -154,7 +154,7 @@ export default function CartDrawer() {
 
           {/* Footer */}
           {items.length > 0 && (
-            <div className="border-t border-border p-4 bg-muted">
+            <div className="flex-shrink-0 border-t border-border p-4 bg-muted">
               <div className="space-y-2 mb-4">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">{t('cart.subtotal')}:</span>
