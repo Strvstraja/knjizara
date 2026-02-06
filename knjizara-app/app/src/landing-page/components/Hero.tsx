@@ -15,7 +15,7 @@ export default function Hero() {
         <div className="max-w-8xl mx-auto">
           <div className="mx-auto max-w-5xl text-center">
             {/* Logo */}
-            <div className="flex justify-center overflow-hidden -mb-8">
+            <div className="flex justify-center overflow-hidden -mb-24">
               <img 
                 src={isCyrillic ? logoLatin : logoCyrillic}
                 alt="Logo"
