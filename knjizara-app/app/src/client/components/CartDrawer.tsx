@@ -41,11 +41,10 @@ export default function CartDrawer() {
       )}
 
       {/* Drawer */}
-      <div
-        className={`fixed top-0 right-0 h-full w-full sm:w-[500px] bg-card shadow-xl z-[9999] transform transition-transform duration-300 ease-in-out ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
-      >
+      {isOpen && (
+        <div
+          className="fixed top-0 right-0 h-full w-full sm:w-[500px] bg-card shadow-xl z-[9999] transform transition-transform duration-300 ease-in-out animate-in slide-in-from-right"
+        >
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-border">
@@ -191,7 +190,8 @@ export default function CartDrawer() {
             </div>
           )}
         </div>
-      </div>
+        </div>
+      )}
     </>
   );
 }

@@ -333,7 +333,7 @@ action updateSellerProfile {
 route CreateListingRoute { path: "/create-listing", to: CreateListingPage }
 page CreateListingPage {
   authRequired: true,
-  component: import CreateListingPage from "@src/listing/CreateListingPage"
+  component: import CreateListingPage from "@src/listing/CreateListingPageNew"
 }
 
 route MyListingsRoute { path: "/my-listings", to: MyListingsPage }
