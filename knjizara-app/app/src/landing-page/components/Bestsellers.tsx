@@ -27,10 +27,10 @@ export default function Bestsellers() {
 
   if (isLoading) {
     return (
-      <section className="py-12 px-6 lg:px-8">
+      <section className="py-16 px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-foreground mb-2">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-foreground mb-2">
               Najprodavanije knjige
             </h2>
           </div>
@@ -55,11 +55,11 @@ export default function Bestsellers() {
   }
 
   return (
-    <section className="py-12 px-6 lg:px-8 bg-muted/30">
+    <section className="py-16 px-6 lg:px-8 bg-muted/30">
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-center gap-2 mb-6">
-          <TrendingUp className="h-6 w-6 text-primary" />
-          <h2 className="text-2xl font-bold text-foreground">
+        <div className="flex items-center justify-center gap-2 mb-12">
+          <TrendingUp className="h-8 w-8 text-primary" />
+          <h2 className="text-4xl font-bold text-foreground">
             Najprodavanije knjige
           </h2>
         </div>
@@ -101,17 +101,22 @@ export default function Bestsellers() {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>
-                    <div className="p-3 flex flex-col flex-grow">
-                      <h3 className="font-semibold text-sm text-foreground mb-1 line-clamp-2 group-hover:text-primary transition-colors">
+                    <div className="p-4 flex flex-col flex-grow">
+                      <h3 className="font-medium text-sm text-foreground line-clamp-2 group-hover:text-primary transition-colors h-10">
                         {book.title}
                       </h3>
-                      <p className="text-xs text-muted-foreground mb-2 line-clamp-1">
+                      <p className="text-xs text-muted-foreground line-clamp-1 mt-1">
                         {book.author}
                       </p>
-                      <div className="flex items-center justify-between mt-auto">
-                        <span className="text-sm font-bold text-primary">
-                          {book.price.toLocaleString('sr-RS')} {t('common.rsd')}
-                        </span>
+                      <div className="flex items-center justify-between mt-auto pt-2">
+                        <div className="flex items-baseline gap-1">
+                          <span className="text-base font-semibold text-primary">
+                            {book.price.toLocaleString('sr-RS')}
+                          </span>
+                          <span className="text-xs text-muted-foreground">
+                            {t('common.rsd')}
+                          </span>
+                        </div>
                         <ShoppingCart className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
                       </div>
                     </div>

@@ -21,9 +21,9 @@ const srLatn = {
   },
   "landing": {
     "hero": {
-      "title": "Otkrijte svet knjiga u",
-      "highlight": "Čika Strajinoj maloj knjižari",
-      "subtitle": "Širok izbor domaćih i stranih naslova, brza dostava i jednostavna kupovina. Vaša omiljena knjiga je samo jedan klik daleko.",
+      "title": "Dobrodošli u",
+      "highlight": "Čika Strajinu malu knjižaru",
+      "subtitle": "Mesto gde knjige menjaju vlasnike. Kupuj i prodaj nove i polovne naslove od prodavaca iz cele Srbije.",
       "browseBooks": "Pregledaj knjige",
       "signup": "Registruj se"
     },
@@ -328,9 +328,9 @@ const srCyrl = {
   },
   "landing": {
     "hero": {
-      "title": "Откријте свет књига у",
-      "highlight": "Чика Страјиној малој књижари",
-      "subtitle": "Широк избор домаћих и страних наслова, брза достава и једноставна куповина. Ваша омиљена књига је само један клик далеко.",
+      "title": "Добродошли у",
+      "highlight": "Чика Страјину малу књижару",
+      "subtitle": "Место где књиге мењају власнике. Купуј и продај нове и половне наслове од продаваца из целе Србије.",
       "browseBooks": "Прегледај књиге",
       "signup": "Региструј се"
     },

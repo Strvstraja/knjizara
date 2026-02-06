@@ -49,37 +49,37 @@ export default function Hero() {
           </div>
           
           {/* Feature highlights */}
-          <div className="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-3">
+          <div className="mt-20 grid grid-cols-1 gap-12 sm:grid-cols-3">
             <div className="flex flex-col items-center text-center">
-              <div className="bg-primary/10 rounded-full p-4 mb-4">
-                <BookOpen className="h-8 w-8 text-primary" />
+              <div className="w-16 h-16 rounded-full bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center mb-4">
+                <BookOpen className="h-8 w-8 text-amber-600 dark:text-amber-400" />
               </div>
               <h3 className="text-foreground font-semibold text-lg mb-2">
                 {t('landing.features.wideSelection.title')}
               </h3>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-muted-foreground">
                 {t('landing.features.wideSelection.description')}
               </p>
             </div>
             <div className="flex flex-col items-center text-center">
-              <div className="bg-primary/10 rounded-full p-4 mb-4">
-                <ShoppingCart className="h-8 w-8 text-primary" />
+              <div className="w-16 h-16 rounded-full bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center mb-4">
+                <ShoppingCart className="h-8 w-8 text-amber-600 dark:text-amber-400" />
               </div>
               <h3 className="text-foreground font-semibold text-lg mb-2">
                 {t('landing.features.easyOrdering.title')}
               </h3>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-muted-foreground">
                 {t('landing.features.easyOrdering.description')}
               </p>
             </div>
             <div className="flex flex-col items-center text-center">
-              <div className="bg-primary/10 rounded-full p-4 mb-4">
-                <Truck className="h-8 w-8 text-primary" />
+              <div className="w-16 h-16 rounded-full bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center mb-4">
+                <Truck className="h-8 w-8 text-amber-600 dark:text-amber-400" />
               </div>
               <h3 className="text-foreground font-semibold text-lg mb-2">
                 {t('landing.features.freeShipping.title')}
               </h3>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-muted-foreground">
                 {t('landing.features.freeShipping.description')}
               </p>
             </div>
