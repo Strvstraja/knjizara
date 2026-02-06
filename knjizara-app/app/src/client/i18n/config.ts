@@ -16,7 +16,8 @@ const srLatn = {
     "myOrders": "Moje porudžbine",
     "wishlist": "Lista želja",
     "myAddresses": "Moje adrese",
-    "accountSettings": "Podešavanja naloga"
+    "accountSettings": "Podešavanja naloga",
+    "adminPanel": "Admin panel"
   },
   "landing": {
     "hero": {
@@ -322,7 +323,8 @@ const srCyrl = {
     "myOrders": "Моје поруџбине",
     "wishlist": "Листа жеља",
     "myAddresses": "Моје адресе",
-    "accountSettings": "Подешавања налога"
+    "accountSettings": "Подешавања налога",
+    "adminPanel": "Админ панел"
   },
   "landing": {
     "hero": {

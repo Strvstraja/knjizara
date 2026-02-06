@@ -202,17 +202,22 @@ export const updateListing = async (
     throw new HttpError(403, 'You can only edit your own listings');
   }
 
-  const { id, categoryIds, title, author, description, ...updateData } = args;
+  const { id, categoryIds, title, author, description, stock, ...updateData } = args;
 
   // Auto-transliterate if title, author, or description are being updated
   const titleTranslit = title ? autoTransliterate(title) : undefined;
   const authorTranslit = author ? autoTransliterate(author) : undefined;
   const descriptionTranslit = description ? autoTransliterate(description) : undefined;
 
+  // If adding stock to a SOLD book, automatically change status to ACTIVE
+  const shouldReactivate = book.status === 'SOLD' && stock !== undefined && stock > 0;
+
   const updated = await context.entities.Book.update({
     where: { id },
     data: {
       ...updateData,
+      ...(stock !== undefined && { stock }),
+      ...(shouldReactivate && { status: 'ACTIVE' }),
       ...(titleTranslit && {
         title: titleTranslit.latin,
         titleCyrillic: titleTranslit.cyrillic,
@@ -253,6 +258,54 @@ export const deleteListing = async (
     throw new HttpError(401, 'You must be logged in');
   }
 
+  const book = await context.entities.Book.findUnique({
+    where: { id: args.id },
+    include: {
+      orderItems: true,
+      wishlistItems: true,
+      conversations: true,
+    }
+  });
+
+  if (!book) {
+    throw new HttpError(404, 'Listing not found');
+  }
+
+  // Check if book has been ordered
+  if (book.orderItems && book.orderItems.length > 0) {
+    throw new HttpError(400, 'Cannot delete book that has been ordered. Consider marking it as SOLD instead.');
+  }
+
+  // Allow admins to delete any book
+  if (context.user.isAdmin) {
+    // Delete related data first
+    if (book.wishlistItems && book.wishlistItems.length > 0) {
+      await context.entities.WishlistItem.deleteMany({
+        where: { bookId: args.id }
+      });
+    }
+    if (book.conversations && book.conversations.length > 0) {
+      // Delete messages in conversations first
+      await context.entities.Message.deleteMany({
+        where: { 
+          conversationId: { 
+            in: book.conversations.map((c: any) => c.id) 
+          } 
+        }
+      });
+      // Then delete conversations
+      await context.entities.Conversation.deleteMany({
+        where: { bookId: args.id }
+      });
+    }
+    
+    await context.entities.Book.delete({
+      where: { id: args.id }
+    });
+    return { success: true };
+  }
+
+  // For non-admins, check seller ownership
   const sellerProfile = await context.entities.SellerProfile.findUnique({
     where: { userId: context.user.id }
   });
@@ -261,16 +314,29 @@ export const deleteListing = async (
     throw new HttpError(403, 'You are not a seller');
   }
 
-  const book = await context.entities.Book.findUnique({
-    where: { id: args.id }
-  });
-
-  if (!book) {
-    throw new HttpError(404, 'Listing not found');
-  }
-
   if (book.sellerId !== sellerProfile.id) {
     throw new HttpError(403, 'You can only delete your own listings');
+  }
+
+  // Delete related data first
+  if (book.wishlistItems && book.wishlistItems.length > 0) {
+    await context.entities.WishlistItem.deleteMany({
+      where: { bookId: args.id }
+    });
+  }
+  if (book.conversations && book.conversations.length > 0) {
+    // Delete messages in conversations first
+    await context.entities.Message.deleteMany({
+      where: { 
+        conversationId: { 
+          in: book.conversations.map((c: any) => c.id) 
+        } 
+      }
+    });
+    // Then delete conversations
+    await context.entities.Conversation.deleteMany({
+      where: { bookId: args.id }
+    });
   }
 
   await context.entities.Book.delete({

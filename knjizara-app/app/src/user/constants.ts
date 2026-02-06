@@ -30,4 +30,11 @@ export const userMenuItems = [
     isAuthRequired: false,
     isAdminOnly: false,
   },
+  {
+    name: "userMenu.adminPanel",
+    to: routes.AdminBooksRoute.to,
+    icon: Shield,
+    isAuthRequired: true,
+    isAdminOnly: true,
+  },
 ] as const;

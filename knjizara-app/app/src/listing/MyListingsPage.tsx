@@ -216,16 +216,14 @@ export default function MyListingsPage() {
 
                   {/* Actions */}
                   <div className="flex gap-2">
-                    {book.status !== 'SOLD' && (
-                      <Link to={`/edit-listing/${book.id}`} className="flex-1">
-                        <button
-                          className="w-full flex items-center justify-center gap-1 px-3 py-2 text-sm bg-blue-100 text-blue-800 rounded hover:bg-blue-200 transition-colors"
-                          title="Izmeni"
-                        >
-                          <Edit className="h-4 w-4" />
-                        </button>
-                      </Link>
-                    )}
+                    <Link to={`/edit-listing/${book.id}`} className="flex-1">
+                      <button
+                        className="w-full flex items-center justify-center gap-1 px-3 py-2 text-sm bg-blue-100 text-blue-800 rounded hover:bg-blue-200 transition-colors"
+                        title={t('listing.edit')}
+                      >
+                        <Edit className="h-4 w-4" />
+                      </button>
+                    </Link>
                     
                     {book.status === 'ACTIVE' && (
                       <>
@@ -247,24 +245,31 @@ export default function MyListingsPage() {
                     )}
                     
                     {book.status === 'PAUSED' && (
-                      <button
-                        onClick={() => handleToggleStatus(book.id, book.status)}
-                        className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm bg-green-100 text-green-800 rounded hover:bg-green-200 transition-colors"
-                        title={t('listing.activate')}
-                      >
-                        <Play className="h-4 w-4" />
-                      </button>
+                      <>
+                        <button
+                          onClick={() => handleToggleStatus(book.id, book.status)}
+                          className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm bg-green-100 text-green-800 rounded hover:bg-green-200 transition-colors"
+                          title={t('listing.activate')}
+                        >
+                          <Play className="h-4 w-4" />
+                        </button>
+                        <button
+                          onClick={() => handleMarkSold(book.id)}
+                          className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm bg-green-100 text-green-800 rounded hover:bg-green-200 transition-colors"
+                          title={t('listing.markSold')}
+                        >
+                          <CheckCircle className="h-4 w-4" />
+                        </button>
+                      </>
                     )}
 
-                    {book.status !== 'SOLD' && (
-                      <button
-                        onClick={() => handleDelete(book.id)}
-                        className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm bg-red-100 text-red-800 rounded hover:bg-red-200 transition-colors"
-                        title={t('listing.delete')}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
-                    )}
+                    <button
+                      onClick={() => handleDelete(book.id)}
+                      className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm bg-red-100 text-red-800 rounded hover:bg-red-200 transition-colors"
+                      title={t('listing.delete')}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
                   </div>
                 </div>
               </div>

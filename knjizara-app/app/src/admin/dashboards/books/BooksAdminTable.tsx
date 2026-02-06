@@ -19,9 +19,10 @@ export default function BooksAdminTable() {
     try {
       await deleteListing({ id });
       refetch();
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error deleting book:', err);
-      alert('Greška pri brisanju knjige');
+      const errorMessage = err?.message || 'Greška pri brisanju knjige';
+      alert(errorMessage);
     }
   };
 
