@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useQuery } from 'wasp/client/operations';
 import { getMyListings, toggleListingStatus, markAsSold, deleteListing } from 'wasp/client/operations';
 import { Button } from '../client/components/ui/button';
-import { Plus, Edit, Pause, Play, CheckCircle, Trash2 } from 'lucide-react';
+import { Plus, Edit, Pause, Play, CheckCircle, Trash2, BookOpen, PauseCircle, ShoppingBag } from 'lucide-react';
 
 type ListingStatus = 'ACTIVE' | 'PAUSED' | 'SOLD' | 'EXPIRED';
 
@@ -49,11 +49,11 @@ export default function MyListingsPage() {
 
   const getStatusBadgeColor = (status: string) => {
     switch (status) {
-      case 'ACTIVE': return 'bg-green-100 text-green-800';
-      case 'PAUSED': return 'bg-yellow-100 text-yellow-800';
-      case 'SOLD': return 'bg-blue-100 text-blue-800';
-      case 'EXPIRED': return 'bg-gray-100 text-gray-800';
-      default: return 'bg-gray-100 text-gray-800';
+      case 'ACTIVE': return 'bg-green-500 text-white';
+      case 'PAUSED': return 'bg-amber-500 text-white';
+      case 'SOLD': return 'bg-gray-500 text-white';
+      case 'EXPIRED': return 'bg-red-500 text-white';
+      default: return 'bg-gray-500 text-white';
     }
   };
 
@@ -79,7 +79,7 @@ export default function MyListingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
@@ -98,27 +98,55 @@ export default function MyListingsPage() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-card rounded-lg p-4 border border-border">
-            <p className="text-sm text-muted-foreground mb-1">Ukupno</p>
-            <p className="text-2xl font-bold text-foreground">{data?.total || 0}</p>
+          <div className="bg-card rounded-lg p-4 border border-border shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                <BookOpen className="h-5 w-5 text-gray-600 dark:text-gray-400" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">Ukupno</p>
+                <p className="text-2xl font-bold text-foreground">{data?.total || 0}</p>
+              </div>
+            </div>
           </div>
-          <div className="bg-card rounded-lg p-4 border border-border">
-            <p className="text-sm text-muted-foreground mb-1">Aktivno</p>
-            <p className="text-2xl font-bold text-green-600">
-              {data?.books?.filter((b: any) => b.status === 'ACTIVE').length || 0}
-            </p>
+          <div className="bg-card rounded-lg p-4 border border-border shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-green-100 dark:bg-green-900 rounded-lg">
+                <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">Aktivno</p>
+                <p className="text-2xl font-bold text-green-600">
+                  {data?.books?.filter((b: any) => b.status === 'ACTIVE').length || 0}
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="bg-card rounded-lg p-4 border border-border">
-            <p className="text-sm text-muted-foreground mb-1">Pauzirano</p>
-            <p className="text-2xl font-bold text-yellow-600">
-              {data?.books?.filter((b: any) => b.status === 'PAUSED').length || 0}
-            </p>
+          <div className="bg-card rounded-lg p-4 border border-border shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-amber-100 dark:bg-amber-900 rounded-lg">
+                <PauseCircle className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">Pauzirano</p>
+                <p className="text-2xl font-bold text-amber-600">
+                  {data?.books?.filter((b: any) => b.status === 'PAUSED').length || 0}
+                </p>
+              </div>
+            </div>
           </div>
-          <div className="bg-card rounded-lg p-4 border border-border">
-            <p className="text-sm text-muted-foreground mb-1">Prodato</p>
-            <p className="text-2xl font-bold text-blue-600">
-              {data?.books?.filter((b: any) => b.status === 'SOLD').length || 0}
-            </p>
+          <div className="bg-card rounded-lg p-4 border border-border shadow-sm hover:shadow-md transition-shadow">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
+                <ShoppingBag className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+              </div>
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">Prodato</p>
+                <p className="text-2xl font-bold text-blue-600">
+                  {data?.books?.filter((b: any) => b.status === 'SOLD').length || 0}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -128,7 +156,7 @@ export default function MyListingsPage() {
             onClick={() => setStatusFilter(undefined)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
               !statusFilter
-                ? 'bg-primary text-primary-foreground'
+                ? 'bg-amber-500 text-white'
                 : 'bg-card text-foreground hover:bg-accent'
             }`}
           >
@@ -140,7 +168,7 @@ export default function MyListingsPage() {
               onClick={() => setStatusFilter(status)}
               className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
                 statusFilter === status
-                  ? 'bg-primary text-primary-foreground'
+                  ? 'bg-amber-500 text-white'
                   : 'bg-card text-foreground hover:bg-accent'
               }`}
             >
@@ -169,22 +197,21 @@ export default function MyListingsPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {data.books.map((book: any) => (
-              <div key={book.id} className="bg-card rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+              <div key={book.id} className={`bg-card rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition-all ${
+                book.status === 'SOLD' || book.status === 'EXPIRED' ? 'opacity-75' : ''
+              }`}>
                 {/* Image */}
                 <div className="relative h-48 bg-muted">
                   <img
                     src={book.coverImage}
                     alt={book.title}
-                    className="w-full h-full object-cover"
+                    className={`w-full h-full object-cover ${
+                      book.status === 'SOLD' || book.status === 'EXPIRED' ? 'grayscale' : ''
+                    }`}
                   />
-                  <div className="absolute top-2 right-2 flex gap-2">
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${getStatusBadgeColor(book.status)}`}>
+                  <div className="absolute top-2 right-2">
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusBadgeColor(book.status)}`}>
                       {t(`listing.status${book.status.charAt(0) + book.status.slice(1).toLowerCase()}`)}
-                    </span>
-                  </div>
-                  <div className="absolute top-2 left-2">
-                    <span className={`${getConditionBadgeColor(book.condition)} text-white px-2 py-1 rounded text-xs font-medium`}>
-                      {t(`listing.condition${book.condition.split('_').map((w: string) => w.charAt(0) + w.slice(1).toLowerCase()).join('')}`)}
                     </span>
                   </div>
                 </div>
@@ -215,13 +242,13 @@ export default function MyListingsPage() {
                   </div>
 
                   {/* Actions */}
-                  <div className="flex gap-2">
-                    <Link to={`/edit-listing/${book.id}`} className="flex-1">
+                  <div className="flex gap-3 justify-center">
+                    <Link to={`/edit-listing/${book.id}`}>
                       <button
-                        className="w-full flex items-center justify-center gap-1 px-3 py-2 text-sm bg-blue-100 text-blue-800 rounded hover:bg-blue-200 transition-colors"
+                        className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
                         title={t('listing.edit')}
                       >
-                        <Edit className="h-4 w-4" />
+                        <Edit className="h-5 w-5" />
                       </button>
                     </Link>
                     
@@ -229,17 +256,17 @@ export default function MyListingsPage() {
                       <>
                         <button
                           onClick={() => handleToggleStatus(book.id, book.status)}
-                          className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm bg-yellow-100 text-yellow-800 rounded hover:bg-yellow-200 transition-colors"
+                          className="p-2 text-gray-600 hover:text-amber-600 hover:bg-amber-50 rounded-lg transition-colors"
                           title={t('listing.pause')}
                         >
-                          <Pause className="h-4 w-4" />
+                          <Pause className="h-5 w-5" />
                         </button>
                         <button
                           onClick={() => handleMarkSold(book.id)}
-                          className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm bg-green-100 text-green-800 rounded hover:bg-green-200 transition-colors"
+                          className="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
                           title={t('listing.markSold')}
                         >
-                          <CheckCircle className="h-4 w-4" />
+                          <CheckCircle className="h-5 w-5" />
                         </button>
                       </>
                     )}
@@ -248,27 +275,27 @@ export default function MyListingsPage() {
                       <>
                         <button
                           onClick={() => handleToggleStatus(book.id, book.status)}
-                          className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm bg-green-100 text-green-800 rounded hover:bg-green-200 transition-colors"
+                          className="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
                           title={t('listing.activate')}
                         >
-                          <Play className="h-4 w-4" />
+                          <Play className="h-5 w-5" />
                         </button>
                         <button
                           onClick={() => handleMarkSold(book.id)}
-                          className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm bg-green-100 text-green-800 rounded hover:bg-green-200 transition-colors"
+                          className="p-2 text-gray-600 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
                           title={t('listing.markSold')}
                         >
-                          <CheckCircle className="h-4 w-4" />
+                          <CheckCircle className="h-5 w-5" />
                         </button>
                       </>
                     )}
 
                     <button
                       onClick={() => handleDelete(book.id)}
-                      className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-sm bg-red-100 text-red-800 rounded hover:bg-red-200 transition-colors"
+                      className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                       title={t('listing.delete')}
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className="h-5 w-5" />
                     </button>
                   </div>
                 </div>
