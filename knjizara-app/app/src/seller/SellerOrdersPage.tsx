@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useQuery } from 'wasp/client/operations';
 import { getSellerOrders, updateOrderStatus } from 'wasp/client/operations';
 import { Package, User, MapPin, Calendar, DollarSign, Truck, Edit2, Check, X } from 'lucide-react';
@@ -6,6 +7,7 @@ import { Package, User, MapPin, Calendar, DollarSign, Truck, Edit2, Check, X } f
 type OrderStatus = 'PENDING' | 'PROCESSING' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED';
 
 export default function SellerOrdersPage() {
+  const { t } = useTranslation();
   const [statusFilter, setStatusFilter] = useState<OrderStatus | undefined>();
   const [page, setPage] = useState(1);
   const [editingOrder, setEditingOrder] = useState<string | null>(null);
@@ -96,33 +98,33 @@ export default function SellerOrdersPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">
-            Moje prodaje
+            {t('sellerOrders.title')}
           </h1>
           <p className="text-muted-foreground">
-            Pregled porudžbina koje sadrže vaše knjige
+            {t('sellerOrders.subtitle')}
           </p>
         </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-card rounded-lg p-4 border border-border">
-            <p className="text-sm text-muted-foreground mb-1">Ukupno</p>
+            <p className="text-sm text-muted-foreground mb-1">{t('sellerOrders.total')}</p>
             <p className="text-2xl font-bold text-foreground">{allOrdersData?.total || 0}</p>
           </div>
           <div className="bg-card rounded-lg p-4 border border-border">
-            <p className="text-sm text-muted-foreground mb-1">U obradi</p>
+            <p className="text-sm text-muted-foreground mb-1">{t('sellerOrders.processing')}</p>
             <p className="text-2xl font-bold text-green-600">
               {allOrdersData?.orders?.filter((o: any) => o.status === 'PROCESSING').length || 0}
             </p>
           </div>
           <div className="bg-card rounded-lg p-4 border border-border">
-            <p className="text-sm text-muted-foreground mb-1">Poslato</p>
+            <p className="text-sm text-muted-foreground mb-1">{t('sellerOrders.shipped')}</p>
             <p className="text-2xl font-bold text-blue-600">
               {allOrdersData?.orders?.filter((o: any) => o.status === 'SHIPPED').length || 0}
             </p>
           </div>
           <div className="bg-card rounded-lg p-4 border border-border">
-            <p className="text-sm text-muted-foreground mb-1">Na čekanju</p>
+            <p className="text-sm text-muted-foreground mb-1">{t('sellerOrders.pending')}</p>
             <p className="text-2xl font-bold text-yellow-600">
               {allOrdersData?.orders?.filter((o: any) => o.status === 'PENDING').length || 0}
             </p>
@@ -139,7 +141,7 @@ export default function SellerOrdersPage() {
                 : 'bg-card text-foreground hover:bg-accent'
             }`}
           >
-            Sve ({allOrdersData?.total || 0})
+            {t('common.all')} ({allOrdersData?.total || 0})
           </button>
           {(['PENDING', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED'] as const).map((status) => (
             <button

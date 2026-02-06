@@ -6,7 +6,8 @@ declare global {
   }
 }
 
-const getConfig = () => {
+const getConfig = (lang: string = 'sr-Latn') => {
+  const isCyrillic = lang === 'sr-Cyrl';
   // See https://cookieconsent.orestbida.com/reference/configuration-reference.html for configuration options.
   const config: CookieConsentConfig = {
     // Default configuration for the modal.
@@ -60,8 +61,8 @@ const getConfig = () => {
               try {
                 const GA_ANALYTICS_ID = import.meta.env
                   .REACT_APP_GOOGLE_ANALYTICS_ID;
-                if (!GA_ANALYTICS_ID.length) {
-                  throw new Error("Google Analytics ID is missing");
+                if (!GA_ANALYTICS_ID || !GA_ANALYTICS_ID.length) {
+                  return;
                 }
                 window.dataLayer = window.dataLayer || [];
                 function gtag(..._args: unknown[]) {
@@ -86,23 +87,21 @@ const getConfig = () => {
     },
 
     language: {
-      default: "en",
+      default: "sr",
       translations: {
-        en: {
+        sr: {
           consentModal: {
-            title: "We use cookies",
-            description:
-              "We use cookies primarily for analytics to enhance your experience. By accepting, you agree to our use of these cookies. You can manage your preferences or learn more about our cookie policy.",
-            acceptAllBtn: "Accept all",
-            acceptNecessaryBtn: "Reject all",
-            // showPreferencesBtn: 'Manage Individual preferences', // (OPTIONAL) Activates the preferences modal
-            // TODO: Add your own privacy policy and terms and conditions links below.
+            title: isCyrillic ? "Користимо колачиће" : "Koristimo kolačiće",
+            description: isCyrillic
+              ? "Користимо колачиће за аналитику како бисмо побољшали ваше искуство. Прихватањем се слажете са коришћењем ових колачића."
+              : "Koristimo kolačiće za analitiku kako bismo poboljšali vaše iskustvo. Prihvatanjem se slažete sa korišćenjem ovih kolačića.",
+            acceptAllBtn: isCyrillic ? "Прихвати све" : "Prihvati sve",
+            acceptNecessaryBtn: isCyrillic ? "Само неопходни" : "Samo neophodni",
             footer: `
-            <a href="<your-url-here>" target="_blank">Privacy Policy</a>
-            <a href="<your-url-here>" target="_blank">Terms and Conditions</a>
+            <a href="/privacy-policy" target="_blank">${isCyrillic ? "Политика приватности" : "Politika privatnosti"}</a>
+            <a href="/terms" target="_blank">${isCyrillic ? "Услови коришћења" : "Uslovi korišćenja"}</a>
                     `,
           },
-          // The showPreferencesBtn activates this modal to manage individual preferences https://cookieconsent.orestbida.com/reference/configuration-reference.html#translation-preferencesmodal
           preferencesModal: {
             sections: [],
           },

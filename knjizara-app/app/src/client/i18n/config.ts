@@ -60,6 +60,8 @@ const srLatn = {
   "cart": {
     "title": "Korpa",
     "empty": "Vaša korpa je prazna",
+    "emptyMessage": "Dodajte knjige u korpu da biste nastavili sa kupovinom.",
+    "browseBooks": "Pregledaj knjige",
     "continueShopping": "Nastavite sa kupovinom",
     "subtotal": "Međuzbir",
     "shipping": "Dostava",
@@ -125,6 +127,7 @@ const srLatn = {
   },
   "checkout": {
     "title": "Plaćanje",
+    "loginRequired": "Prijavite se da nastavite",
     "step1": "Adresa dostave",
     "step2": "Način dostave",
     "step3": "Plaćanje",
@@ -229,7 +232,24 @@ const srLatn = {
     "rsd": "RSD",
     "loading": "Učitavanje...",
     "error": "Greška",
-    "back": "Nazad"
+    "back": "Nazad",
+    "all": "Sve"
+  },
+  "notFound": {
+    "message": "Stranica koju tražite ne postoji.",
+    "backHome": "Nazad na početnu"
+  },
+  "sellerOrders": {
+    "title": "Moje prodaje",
+    "subtitle": "Pregled porudžbina koje sadrže vaše knjige",
+    "total": "Ukupno",
+    "processing": "U obradi",
+    "shipped": "Poslato",
+    "pending": "Na čekanju"
+  },
+  "allSellers": {
+    "title": "Svi oglasi prodavaca",
+    "sellerListings": "Oglasi prodavca"
   },
   "seller": {
     "displayName": "Ime i prezime",
@@ -244,6 +264,8 @@ const srLatn = {
   "listing": {
     "create": "Objavi knjigu",
     "edit": "Izmeni oglas",
+    "editSubtitle": "Ažuriraj detalje knjige",
+    "notFound": "Knjiga nije pronađena",
     "myListings": "Moji oglasi",
     "totalListings": "Ukupno oglasa",
     "all": "Svi",
@@ -401,6 +423,8 @@ const srCyrl = {
   "cart": {
     "title": "Корпа",
     "empty": "Ваша корпа је празна",
+    "emptyMessage": "Додајте књиге у корпу да бисте наставили са куповином.",
+    "browseBooks": "Прегледај књиге",
     "continueShopping": "Наставите са куповином",
     "subtotal": "Међузбир",
     "shipping": "Достава",
@@ -466,6 +490,7 @@ const srCyrl = {
   },
   "checkout": {
     "title": "Плаћање",
+    "loginRequired": "Пријавите се да наставите",
     "step1": "Адреса доставе",
     "step2": "Начин доставе",
     "step3": "Плаћање",
@@ -570,7 +595,24 @@ const srCyrl = {
     "rsd": "РСД",
     "loading": "Учитавање...",
     "error": "Грешка",
-    "back": "Назад"
+    "back": "Назад",
+    "all": "Све"
+  },
+  "notFound": {
+    "message": "Страница коју тражите не постоји.",
+    "backHome": "Назад на почетну"
+  },
+  "sellerOrders": {
+    "title": "Моје продаје",
+    "subtitle": "Преглед поруџбина које садрже ваше књиге",
+    "total": "Укупно",
+    "processing": "У обради",
+    "shipped": "Послато",
+    "pending": "На чекању"
+  },
+  "allSellers": {
+    "title": "Сви огласи продаваца",
+    "sellerListings": "Огласи продавца"
   },
   "seller": {
     "displayName": "Име и презиме",
@@ -585,6 +627,8 @@ const srCyrl = {
   "listing": {
     "create": "Објави књигу",
     "edit": "Измени оглас",
+    "editSubtitle": "Ажурирај детаље књиге",
+    "notFound": "Књига није пронађена",
     "myListings": "Моји огласи",
     "totalListings": "Укупно огласа",
     "all": "Сви",

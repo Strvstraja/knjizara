@@ -50,12 +50,12 @@ export default function CheckoutPage() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <ShoppingBag className="w-24 h-24 text-gray-300 mx-auto mb-6" />
-          <h1 className="text-2xl font-bold text-foreground mb-4">Vaša korpa je prazna</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-4">{t('cart.empty')}</h1>
           <button
             onClick={() => navigate('/books')}
             className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700"
           >
-            Pregledaj knjige
+            {t('cart.browseBooks')}
           </button>
         </div>
       </div>
@@ -67,12 +67,12 @@ export default function CheckoutPage() {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-foreground mb-4">Prijavite se da nastavite</h1>
+          <h1 className="text-2xl font-bold text-foreground mb-4">{t('checkout.loginRequired')}</h1>
           <button
             onClick={() => navigate('/login')}
             className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700"
           >
-            Prijavi se
+            {t('auth.login.button')}
           </button>
         </div>
       </div>

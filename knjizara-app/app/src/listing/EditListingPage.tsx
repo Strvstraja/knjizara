@@ -130,7 +130,7 @@ export default function EditListingPage() {
     return (
       <div className="min-h-screen bg-background py-12 px-4">
         <div className="max-w-3xl mx-auto text-center">
-          <p className="text-red-600">Knjiga nije pronađena</p>
+          <p className="text-red-600">{t('listing.notFound')}</p>
         </div>
       </div>
     );
@@ -141,10 +141,10 @@ export default function EditListingPage() {
       <div className="max-w-3xl mx-auto">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">
-            Izmeni oglas
+            {t('listing.edit')}
           </h1>
           <p className="text-muted-foreground">
-            Ažuriraj detalje knjige
+            {t('listing.editSubtitle')}
           </p>
         </div>
 

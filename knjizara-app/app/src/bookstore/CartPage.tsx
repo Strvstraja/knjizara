@@ -19,13 +19,13 @@ export default function CartPage() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <ShoppingCart className="w-24 h-24 text-gray-300 mx-auto mb-6" />
-          <h1 className="text-2xl font-bold text-foreground mb-4">Vaša korpa je prazna</h1>
-          <p className="text-gray-600 mb-6">Dodajte knjige u korpu da biste nastavili sa kupovinom.</p>
+          <h1 className="text-2xl font-bold text-foreground mb-4">{t('cart.empty')}</h1>
+          <p className="text-gray-600 mb-6">{t('cart.emptyMessage')}</p>
           <Link
             to="/books"
             className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
-            Pregledaj knjige
+            {t('cart.browseBooks')}
           </Link>
         </div>
       </div>

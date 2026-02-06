@@ -3,7 +3,7 @@ app OpenSaaS {
     version: "^0.20.0"
   },
 
-  title: "My Open SaaS App",
+  title: "ČSMK",
 
   head: [
     "<link rel='icon' href='/favicon.ico' />",
