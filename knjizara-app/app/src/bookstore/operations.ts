@@ -273,6 +273,11 @@ export const getCategories = async (_args: void, context: any): Promise<Category
     include: {
       parent: true,
       children: true,
+      _count: {
+        select: {
+          books: true,
+        },
+      },
     },
     orderBy: {
       name: 'asc',

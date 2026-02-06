@@ -4,11 +4,13 @@ import { getBooks, getCategories, getUserWishlist, addToWishlist, removeFromWish
 import { Link } from 'wasp/client/router';
 import { useTranslation } from 'react-i18next';
 import { useCart } from '../client/contexts/CartContext';
-import { ShoppingCart, Check, Heart } from 'lucide-react';
+import { ShoppingCart, Check, Heart, Filter, X } from 'lucide-react';
 import { useAuth } from 'wasp/client/auth';
+import FilterSidebar from './components/FilterSidebar';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '../client/components/ui/sheet';
 
 export default function BooksPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { data: user } = useAuth();
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
@@ -16,8 +18,11 @@ export default function BooksPage() {
   const [sortBy, setSortBy] = useState<'newest' | 'price_asc' | 'price_desc' | 'title'>('newest');
   const [condition, setCondition] = useState<string | undefined>();
   const [sellerType, setSellerType] = useState<string | undefined>();
+  const [minPrice, setMinPrice] = useState<number | undefined>();
+  const [maxPrice, setMaxPrice] = useState<number | undefined>();
   const [addedBookId, setAddedBookId] = useState<string | null>(null);
   const [wishlistLoading, setWishlistLoading] = useState<string | null>(null);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const { addToCart } = useCart();
   const { data: wishlistItems, refetch: refetchWishlist } = useQuery(getUserWishlist, undefined, { enabled: !!user });
 
@@ -29,6 +34,8 @@ export default function BooksPage() {
     sortBy,
     condition,
     sellerType,
+    minPrice,
+    maxPrice,
   });
 
   const { data: categories } = useQuery(getCategories);
@@ -71,105 +78,196 @@ export default function BooksPage() {
     }
   };
 
+  const handleClearFilters = () => {
+    setCategoryId(undefined);
+    setCondition(undefined);
+    setSellerType(undefined);
+    setMinPrice(undefined);
+    setMaxPrice(undefined);
+    setPage(1);
+  };
+
+  const getActiveFilters = () => {
+    const filters: Array<{ label: string; onRemove: () => void }> = [];
+    const isCyrillic = i18n.language === 'sr-Cyrl';
+    
+    if (categoryId) {
+      const category = categories?.find(c => c.id === categoryId);
+      if (category) {
+        filters.push({
+          label: isCyrillic ? category.nameCyrillic : category.name,
+          onRemove: () => setCategoryId(undefined)
+        });
+      }
+    }
+    
+    if (condition) {
+      const conditionLabels: Record<string, string> = {
+        'NEW': t('books.conditionNew'),
+        'LIKE_NEW': t('books.conditionLikeNew'),
+        'VERY_GOOD': t('books.conditionVeryGood'),
+        'GOOD': t('books.conditionGood'),
+        'ACCEPTABLE': t('books.conditionAcceptable')
+      };
+      filters.push({
+        label: conditionLabels[condition],
+        onRemove: () => setCondition(undefined)
+      });
+    }
+    
+    if (sellerType) {
+      filters.push({
+        label: sellerType === 'PRIVATE' ? t('books.sellerPrivate') : t('books.sellerBusiness'),
+        onRemove: () => setSellerType(undefined)
+      });
+    }
+    
+    if (minPrice || maxPrice) {
+      filters.push({
+        label: `${minPrice || 0} - ${maxPrice || '∞'} RSD`,
+        onRemove: () => {
+          setMinPrice(undefined);
+          setMaxPrice(undefined);
+        }
+      });
+    }
+    
+    return filters;
+  };
+
+  const activeFilters = getActiveFilters();
+
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <h1 className="text-4xl font-bold text-foreground mb-8">{t('books.title')}</h1>
 
-        {/* Search and Filters */}
-        <div className="bg-card rounded-lg shadow p-6 mb-8">
-          <form onSubmit={handleSearch} className="mb-4">
-            <div className="flex gap-4">
-              <input
-                type="text"
-                placeholder={t('books.search')}
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="flex-1 px-4 py-2 bg-background border border-input rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-foreground"
-              />
-              <button
-                type="submit"
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-              >
-                {t('books.searchButton')}
-              </button>
-            </div>
-          </form>
-
-          <div className="flex flex-wrap gap-4">
-            <select
-              value={categoryId || ''}
-              onChange={(e) => {
-                setCategoryId(e.target.value || undefined);
-                setPage(1);
-              }}
-              className="px-4 py-2 bg-background border border-input rounded-lg focus:ring-2 focus:ring-blue-500 text-foreground"
+        {/* Search bar - full width */}
+        <form onSubmit={handleSearch} className="mb-6">
+          <div className="flex gap-4">
+            <input
+              type="text"
+              placeholder={t('books.search')}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="flex-1 px-4 py-3 bg-background border border-input rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-foreground"
+            />
+            <button
+              type="submit"
+              className="px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
             >
-              <option value="">{t('books.allCategories')}</option>
-              {categories?.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-
-            <select
-              value={sortBy}
-              onChange={(e) => {
-                setSortBy(e.target.value as any);
-                setPage(1);
-              }}
-              className="px-4 py-2 bg-background border border-input rounded-lg focus:ring-2 focus:ring-blue-500 text-foreground"
-            >
-              <option value="newest">{t('books.sortNewest')}</option>
-              <option value="price_asc">{t('books.sortPriceAsc')}</option>
-              <option value="price_desc">{t('books.sortPriceDesc')}</option>
-              <option value="title">{t('books.sortTitle')}</option>
-            </select>
-
-            <select
-              value={condition || ''}
-              onChange={(e) => {
-                setCondition(e.target.value || undefined);
-                setPage(1);
-              }}
-              className="px-4 py-2 bg-background border border-input rounded-lg focus:ring-2 focus:ring-blue-500 text-foreground"
-            >
-              <option value="">Sva stanja</option>
-              <option value="NEW">Nova</option>
-              <option value="LIKE_NEW">Kao nova</option>
-              <option value="VERY_GOOD">Odlična</option>
-              <option value="GOOD">Dobra</option>
-              <option value="ACCEPTABLE">Prihvatljiva</option>
-            </select>
-
-            <select
-              value={sellerType || ''}
-              onChange={(e) => {
-                setSellerType(e.target.value || undefined);
-                setPage(1);
-              }}
-              className="px-4 py-2 bg-background border border-input rounded-lg focus:ring-2 focus:ring-blue-500 text-foreground"
-            >
-              <option value="">Svi prodavci</option>
-              <option value="PRIVATE">Privatno lice</option>
-              <option value="BUSINESS">Firma</option>
-            </select>
+              {t('books.searchButton')}
+            </button>
           </div>
-        </div>
+        </form>
 
-        {/* Books Grid */}
-        {booksLoading ? (
+        {/* Mobile filter button */}
+        <Sheet open={mobileFiltersOpen} onOpenChange={setMobileFiltersOpen}>
+          <SheetTrigger asChild>
+            <button className="md:hidden flex items-center gap-2 border border-input rounded-lg px-4 py-2 mb-4 bg-card text-foreground hover:bg-muted transition-colors">
+              <Filter className="w-4 h-4" />
+              {t('books.filters')}
+              {activeFilters.length > 0 && (
+                <span className="ml-1 bg-primary text-primary-foreground text-xs font-bold px-2 py-0.5 rounded-full">
+                  {activeFilters.length}
+                </span>
+              )}
+            </button>
+          </SheetTrigger>
+          <SheetContent side="left" className="w-80 overflow-y-auto">
+            <SheetHeader>
+              <SheetTitle>{t('books.filters')}</SheetTitle>
+            </SheetHeader>
+            <div className="mt-6">
+              <FilterSidebar
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                categoryId={categoryId}
+                setCategoryId={setCategoryId}
+                condition={condition}
+                setCondition={setCondition}
+                sellerType={sellerType}
+                setSellerType={setSellerType}
+                minPrice={minPrice}
+                setMinPrice={setMinPrice}
+                maxPrice={maxPrice}
+                setMaxPrice={setMaxPrice}
+                categories={categories}
+                onClearFilters={handleClearFilters}
+                setPage={setPage}
+              />
+            </div>
+          </SheetContent>
+        </Sheet>
+
+        {/* Main content: sidebar + grid */}
+        <div className="flex gap-8">
+
+          {/* Left Sidebar - Desktop only */}
+          <div className="hidden md:block">
+            <FilterSidebar
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+              categoryId={categoryId}
+              setCategoryId={setCategoryId}
+              condition={condition}
+              setCondition={setCondition}
+              sellerType={sellerType}
+              setSellerType={setSellerType}
+              minPrice={minPrice}
+              setMinPrice={setMinPrice}
+              maxPrice={maxPrice}
+              setMaxPrice={setMaxPrice}
+              categories={categories}
+              onClearFilters={handleClearFilters}
+              setPage={setPage}
+            />
+          </div>
+
+          {/* Book Grid */}
+          <main className="flex-1">
+            {/* Results count and active filters */}
+            {booksData && (
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+                <p className="text-sm text-muted-foreground">
+                  {t('books.showing')} <span className="font-medium text-foreground">{booksData.books.length}</span> {t('books.of')}{' '}
+                  <span className="font-medium text-foreground">{booksData.total}</span> {t('books.booksCount')}
+                </p>
+                
+                {/* Active filter pills */}
+                {activeFilters.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {activeFilters.map((filter, index) => (
+                      <span
+                        key={index}
+                        className="inline-flex items-center gap-1 bg-muted text-foreground text-sm px-3 py-1 rounded-full"
+                      >
+                        {filter.label}
+                        <button
+                          onClick={filter.onRemove}
+                          className="hover:text-primary transition-colors"
+                        >
+                          <X className="w-3 h-3" />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Books Grid */}
+            {booksLoading ? (
           <div className="text-center py-12">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
             <p className="mt-4 text-gray-600">{t('common.loading')}</p>
           </div>
-        ) : booksData?.books.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-gray-600 text-lg">{t('books.noBooks')}</p>
-          </div>
-        ) : (
-          <>
+            ) : booksData?.books.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground text-lg">{t('books.noBooks')}</p>
+              </div>
+            ) : (
+              <>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
               {booksData?.books.map((book) => (
                 <Link
@@ -185,8 +283,10 @@ export default function BooksPage() {
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     />
                     {book.discountPrice && (
-                      <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-sm font-bold">
-                        -{Math.round(((book.price - book.discountPrice) / book.price) * 100)}%
+                      <div className="absolute top-2 right-2">
+                        <span className="bg-red-500 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-sm">
+                          -{Math.round(((book.price - book.discountPrice) / book.price) * 100)}%
+                        </span>
                       </div>
                     )}
                     {user && (
@@ -244,32 +344,34 @@ export default function BooksPage() {
                   </div>
                 </Link>
               ))}
-            </div>
-
-            {/* Pagination */}
-            {booksData && booksData.totalPages > 1 && (
-              <div className="mt-8 flex justify-center gap-2">
-                <button
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  disabled={page === 1}
-                  className="px-4 py-2 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-                >
-                  {t('books.previous')}
-                </button>
-                <span className="px-4 py-2 text-gray-700">
-                  {t('books.page')} {page} {t('books.of')} {booksData.totalPages}
-                </span>
-                <button
-                  onClick={() => setPage((p) => Math.min(booksData.totalPages, p + 1))}
-                  disabled={page === booksData.totalPages}
-                  className="px-4 py-2 border border-gray-300 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
-                >
-                  {t('books.next')}
-                </button>
               </div>
+
+              {/* Pagination */}
+              {booksData && booksData.totalPages > 1 && (
+                <div className="mt-8 flex justify-center gap-2">
+                  <button
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
+                    disabled={page === 1}
+                    className="px-4 py-2 border border-input rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-colors text-foreground"
+                  >
+                    {t('books.previous')}
+                  </button>
+                  <span className="px-4 py-2 text-foreground">
+                    {t('books.page')} {page} {t('books.of')} {booksData.totalPages}
+                  </span>
+                  <button
+                    onClick={() => setPage((p) => Math.min(booksData.totalPages, p + 1))}
+                    disabled={page === booksData.totalPages}
+                    className="px-4 py-2 border border-input rounded-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-colors text-foreground"
+                  >
+                    {t('books.next')}
+                  </button>
+                </div>
+              )}
+            </>
             )}
-          </>
-        )}
+          </main>
+        </div>
       </div>
     </div>
   );
