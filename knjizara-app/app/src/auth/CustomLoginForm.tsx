@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export function CustomLoginForm() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,10 +18,11 @@ export function CustomLoginForm() {
     setIsLoading(true);
 
     try {
-      await login({ email, password });
+      await login({ username, password });
       navigate(routes.BooksRoute.to);
     } catch (err: any) {
-      setError(err.message || "Greška pri prijavi");
+      const msg = err?.data?.message || err?.message || "Greška pri prijavi";
+      setError(msg);
     } finally {
       setIsLoading(false);
     }
@@ -32,23 +33,23 @@ export function CustomLoginForm() {
       <h2 className="text-2xl font-bold text-center mb-6 text-foreground">
         {t('auth.login.title')}
       </h2>
-      
+
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded">
             {error}
           </div>
         )}
-        
+
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1">
-            {t('auth.login.email')}
+          <label htmlFor="username" className="block text-sm font-medium text-foreground mb-1">
+            {t('auth.login.username', 'Korisničko ime')}
           </label>
           <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            id="username"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             required
             className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
           />
@@ -77,28 +78,14 @@ export function CustomLoginForm() {
         </button>
       </form>
 
-      <div className="mt-4 text-center space-y-2">
-        <div>
-          <span className="text-sm font-medium text-foreground">
-            {t('auth.login.noAccount')}{" "}
-            <WaspRouterLink to={routes.SignupRoute.to} className="underline text-primary">
-              {t('auth.login.goToSignup')}
-            </WaspRouterLink>
-            .
-          </span>
-        </div>
-        <div>
-          <span className="text-sm font-medium text-foreground">
-            {t('auth.login.forgotPassword')}{" "}
-            <WaspRouterLink
-              to={routes.RequestPasswordResetRoute.to}
-              className="underline text-primary"
-            >
-              resetujte je
-            </WaspRouterLink>
-            .
-          </span>
-        </div>
+      <div className="mt-4 text-center">
+        <span className="text-sm font-medium text-foreground">
+          {t('auth.login.noAccount')}{" "}
+          <WaspRouterLink to={routes.SignupRoute.to} className="underline text-primary">
+            {t('auth.login.goToSignup')}
+          </WaspRouterLink>
+          .
+        </span>
       </div>
     </div>
   );

@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 export function CustomSignupForm() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -19,15 +18,12 @@ export function CustomSignupForm() {
     setIsLoading(true);
 
     try {
-      await signup({ 
-        email, 
-        password,
-        username: username || email.split('@')[0],
-        isAdmin: false
-      });
+      await signup({ username, password });
       navigate(routes.BooksRoute.to);
     } catch (err: any) {
-      setError(err.message || "Greška pri registraciji");
+      console.error('Signup error:', JSON.stringify(err, null, 2));
+      const msg = err?.data?.message || err?.message || "Greška pri registraciji";
+      setError(msg);
     } finally {
       setIsLoading(false);
     }
@@ -38,23 +34,23 @@ export function CustomSignupForm() {
       <h2 className="text-2xl font-bold text-center mb-6 text-foreground">
         {t('auth.signup.title')}
       </h2>
-      
+
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && (
           <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded">
             {error}
           </div>
         )}
-        
+
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-foreground mb-1">
-            {t('auth.signup.email')}
+          <label htmlFor="username" className="block text-sm font-medium text-foreground mb-1">
+            {t('auth.signup.username', 'Korisničko ime')}
           </label>
           <input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            id="username"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             required
             className="w-full px-3 py-2 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-background text-foreground"
           />

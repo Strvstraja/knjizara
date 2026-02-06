@@ -4,14 +4,10 @@ import { z } from "zod";
 const adminEmails = process.env.ADMIN_EMAILS?.split(",") || [];
 
 const emailDataSchema = z.object({
-  email: z.string(),
+  email: z.string().email(),
 });
 
 export const getEmailUserFields = defineUserSignupFields({
-  email: (data) => {
-    const emailData = emailDataSchema.parse(data);
-    return emailData.email;
-  },
   username: (data) => {
     const emailData = emailDataSchema.parse(data);
     return emailData.email;
@@ -19,6 +15,20 @@ export const getEmailUserFields = defineUserSignupFields({
   isAdmin: (data) => {
     const emailData = emailDataSchema.parse(data);
     return adminEmails.includes(emailData.email);
+  },
+});
+
+// Username and password auth (no email required)
+const adminUsernames = process.env.ADMIN_USERNAMES?.split(",") || [];
+
+const usernameDataSchema = z.object({
+  username: z.string(),
+});
+
+export const getUsernameAndPasswordUserFields = defineUserSignupFields({
+  username: (data) => {
+    const parsed = usernameDataSchema.parse(data);
+    return parsed.username;
   },
 });
 
