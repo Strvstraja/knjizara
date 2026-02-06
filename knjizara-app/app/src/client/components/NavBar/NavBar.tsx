@@ -1,4 +1,4 @@
-import { LogIn, Menu } from "lucide-react";
+import { LogIn, Menu, ShoppingCart } from "lucide-react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { useAuth } from "wasp/client/auth";
@@ -119,7 +119,7 @@ function NavBarMobileMenu({
 }) {
   const { data: user, isLoading: isUserLoading } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const isCyrillic = i18n.language === 'sr-Cyrl';
   const siteName = isCyrillic ? 'ЧСМК' : 'ČSMK';
 
@@ -161,11 +161,21 @@ function NavBarMobileMenu({
                 {isUserLoading ? null : !user ? (
                   <WaspRouterLink to={routes.LoginRoute.to}>
                     <div className="text-foreground hover:text-primary flex items-center justify-end transition-colors duration-300 ease-in-out">
-                      Log in <LogIn size="1.1rem" className="ml-1" />
+                      {t('auth.login.title')} <LogIn size="1.1rem" className="ml-1" />
                     </div>
                   </WaspRouterLink>
                 ) : (
                   <ul className="space-y-2">
+                    <li>
+                      <WaspRouterLink 
+                        to={routes.CartRoute.to}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="text-foreground hover:text-primary flex items-center gap-2 py-2 transition-colors"
+                      >
+                        <ShoppingCart className="h-5 w-5" />
+                        {t('cart.title')}
+                      </WaspRouterLink>
+                    </li>
                     <UserMenuItems
                       user={user}
                       onItemClick={() => setMobileMenuOpen(false)}
