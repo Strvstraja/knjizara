@@ -233,7 +233,9 @@ const srLatn = {
     "loading": "Učitavanje...",
     "error": "Greška",
     "back": "Nazad",
-    "all": "Sve"
+    "all": "Sve",
+    "next": "Sledeća",
+    "previous": "Prethodna"
   },
   "notFound": {
     "message": "Stranica koju tražite ne postoji.",
@@ -596,7 +598,9 @@ const srCyrl = {
     "loading": "Учитавање...",
     "error": "Грешка",
     "back": "Назад",
-    "all": "Све"
+    "all": "Све",
+    "next": "Следећа",
+    "previous": "Претходна"
   },
   "notFound": {
     "message": "Страница коју тражите не постоји.",

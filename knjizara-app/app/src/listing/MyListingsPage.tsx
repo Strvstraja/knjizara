@@ -11,7 +11,9 @@ type ListingStatus = 'ACTIVE' | 'PAUSED' | 'SOLD' | 'EXPIRED';
 export default function MyListingsPage() {
   const { t } = useTranslation();
   const [statusFilter, setStatusFilter] = useState<ListingStatus | undefined>();
-  const { data, isLoading, refetch } = useQuery(getMyListings, { status: statusFilter });
+  const [page, setPage] = useState(1);
+  const limit = 20;
+  const { data, isLoading, refetch } = useQuery(getMyListings, { status: statusFilter, page, limit });
 
   const handleToggleStatus = async (id: string, currentStatus: string) => {
     try {
@@ -153,7 +155,10 @@ export default function MyListingsPage() {
         {/* Status Filters */}
         <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
           <button
-            onClick={() => setStatusFilter(undefined)}
+            onClick={() => {
+              setStatusFilter(undefined);
+              setPage(1);
+            }}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
               !statusFilter
                 ? 'bg-amber-500 text-white'
@@ -165,7 +170,10 @@ export default function MyListingsPage() {
           {(['ACTIVE', 'PAUSED', 'SOLD', 'EXPIRED'] as const).map((status) => (
             <button
               key={status}
-              onClick={() => setStatusFilter(status)}
+              onClick={() => {
+                setStatusFilter(status);
+                setPage(1);
+              }}
               className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
                 statusFilter === status
                   ? 'bg-amber-500 text-white'
@@ -301,6 +309,43 @@ export default function MyListingsPage() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Pagination */}
+        {data && data.totalPages > 1 && (
+          <div className="flex justify-center items-center gap-2 mt-8">
+            <Button
+              variant="outline"
+              onClick={() => setPage(p => Math.max(1, p - 1))}
+              disabled={page === 1}
+            >
+              {t('common.previous')}
+            </Button>
+            
+            <div className="flex gap-1">
+              {Array.from({ length: data.totalPages }, (_, i) => i + 1).map((pageNum) => (
+                <button
+                  key={pageNum}
+                  onClick={() => setPage(pageNum)}
+                  className={`px-3 py-1 rounded ${
+                    page === pageNum
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-card text-foreground hover:bg-accent'
+                  }`}
+                >
+                  {pageNum}
+                </button>
+              ))}
+            </div>
+
+            <Button
+              variant="outline"
+              onClick={() => setPage(p => Math.min(data.totalPages, p + 1))}
+              disabled={page === data.totalPages}
+            >
+              {t('common.next')}
+            </Button>
           </div>
         )}
       </div>
